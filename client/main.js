@@ -12,19 +12,29 @@ if (Meteor.isClient) {
       //const pred = document.getElementById("loopTaskField").value;
       var loopTask = document.getElementById("loopTaskField").value;
       var next = document.getElementById("nextStateField").value;
-      //const type = document.getElementById("stateTypeField").value;
+      if (document.getElementById("initialRadio").checked) {
+        var stateType = "Initial";
+      } else if (document.getElementById("normalRadio").checked) {
+        var stateType = "Normal";
+      } else if (document.getElementById("finalRadio").checked) {
+        var stateType = "Final";
+      }
       StatesList.insert({
         name: name,
         loopTask: loopTask,
-        nextState: next
+        nextState: next,
+        type: stateType
       });
-      console.log(name + ","  + loopTask + "," + next);
+      console.log(name + ","  + loopTask + "," + next + "," + stateType);
     }, // end createButton
     'click #clearButton': function(e){
       e.preventDefault();
       console.log("You pressed the clear button");
       document.getElementById("createForm").reset();
       name = "";
+      loopTask = "";
+      next = "";
+      stateType = "";
     },
     'click #viewButton': function(e) {
       e.preventDefault();
