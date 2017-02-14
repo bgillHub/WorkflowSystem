@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "state.js": {
+      "version": "5.11.0"
+    }
+  }
+}
