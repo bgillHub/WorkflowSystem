@@ -1,3 +1,5 @@
+//DASHBOARD JS
+
 Template.dashboardPage.events({
   'click #createStateButton': function(e){
     e.preventDefault();
