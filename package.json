@@ -1,0 +1,25 @@
+{
+  "name": "workflowsystem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bgillHub/WorkflowSystem.git"
+  },
+  "keywords": [
+    "dfa"
+  ],
+  "author": "gill and cooz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bgillHub/WorkflowSystem/issues"
+  },
+  "dependencies": {
+    "state.js": "^5.11.0"
+  },
+  "homepage": "https://github.com/bgillHub/WorkflowSystem#readme"
+}

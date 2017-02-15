@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+//var state = require("state.js");
+>>>>>>> 9758ff05df16406ee208c58871d86a3fb17e3fdf
 Template.createState.events({
   'click #createButton': function(e) {
     e.preventDefault();
@@ -20,6 +24,15 @@ Template.createState.events({
       type: stateType
     });
     console.log(name + ","  + loopTask + "," + next + "," + stateType);
+<<<<<<< HEAD
+=======
+    if (Meteor.isServer) {
+    }
+    else {
+      //Meteor.call('createState');
+      console.log("State Not Created");
+    }
+>>>>>>> 9758ff05df16406ee208c58871d86a3fb17e3fdf
   }, // end createButton
   'click #clearButton': function(e){
     e.preventDefault();
@@ -34,7 +47,10 @@ Template.createState.events({
     e.preventDefault();
     console.log("You pressed the view button");
     console.log(StatesList.find().fetch());
+<<<<<<< HEAD
     Router.go("/modifyWorkflow");
+=======
+>>>>>>> 9758ff05df16406ee208c58871d86a3fb17e3fdf
   },
   'click #backButton': function(e){
     e.preventDefault();

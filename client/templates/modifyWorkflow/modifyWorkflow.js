@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Template.modifyWorkflow.events({
   'click #deleteButton': function(e){
     e.preventDefault();
@@ -16,3 +17,8 @@ Template.modifyWorkflow.events({
     Router.go("/");
   }
 });
+=======
+/*Template.modifyWorkflow.events {
+
+}*/
+>>>>>>> 9758ff05df16406ee208c58871d86a3fb17e3fdf

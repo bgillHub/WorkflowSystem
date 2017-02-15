@@ -3,6 +3,7 @@ Template.dashboardPage.events({
       e.preventDefault();
       console.log("You pressed Go To Create State button");
       Router.go("/createState");
+<<<<<<< HEAD
     },
     'click #createTransButton': function(e){
       e.preventDefault();
@@ -15,4 +16,7 @@ Template.dashboardPage.events({
       console.log(StatesList.find().fetch());
       Router.go("/modifyWorkflow");
     },
+=======
+    }
+>>>>>>> 9758ff05df16406ee208c58871d86a3fb17e3fdf
 });
