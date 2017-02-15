@@ -24,8 +24,7 @@ Template.createState.events({
     if (Meteor.isServer) {
     }
     else {
-      //Meteor.call('createState');
-      console.log("State Not Created");
+      Meteor.call('createState');
     }
   }, // end createButton
   'click #clearButton': function(e){
