@@ -1,0 +1,96 @@
+/* CSS declarations go here */
+body {
+  font-family: sans-serif;
+  background-color: #C9F1FD;
+  background-attachment: fixed;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: 0;
+  margin: 0;
+
+  font-size: 14px;
+}
+
+.createStateArea {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: white;
+  text-align: center
+}
+
+.pageTitle {
+
+}
+
+.module {
+  text-align: center;
+  width: 100%;
+  color: white;
+  padding: 30px;
+  border: 1px solid black;
+}
+
+.module.createWorkflowArea {
+  background-color: #3d8af7;
+}
+
+.module.createWorkflowArea:hover {
+  background-color: #367CDE;
+  color: #F1F1F1;
+  /*text-decoration: underline; */
+}
+
+.module.viewWorkflowArea {
+  background-color: #ffa834;
+}
+
+.module.viewWorkflowArea:hover {
+  background-color: #e5972e;
+  color: #F1F1F1;
+  /*text-decoration: underline; */
+}
+
+.module.profileArea {
+  background-color: #e93578;
+}
+
+.module.profileArea:hover {
+  background-color: #D12F6C;
+  color: #F1F1F1;
+  /*text-decoration: underline; */
+}
+
+.module.notificationsArea {
+  background-color: #72bb53;
+}
+
+.module.notificationsArea:hover {
+  background-color: #66a84a;
+  color: #F1F1F1;
+  /*text-decoration: underline; */
+}
+
+.module.monitorWorkflowArea {
+  background-color: #ff8a84;
+}
+
+.module.monitorWorkflowArea:hover {
+  background-color: #e57c76;
+  color: #F1F1F1;
+  /*text-decoration: underline; */
+}
+
+.module.alterSettingsArea {
+  background-color: #c238eb;
+}
+
+.module.alterSettingsArea:hover {
+  background-color: #ae32d3;
+  color: #F1F1F1;
+  /*text-decoration: underline; */
+}
