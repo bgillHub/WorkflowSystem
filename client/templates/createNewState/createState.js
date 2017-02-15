@@ -40,6 +40,7 @@ Template.createState.events({
     e.preventDefault();
     console.log("You pressed the view button");
     console.log(StatesList.find().fetch());
+    Router.go("/modifyWorkflow");
   },
   'click #backButton': function(e){
     e.preventDefault();
