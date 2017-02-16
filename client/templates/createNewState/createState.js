@@ -5,8 +5,6 @@ Template.createState.events({
     console.log("You pressed the create button");
     var name = document.getElementById("nameField").value;
     //const pred = document.getElementById("loopTaskField").value;
-    var loopTask = document.getElementById("loopTaskField").value;
-    var next = document.getElementById("nextStateField").value;
     if (document.getElementById("initialRadio").checked) {
       var stateType = "Initial";
     } else if (document.getElementById("normalRadio").checked) {
@@ -14,17 +12,16 @@ Template.createState.events({
     } else if (document.getElementById("finalRadio").checked) {
       var stateType = "Final";
     }
-    StatesList.insert({
-      name: name,
-      loopTask: loopTask,
-      nextState: next,
+    /*StatesList.insert({
+      stateName: name,
       type: stateType
-    });
-    console.log(name + ","  + loopTask + "," + next + "," + stateType);
+    });*/
+    console.log(name + ","  + "," + "," + stateType);
     if (Meteor.isServer) {
+      Meteor.call('createState', name);
     }
     else {
-      Meteor.call('createState');
+      Meteor.call('createState', name);
     }
   }, // end createButton
   'click #clearButton': function(e){
@@ -40,6 +37,10 @@ Template.createState.events({
     e.preventDefault();
     console.log("You pressed the view button");
     console.log(StatesList.find().fetch());
+    var doc = StatesList.findOne();
+    if (doc){
+      console.log("Sample Name: " + doc.stateName);
+    }
     // Router.go("/modifyWorkflow");
   },
   'click #backButton': function(e){
