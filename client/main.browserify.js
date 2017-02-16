@@ -39,6 +39,8 @@ Meteor.methods({
       stateName: Name,
       stateJson: jsonString
     });
+    console.log(StatesList.find().fetch());
+    console.log(StatesList.findOne().stateName);
     console.log("State Inserted On Client Method");
   }//end create state
 });//end methods
