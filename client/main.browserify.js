@@ -9,7 +9,7 @@ if (Meteor.isClient) {
 }// if is client
 if (Meteor.isServer) {
   Meteor.methods({
-    'saveWorkflow': function (){
+    'saveWorkflow': function (Name){
       var state = require('state.js');
       state.setConsole(console);
       var initial = new state.PseudoState("initial", model, state.PseudoStateKind.Initial);
@@ -33,7 +33,7 @@ if (Meteor.isServer) {
 
 }//end is server
 Meteor.methods({
-  'saveWorkflow': function (){
+  'saveWorkflow': function (Name){
     var state = require('state.js');
     state.setConsole(console);
     var initial = new state.PseudoState("initial", model, state.PseudoStateKind.Initial);

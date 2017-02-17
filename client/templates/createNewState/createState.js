@@ -13,7 +13,7 @@ Template.createState.events({
       var stateType = "Final";
     }
     StatesList.insert({
-      stateName: name,
+      name: name,
       type: stateType
     });
     console.log(name + ","  + "," + "," + stateType);
@@ -53,7 +53,7 @@ Template.createState.events({
     console.log(StatesList.find().fetch());
     var doc = StatesList.findOne();
     if (doc){
-      console.log("Sample Name: " + doc.stateName);
+      console.log("Sample Name: " + doc.name);
     }
     // Router.go("/modifyWorkflow");
   },
