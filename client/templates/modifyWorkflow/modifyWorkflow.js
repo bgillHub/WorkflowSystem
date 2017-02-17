@@ -7,8 +7,11 @@ Template.modifyWorkflow.events({
     StatesList.remove({
       _id: deleteQuery._id
     });
+    document.getElementById("deleteForm").reset();
+    console.log(deleteName + ", has been deleted!");
+    deleteName = "";
     console.log(StatesList.find().fetch());
-    Router.go("/createState");
+    // Router.go("/createState");
   },
   'click #backButton': function(e){
     e.preventDefault();

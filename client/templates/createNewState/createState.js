@@ -5,8 +5,6 @@ Template.createState.events({
     console.log("You pressed the create button");
     var name = document.getElementById("nameField").value;
     //const pred = document.getElementById("loopTaskField").value;
-    var loopTask = document.getElementById("loopTaskField").value;
-    var next = document.getElementById("nextStateField").value;
     if (document.getElementById("initialRadio").checked) {
       var stateType = "Initial";
     } else if (document.getElementById("normalRadio").checked) {
@@ -16,11 +14,12 @@ Template.createState.events({
     }
     StatesList.insert({
       name: name,
-      loopTask: loopTask,
-      nextState: next,
       type: stateType
     });
-    console.log(name + ","  + loopTask + "," + next + "," + stateType);
+    name = "";
+    document.getElementById("createForm").reset();
+    stateType
+    console.log(name + "," + stateType);
     if (Meteor.isServer) {
     }
     else {
@@ -32,13 +31,11 @@ Template.createState.events({
     console.log("You pressed the clear button");
     document.getElementById("createForm").reset();
     name = "";
-    loopTask = "";
-    next = "";
     stateType = "";
   }, // end clearButton
   'click #viewButton': function(e) {
     e.preventDefault();
-    console.log("You pressed the view button");
+    console.log("You pressed the view states button");
     console.log(StatesList.find().fetch());
     // Router.go("/modifyWorkflow");
   },
