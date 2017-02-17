@@ -25,7 +25,7 @@ if (Meteor.isServer) {
       }
       else {console.log("JSON instance found empty");}
       console.log("State Created on Client Method: " + stateNew.name);
-      console.log(Workflows.find().fetch());
+      console.log("Workflows:" + Workflows.find().fetch());
       console.log("Workflow Name: " + Workflows.findOne().workflowName);
       console.log("Workflow Saved On Client Method");
     }//end create state

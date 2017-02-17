@@ -35,8 +35,8 @@ Template.createState.events({
         workflowName: "Model",
         stateJson: jsonString
       });
-      console.log(Workflows.find().fetch());
-      console.log(Workflows.findOne().workflowName);
+      console.log("Workflows " +Workflows.find().fetch());
+      console.log("Workflow Name: " + Workflows.findOne().workflowName);
       console.log("State Inserted On Client Method");
     }
   }, // end createButton
@@ -50,10 +50,16 @@ Template.createState.events({
   'click #viewButton': function(e) {
     e.preventDefault();
     console.log("You pressed the view states button");
-    console.log(StatesList.find().fetch());
-    var doc = StatesList.findOne();
+    if (StatesList == Workflows){
+      console.log("The DBs are the same...");
+    }
+    console.log("Workflow Array: " + Workflows.find().fetch());
+    console.log("States Array: " + StatesList.find().fetch());
+    doc = StatesList.findOne();
     if (doc){
+      console.log("Sample Data: " + doc);
       console.log("Sample Name: " + doc.name);
+      console.log("Sample Name: " + doc.stateName);
     }
     // Router.go("/modifyWorkflow");
   },

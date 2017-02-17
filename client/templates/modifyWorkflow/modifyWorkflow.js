@@ -4,11 +4,13 @@ Template.modifyWorkflow.events({
     console.log("You pressed the delete button");
     var deleteName = document.getElementById("deleteField").value;
     var deleteQuery = StatesList.findOne({ name: deleteName});
+    if (deleteQuery){
     StatesList.remove({
       _id: deleteQuery._id
     });
     document.getElementById("deleteForm").reset();
     console.log(deleteName + ", has been deleted!");
+  }//end if exists
     deleteName = "";
     console.log(StatesList.find().fetch());
     // Router.go("/createState");
