@@ -20,10 +20,13 @@ Template.createState.events({
     if (Meteor.isServer) {
       console.log("Calling Method");
       Meteor.call('saveWorkflow', name);
-      Workflows.insert({
+      Workflows.update(
+        {workflowName: "Model"},
+        {
         workflowName: "Model",
         stateJson: jsonString
-      });
+      },{upsert: true}
+    );
       console.log(Workflows.find().fetch());
       console.log(Workflows.findOne().workflowName);
       console.log("State Inserted On Server Method");
@@ -31,10 +34,13 @@ Template.createState.events({
     else {
       console.log("Calling Method");
       Meteor.call('saveWorkflow', name);
-      Workflows.insert({
+      Workflows.update(
+        {workflowName: "Model"},
+        {
         workflowName: "Model",
         stateJson: jsonString
-      });
+      },{upsert: true}
+    );
       console.log("Workflows " +Workflows.find().fetch());
       console.log("Workflow Name: " + Workflows.findOne().workflowName);
       console.log("State Inserted On Client Method");
@@ -55,11 +61,10 @@ Template.createState.events({
     }
     console.log("Workflow Array: " + Workflows.find().fetch());
     console.log("States Array: " + StatesList.find().fetch());
-    doc = StatesList.findOne();
+    var doc = StatesList.findOne();
     if (doc){
       console.log("Sample Data: " + doc);
-      console.log("Sample Name: " + doc.name);
-      console.log("Sample Name: " + doc.stateName);
+      console.log("State Name: " + doc.name);
     }
     // Router.go("/modifyWorkflow");
   },
