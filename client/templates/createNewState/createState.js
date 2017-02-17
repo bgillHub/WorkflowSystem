@@ -18,10 +18,26 @@ Template.createState.events({
     });*/
     console.log(name + ","  + "," + "," + stateType);
     if (Meteor.isServer) {
-      Meteor.call('createState', name);
+      console.log("Calling Method");
+      Meteor.call('saveWorkflow', name);
+      StatesList.insert({
+        workflowName: "Model",
+        stateJson: jsonString
+      });
+      console.log(StatesList.find().fetch());
+      console.log(StatesList.findOne().workflowName);
+      console.log("State Inserted On Server Method");
     }
     else {
-      Meteor.call('createState', name);
+      console.log("Calling Method");
+      Meteor.call('saveWorkflow', name);
+      StatesList.insert({
+        workflowName: "Model",
+        stateJson: jsonString
+      });
+      console.log(StatesList.find().fetch());
+      console.log(StatesList.findOne().workflowName);
+      console.log("State Inserted On Client Method");
     }
   }, // end createButton
   'click #clearButton': function(e){
@@ -39,7 +55,7 @@ Template.createState.events({
     console.log(StatesList.find().fetch());
     var doc = StatesList.findOne();
     if (doc){
-      console.log("Sample Name: " + doc.stateName);
+      console.log("Sample Name: " + doc.workflowName);
     }
     // Router.go("/modifyWorkflow");
   },
