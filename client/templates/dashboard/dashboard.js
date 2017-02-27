@@ -11,8 +11,10 @@ Template.dashboardPage.events({
   },
   'click .viewWorkflowArea': function(e) {
     e.preventDefault();
-    console.log("You pressed the view button");
-    console.log(StatesList.find().fetch());
+    console.log("You pressed the Monitor Workflow button");
+    if (model){
+      console.log("Current Workflow: " + model.name);      
+    }
     Router.go("/modifyWorkflow");
   }
 });

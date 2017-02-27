@@ -2,52 +2,96 @@ if (Meteor.isClient) {
   Meteor.startup(function () {
     var state = require('state.js');
     state.setConsole(console);
-    model = new state.StateMachine("model");
+    machine = new state.StateMachine("machine");
+    var initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
+    var terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
+    console.log("Begin Test");
+    var stateA = new state.State("A", machine);
+    initial.to(stateA);
+    console.log("State Created: " + stateA.name);
+    var stateB = new state.State("B", machine);
+    stateA.to(stateB);
+    console.log("State Created: " + stateB.name);
+    var stateC = new state.State("C", machine);
+    stateB.to(stateC);
+    console.log("State Created: " + stateC.name);
+    stateC.to(terminal);
+    // create a state machine instance
+    var instance = new state.StateMachineInstance("test");
+    // initialise the model and instance
+    state.initialise(machine, instance);
+    console.log("Created and Initialised machine");
+    regional = machine.getDefaultRegion();
+    if (regional!= null){
+      console.log("Default Region exists");
+      console.log("Vertices: " + regional.vertices);
+    }
     console.log("Meteor Executed Client Code. Created StateMachine");
     console.log("Meteor started as Client with Browserify");
   });//end startup
 }// if is client
 if (Meteor.isServer) {
   Meteor.methods({
-    'saveWorkflow': function (Name){
+    'saveWorkflow': function (){
       var state = require('state.js');
       state.setConsole(console);
-      var initial = new state.PseudoState("initial", model, state.PseudoStateKind.Initial);
-      var stateNew = new state.State(Name, model);
-      initial.to(stateNew);
-      var instance = new state.StateMachineInstance("State.js Class Representative");
-      state.initialise(model, instance);
-      var jsonObject = new state.JSONInstance("JSON Representative");
-      state.initialise(model, jsonObject);
+      var jsonObject = new state.JSONInstance("jsonInstane");
+      state.initialise(machine, jsonObject);
       jsonString = jsonObject.toJSON();
       if (jsonString){
         console.log("Created Json Passer");
+        console.log(jsonString);
       }
       else {console.log("JSON instance found empty");}
-      console.log("State Created on Client Method: " + stateNew.name);
-      console.log("Workflows:" + Workflows.find().fetch());
-      console.log("Workflow Name: " + Workflows.findOne().workflowName);
-      console.log("Workflow Saved On Client Method");
-    }//end create state
+      console.log("Workflow JSON Created on Server Method: " + newState.name);
+    },//end  saveWorkflow
+    'addState': function (Name, Type){
+      var state = require('state.js');
+      state.setConsole(console);
+      newState = new state.State(Name, machine);
+      if (Type == "Initial"){
+        var initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
+        initial.to(newState);
+      }
+      else if (Type == "Final"){
+        var terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
+        newState.to(terminal);
+      }
+      var instance = new state.StateMachineInstance("progress");
+      state.initialise(machine, instance);
+      console.log("Vertices: " + machine.getDefaultRegion().vertices);
+    }//end addState
   });//end methods
 
 }//end is server
 Meteor.methods({
-  'saveWorkflow': function (Name){
+  'saveWorkflow': function (){
     var state = require('state.js');
     state.setConsole(console);
-    var initial = new state.PseudoState("initial", model, state.PseudoStateKind.Initial);
-    var stateNew = new state.State(Name, model);
-    initial.to(stateNew);
-    var instance = new state.StateMachineInstance("progress");
-    state.initialise(model, instance);
     var jsonObject = new state.JSONInstance("jsonInstane");
-    state.initialise(model, jsonObject);
+    state.initialise(machine, jsonObject);
     jsonString = jsonObject.toJSON();
     if (jsonString){
       console.log("Created Json Passer");
+      console.log(jsonString);
     }
     else {console.log("JSON instance found empty");}
-    console.log("State Created on Client Method: " + stateNew.name);
-  }//end create state
+    console.log("Workflow JSON Created on Client Method: " + newState.name);
+  },//end  saveWorkflow
+  'addState': function (Name, Type){
+    var state = require('state.js');
+    state.setConsole(console);
+    newState = new state.State(Name, machine);
+    if (Type == "Initial"){
+      var initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
+      initial.to(newState);
+    }
+    else if (Type == "Final"){
+      var terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
+      newState.to(terminal);
+    }
+    var instance = new state.StateMachineInstance("progress");
+    state.initialise(machine, instance);
+    console.log("Vertices: " + machine.getDefaultRegion().vertices);
+  }//end addState
 });//end methods

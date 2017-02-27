@@ -19,30 +19,14 @@ Template.createState.events({
     console.log(name + ","  + "," + "," + stateType);
     if (Meteor.isServer) {
       console.log("Calling Method");
-      Meteor.call('saveWorkflow', name);
-      Workflows.update(
-        {workflowName: "Model"},
-        {
-        workflowName: "Model",
-        stateJson: jsonString
-      },{upsert: true}
-    );
+      Meteor.call('addState', name, stateType);
       console.log(Workflows.find().fetch());
-      console.log(Workflows.findOne().workflowName);
       console.log("State Inserted On Server Method");
     }
     else {
       console.log("Calling Method");
-      Meteor.call('saveWorkflow', name);
-      Workflows.update(
-        {workflowName: "Model"},
-        {
-        workflowName: "Model",
-        stateJson: jsonString
-      },{upsert: true}
-    );
+      Meteor.call('addState', name, stateType);
       console.log("Workflows " +Workflows.find().fetch());
-      console.log("Workflow Name: " + Workflows.findOne().workflowName);
       console.log("State Inserted On Client Method");
     }
   }, // end createButton
@@ -60,15 +44,23 @@ Template.createState.events({
       console.log("The DBs are the same...");
     }
     console.log("Workflow Array: " + Workflows.find().fetch());
+    console.log("Workflow Array: " + Workflows.find());
     console.log("States Array: " + StatesList.find().fetch());
-    var doc = StatesList.findOne();
-    if (doc){
-      console.log("Sample Data: " + doc);
-      console.log("State Name: " + doc.name);
+    console.log("States Array: " + StatesList.find());
+    for (i in StatesList.find().fetch()){
+      console.log("State Name: " + i.name);
     }
     // Router.go("/modifyWorkflow");
   },
   'click #backButton': function(e){
+    Meteor.call('saveWorkflow');
+    Workflows.update(
+      {workflowName: machine.name},
+      {
+      workflowName: machine.name,
+      stateJson: jsonString
+    },{upsert: true}
+  );
     e.preventDefault();
     console.log("You pressed the back button");
     Router.go("/");
