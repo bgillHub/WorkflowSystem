@@ -48,17 +48,15 @@ Template.createState.events({
     e.preventDefault();
   //  Meteor.call('saveWorkflow', wfName);
   console.log("Updating Workflow");
-  Workflows.insert({
+  /*Workflows.insert({
     workflowName: wfName,
     States: statesArray
-  });
-    /*Workflows.update(
-      {workflowName: wfName},
-      {
-      workflowName: wfName,
-      States: statesArray
-    },
-    {upsert: true});*/
+  });*/
+    Workflows.update(
+   {_id:Workflows.findOne({workflowName:wfName})['_id']},
+   {workflowName: wfName, States: statesArray},
+    {upsert: true}
+    );
     console.log("ALL WORKFLOW NAMES: " + Workflows.find({}).fetch());
     console.log("SAMPLE WORKFLOW NAME: " + Workflows.findOne({}).workflowName);
     console.log("SAMPLE WORKFLOW STATES: " + Workflows.findOne({}).States);
