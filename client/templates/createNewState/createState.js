@@ -2,7 +2,6 @@
 Template.createState.events({
   'click #createButton': function(e) {
     e.preventDefault();
-    console.log("You pressed the create button");
     var name = document.getElementById("nameField").value;
     var stateTime = document.getElementById("stateTime").value;
     console.log("TIME : " + stateTime)
@@ -19,17 +18,14 @@ Template.createState.events({
       time: stateTime,
       type: stateType
     });
-    console.log(name + ","  + "," + "," + stateType);
     if (Meteor.isServer) {
-      console.log("Calling Method");
+      console.log("Calling Add Method");
       Meteor.call('addState', name, stateType);
-      console.log(Workflows.find().fetch());
       console.log("State Inserted On Server Method");
     }
     else {
-      console.log("Calling Method");
+      console.log("Calling Add Method");
       Meteor.call('addState', name, stateType);
-      console.log("Workflows " +Workflows.find().fetch());
       console.log("State Inserted On Client Method");
     }
   }, // end createButton
@@ -44,28 +40,30 @@ Template.createState.events({
   'click #viewButton': function(e) {
     e.preventDefault();
     console.log("You pressed the view states button");
-    if (StatesList == Workflows){
-      console.log("The DBs are the same...");
-    }
-    console.log("Workflow Array: " + Workflows.find().fetch());
-    console.log("Workflow Array: " + Workflows.find());
-    console.log("States Array: " + StatesList.find().fetch());
-    console.log("States Array: " + StatesList.find());
+    //console.log("Workflow Name: " + Workflows.findOne({}).workflowName);
+    console.log("Workflow Array: " + Workflows.find({}));
     for (i in StatesList.find().fetch()){
-      console.log("State Name: " + i.name);
+      console.log("State Name: " + i);
     }
     // Router.go("/modifyWorkflow");
   },
   'click #backButton': function(e){
-    Meteor.call('saveWorkflow');
-    Workflows.update(
-      {workflowName: machine.name},
-      {
-      workflowName: machine.name,
-      stateJson: jsonString
-    },{upsert: true}
-  );
+    //Meteor.call('saveWorkflow', wfName);
     e.preventDefault();
+  //  Meteor.call('saveWorkflow', wfName);
+  console.log("Updating Workflow");
+  /*Workflows.insert({
+    workflowName: wfName,
+    States: statesArray
+  });*/
+    Workflows.update(
+   {_id:Workflows.findOne({workflowName:wfName})['_id']},
+   {workflowName: wfName, States: statesArray},
+    {upsert: true}
+    );
+    console.log("ALL WORKFLOW NAMES: " + Workflows.find({}).fetch());
+    console.log("SAMPLE WORKFLOW NAME: " + Workflows.findOne({}).workflowName);
+    console.log("SAMPLE WORKFLOW STATES: " + Workflows.findOne({}).States);
     console.log("You pressed the back button");
     Router.go("/");
   } // end backButton

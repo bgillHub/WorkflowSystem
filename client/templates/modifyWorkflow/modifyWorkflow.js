@@ -2,8 +2,8 @@ Template.modifyWorkflow.events({
   'click #deleteButton': function(e){
     e.preventDefault();
     console.log("You pressed the delete button");
-    var debugRegions = model.regions;
-    var defRegion = model.defaultRegion;
+    var debugRegions = machine.regions;
+    var defRegion = machine.defaultRegion;
     if (defRegion){
       console.log("Default Region Exists!");
       console.log("Vertices: " + defRegion.vertices);
