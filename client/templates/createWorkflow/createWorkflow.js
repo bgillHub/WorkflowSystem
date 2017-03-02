@@ -10,6 +10,7 @@ Template.createWorkflow.events({
   },
   'click #clearButton': function(e) {
     e.preventDefault();
+    document.getElementById("createForm").reset();
     console.log("You pressed the clear button");
     name = "";
   },
