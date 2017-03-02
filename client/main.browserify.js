@@ -8,28 +8,23 @@ if (Meteor.isClient) {
     console.log("Begin Test");
     var stateA = new state.State("A", machine);
     initial.to(stateA);
-    console.log("State Created: " + stateA.name);
     var stateB = new state.State("B", machine);
     stateA.to(stateB);
-    console.log("State Created: " + stateB.name);
     var stateC = new state.State("C", machine);
     stateB.to(stateC);
-    console.log("State Created: " + stateC.name);
     stateC.to(terminal);
     // create a state machine instance
     var instance = new state.StateMachineInstance("test");
     // initialise the model and instance
     state.initialise(machine, instance);
-    console.log("Created and Initialised machine");
     regional = machine.getDefaultRegion();
     if (regional!= null){
       console.log("Default Region exists");
       console.log("Vertices: " + regional.vertices);
     }
-    console.log("Meteor Executed Client Code. Created StateMachine");
-    console.log("Meteor started as Client with Browserify");
-  });//end startup
-}// if is client
+  }); //end startup
+} // if is client
+
 if (Meteor.isServer) {
   Meteor.methods({
     'saveWorkflow': function (){

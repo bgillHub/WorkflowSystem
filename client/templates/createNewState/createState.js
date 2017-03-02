@@ -4,6 +4,8 @@ Template.createState.events({
     e.preventDefault();
     console.log("You pressed the create button");
     var name = document.getElementById("nameField").value;
+    var stateTime = document.getElementById("stateTime").value;
+    console.log("TIME : " + stateTime)
     //const pred = document.getElementById("loopTaskField").value;
     if (document.getElementById("initialRadio").checked) {
       var stateType = "Initial";
@@ -14,6 +16,7 @@ Template.createState.events({
     }
     StatesList.insert({
       name: name,
+      time: stateTime,
       type: stateType
     });
     console.log(name + ","  + "," + "," + stateType);
@@ -36,6 +39,7 @@ Template.createState.events({
     document.getElementById("createForm").reset();
     name = "";
     stateType = "";
+    stateTime = "";
   }, // end clearButton
   'click #viewButton': function(e) {
     e.preventDefault();

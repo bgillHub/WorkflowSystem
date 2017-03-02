@@ -13,6 +13,21 @@
           <label>State Name:</label>
           <input type="text" id="nameField" name="text" placeholder="Add State Title"/>
           <br>
+          <label>Time Select:</label>
+          <fieldset class="form-group">
+            <div class='input-group date' id='stateTime'>
+              <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+          </fieldset>
+          <script type="text/javascript">
+            $(function () {
+              $('#stateTime').datetimepicker();
+            });
+          </script>
+          <br>
           <label>Check State Type:</label>
           <fieldset class="form-group">
             <!-- <legend>Radio buttons</legend> -->

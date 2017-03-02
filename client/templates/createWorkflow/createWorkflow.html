@@ -1,0 +1,24 @@
+<template name ="createWorkflow">
+  <div class="container-fluid ">
+    <div name="row">
+      <h2>WFMS</h2>
+      <div class="col-md-6 col-md-offset-3 text-center">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 createStateArea">
+        <h2>Create Workflow</h2>
+        <form class="form-inline new-state" id="createForm">
+          <label>Workflow Name:</label>
+          <input type="text" id="nameField" name="text" placeholder="Add State Title"/>
+          <br>
+          <br>
+          <button type="button" id="createButton" class="btn btn-success" value="create">Create</button>
+          <button type="button" id="clearButton" class="btn btn-warning">Clear</button>
+          <button type="button" class="btn btn-danger">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <button type="button" id="backButton" class="btn btn-primary">Back Home</button>
+</template>
