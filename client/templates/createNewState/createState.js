@@ -46,7 +46,19 @@ Template.createState.events({
   'click #backButton': function(e){
     //Meteor.call('saveWorkflow', wfName);
     e.preventDefault();
-    Meteor.call('saveWorkflow', wfName);
+  //  Meteor.call('saveWorkflow', wfName);
+  console.log("Updating Workflow");
+  Workflows.insert({
+    workflowName: wfName,
+    States: statesArray
+  });
+    /*Workflows.update(
+      {workflowName: wfName},
+      {
+      workflowName: wfName,
+      States: statesArray
+    },
+    {upsert: true});*/
     console.log("ALL WORKFLOW NAMES: " + Workflows.find({}).fetch());
     console.log("SAMPLE WORKFLOW NAME: " + Workflows.findOne({}).workflowName);
     console.log("SAMPLE WORKFLOW STATES: " + Workflows.findOne({}).States);
