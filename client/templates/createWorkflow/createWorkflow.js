@@ -6,10 +6,6 @@ Template.createWorkflow.events({
     WorkflowsList.insert({
       name: name
     });
-
-    createDiv(name);
-
-
     // $('#create').load('templates/selectWorkflow/selectWorkflow.html .selectWFArea');
     // var counter = 1;
     // $("#createButton").click(function () {
