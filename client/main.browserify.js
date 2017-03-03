@@ -11,7 +11,6 @@ if (Meteor.isClient) {
     statesArray = [];
     transArray=[];
     currentWorkflow = "Workflow";
-
     console.log("Proof that Workflows Exists:" + Workflows.find().fetch());
     console.log("Meteor Executed Client Code. Created StateMachine");
     console.log("Meteor started as Client with Browserify");
@@ -20,6 +19,18 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.methods({
+    'createMachine': function(name){
+      var state = require('state.js');
+      wfName = name;
+      state.setConsole(console);
+      machine = new state.StateMachine(name);
+      initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
+      terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
+      initial.to(terminal);
+      var instance = new state.StateMachineInstance(name);
+      state.initialise(machine, instance);
+      alert("Machine Created and Initialsed");
+    },
     'saveWorkflow': function (Name){
       var state = require('state.js');
       state.setConsole(console);
@@ -76,6 +87,18 @@ if (Meteor.isServer) {
 }//end is server
 
 Meteor.methods({
+  'createMachine': function(name){
+    var state = require('state.js');
+    wfName = name;
+    state.setConsole(console);
+    machine = new state.StateMachine(name);
+    initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
+    terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
+    initial.to(terminal);
+    var instance = new state.StateMachineInstance(name);
+    state.initialise(machine, instance);
+    alert("Machine Created and Initialsed");
+  },
     'saveWorkflow': function (Name){
       var state = require('state.js');
       state.setConsole(console);
