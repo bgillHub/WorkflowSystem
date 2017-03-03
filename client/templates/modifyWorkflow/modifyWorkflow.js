@@ -19,7 +19,6 @@ Template.modifyWorkflow.events({
     console.log(deleteName + ", has been deleted!");
     regional = machine.getDefaultRegion();
     if (regional!= null){
-      console.log("States BEFORE: " + regional.vertices);
       var stateList = regional.vertices;
       for (i in statesArray){
         if (deleteName = i){

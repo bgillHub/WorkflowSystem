@@ -1,7 +1,7 @@
 Template.dashboardPage.events({
   'click #createStateButton': function(e){
     e.preventDefault();
-    selectedFlow = Workflows.findOne();
+    selectedFlow = Workflows.findOne({workflowName: wfName});
     if (selectedFlow != null){
     Meteor.call('loadWorkflow', selectedFlow);}
     else {
@@ -17,6 +17,12 @@ Template.dashboardPage.events({
   },
   'click .viewWorkflowArea': function(e) {
     e.preventDefault();
+    selectedFlow = Workflows.findOne({workflowName: wfName});
+    if (selectedFlow != null){
+    Meteor.call('loadWorkflow', selectedFlow);}
+    else {
+      console.log("No Workflow Found");
+    }
     console.log("You pressed the Monitor Workflow button");
     Router.go("/modifyWorkflow");
   },
