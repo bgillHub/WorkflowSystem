@@ -15,6 +15,11 @@ Template.dashboardPage.events({
     console.log("You pressed Go To Create Transition button");
     Router.go("/createTrans");
   },
+  'click #deleteWFButton': function(e){
+    e.preventDefault();
+    console.log("You pressed Go To Delete Workflow button");
+    Router.go("/modifyWorkflow");
+  },
   'click .viewWorkflowArea': function(e) {
     e.preventDefault();
     selectedFlow = Workflows.findOne({workflowName: wfName});
