@@ -3,6 +3,12 @@ Template.createWorkflow.events({
     e.preventDefault();
     console.log("You pressed the create button");
     var name = document.getElementById("nameField").value;
+    wfName = name;
+    Workflows.insert({
+      workflowName: wfName,
+      States: [],
+      Transitions: []
+    });
     WorkflowsList.insert({
       name: name
     });

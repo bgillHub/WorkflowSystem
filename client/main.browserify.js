@@ -1,12 +1,15 @@
 if (Meteor.isClient) {
   Meteor.startup(function () {
     var state = require('state.js');
-    wfName = "WorkflowNew";
+    wfName = "New";
+    selectedFlow = Workflows.findOne({workflowName: wfName});
+    Meteor.call('loadWorkflow', selectedFlow);
     state.setConsole(console);
     machine = new state.StateMachine("machine");
     initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
     terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
     statesArray = [];
+    transArray=[];
     currentWorkflow = "Workflow";
 
     console.log("Proof that Workflows Exists:" + Workflows.find().fetch());
@@ -27,17 +30,6 @@ if (Meteor.isServer) {
         statesArray.push(i.name);
         console.log("State Name: " + i.name);
       }*/
-      Workflows.insert({
-        workflowName: Name,
-        States: statesArray
-      });
-      /*Workflows.update(
-        {workflowName: Name},
-        {
-        workflowName: Name,
-        States: statesArray
-      },
-      {upsert: true});*/
     },//end  saveWorkflow
     'addState': function (Name, Type){
       var state = require('state.js');
@@ -68,6 +60,7 @@ if (Meteor.isServer) {
       var state = require('state.js');
       state.setConsole(console);
       statesArray = [];
+      transArray=[];
       holdArray = selectedFlow.States;
       for (i in holdArray){
         statesArray.push(String(i));
@@ -94,7 +87,8 @@ Meteor.methods({
       }*/
       Workflows.insert({
         workflowName: Name,
-        States: statesArray
+        States: statesArray,
+        Transitions: transArray
       });
       /*Workflows.update(
         {workflowName: Name},
@@ -130,6 +124,7 @@ Meteor.methods({
     var state = require('state.js');
     state.setConsole(console);
     statesArray = [];
+    transArray =[];
     console.log("Selected Flow Found");
     holdArray = selectedFlow.States;
     for (i in holdArray){

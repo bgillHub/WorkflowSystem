@@ -10,16 +10,17 @@ Template.modifyWorkflow.events({
     console.log("Region #: " + debugRegions.length);
     var debugVertices = debugRegions[0];
     var deleteName = document.getElementById("deleteField").value;
-    var deleteQuery = StatesList.findOne({ name: deleteName});
+    var deleteQuery = WorkflowsList.findOne({ name: deleteName});
     if (deleteQuery){
-    StatesList.remove({
+    WorkflowsList.remove({
       _id: deleteQuery._id
     });
+  }
+    else alert("No Workflow by "+ deleteName + " Found");
     document.getElementById("deleteForm").reset();
-    console.log(deleteName + ", has been deleted!");
+    //console.log(deleteName + ", has been deleted!");
     regional = machine.getDefaultRegion();
-    if (regional!= null){
-      console.log("States BEFORE: " + regional.vertices);
+    /*if (regional!= null){
       var stateList = regional.vertices;
       for (i in statesArray){
         if (deleteName = i){
@@ -30,8 +31,8 @@ Template.modifyWorkflow.events({
         }
       }
       console.log("States AFTER: " + regional.vertices);
-    }
-  }//end if exists
+    }*/
+  //end if exists
     deleteName = "";
     console.log(StatesList.find().fetch());
     // Router.go("/createState");

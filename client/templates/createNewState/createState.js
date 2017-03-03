@@ -56,14 +56,14 @@ Template.createState.events({
     workflowName: wfName,
     States: statesArray
   });*/
+  var foundObject = Workflows.findOne({workflowName:wfName});
     Workflows.update(
-   {_id:Workflows.findOne({workflowName:wfName})['_id']},
-   {workflowName: wfName, States: statesArray},
+   {_id:foundObject._id},
+   {workflowName: wfName, States: statesArray, Transitions: []},
     {upsert: true}
-    );
+  );
+
     console.log("ALL WORKFLOW NAMES: " + Workflows.find({}).fetch());
-    // console.log("SAMPLE WORKFLOW NAME: " + Workflows.findOne({}).workflowName);
-    // console.log("SAMPLE WORKFLOW STATES: " + Workflows.findOne({}).States);
     console.log("You pressed the back button");
     Router.go("/");
   } // end backButton
