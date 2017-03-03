@@ -23,10 +23,12 @@ body {
   text-align: center
 }
 
-.pageTitle {
-
+.workflow {
+  background-color: #337AB7;
+  color: white;
+  padding-top: 5px;
+  font-size: 20px;
 }
-
 .module {
   text-align: center;
   width: 100%;

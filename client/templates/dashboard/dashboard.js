@@ -18,9 +18,11 @@ Template.dashboardPage.events({
   'click .viewWorkflowArea': function(e) {
     e.preventDefault();
     console.log("You pressed the Monitor Workflow button");
-    /*if (machine){
-      console.log("Current Workflow: " + machine.name);
-    }*/
     Router.go("/modifyWorkflow");
+  },
+  'click .createWorkflowArea': function(e) {
+    e.preventDefault();
+    console.log("You pressed the Create Workflow Button")
+    Router.go("/createWorkflow");
   }
 });
