@@ -3,9 +3,23 @@ Template.createTrans.events({
     e.preventDefault();
     console.log("You pressed the create button");
     var name = document.getElementById("nameField").value;
-    Transitions.insert({
-      name: name
-    });
+    var start = document.getElementById("startSelect").value;
+    var end = document.getElementById("endSelect").value;
+    var foundObject = Workflows.findOne({workflowName:wfName});
+    //Meteor.call('updateTransitions');
+    Workflows.update(
+   {_id: Workflows.findOne({workflowName:wfName})._id},
+   {
+     workflowName: wfName,
+     States: statesArray,
+     Transitions:{
+       name: name,
+       startState: start,
+       endState: end
+     }
+},
+    {upsert: true}
+  );
     console.log(name);
   },
   'click #clearButton': function(e) {
