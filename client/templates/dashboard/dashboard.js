@@ -18,7 +18,7 @@ Template.dashboardPage.events({
   'click .viewWorkflowArea': function(e) {
     e.preventDefault();
     console.log("You pressed the Monitor Workflow button");
-    Router.go("/modifyWorkflow");
+    Router.go("/selectWorkflow");
   },
   'click .createWorkflowArea': function(e) {
     e.preventDefault();

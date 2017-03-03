@@ -3,10 +3,25 @@ Template.createWorkflow.events({
     e.preventDefault();
     console.log("You pressed the create button");
     var name = document.getElementById("nameField").value;
-    Transitions.insert({
+    WorkflowsList.insert({
       name: name
     });
-    console.log("Created Workflow: " + name);
+
+    createDiv(name);
+
+
+    // $('#create').load('templates/selectWorkflow/selectWorkflow.html .selectWFArea');
+    // var counter = 1;
+    // $("#createButton").click(function () {
+    //   $('<div/>',{'id':'workflow' + counter}).html(
+    //     $('<label/>').html( 'Workflow #' + counter)
+    //   )
+    //   .appendTo('.selectWFArea')
+    //   counter++;
+    // });
+    // console.log("Created Workflow: " + name);
+    // console.log(WorkflowsList.find().fetch());
+
   },
   'click #clearButton': function(e) {
     e.preventDefault();
@@ -14,7 +29,7 @@ Template.createWorkflow.events({
     console.log("You pressed the clear button");
     name = "";
   },
-  'click #backButton': function(e) {
+  'click #cancelButton': function(e) {
     e.preventDefault();
     console.log("You pressed the back button");
     Router.go("/");

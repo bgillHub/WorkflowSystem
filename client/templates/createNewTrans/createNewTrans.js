@@ -18,9 +18,9 @@ Template.createTrans.events({
     console.log("You pressed the view transitions button");
     console.log(Transitions.find().fetch());
   },
-  'click #backButton': function(e){
+  'click #cancelButton': function(e){
     e.preventDefault();
     console.log("You pressed the back button");
     Router.go("/");
-  }
+  },
 });
