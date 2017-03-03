@@ -29,8 +29,8 @@
           <br>
           <!-- Pull States from DB with type initial & final (seperate) -->
           <label>Start State:</label>
-          <div class="form-group">
-            <select class="form-control" id="sel1">
+          <div class="form-group startForm">
+            <select class="form-control" id="startSelect">
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -40,7 +40,7 @@
           <br>
           <label>End State:</label>
           <div class="form-group">
-            <select class="form-control" id="sel1">
+            <select class="form-control" id="endSelect">
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -51,12 +51,11 @@
           <!-- Get time element for task -->
           <button type="button" id="createButton" class="btn btn-success" value="create">Create</button>
           <button type="button" id="clearButton" class="btn btn-warning">Clear</button>
-          <button type="button" class="btn btn-danger">Cancel</button>
+          <button type="button" id="cancelButton" class="btn btn-danger">Cancel</button>
         </form>
         <br>
         <button type="button" id="viewButton" class="btn btn-primary">View Workflow</button>
       </div>
     </div>
   </div>
-  <button type="button" id="backButton" class="btn btn-primary">Back Home</button>
 </template>

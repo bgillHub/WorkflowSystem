@@ -71,7 +71,7 @@ if (Meteor.isServer) {
         }
         console.log("New Machine Loaded with Vertices: "+ machine.getDefaultRegion().vertices);
         console.log("New Machine Loaded with Vertices: "+ statesArray);
-      } //end loadworkflow
+      }, //end loadworkflow
   });//end methods
 }//end is server
 
@@ -136,5 +136,5 @@ Meteor.methods({
       }
       console.log("New Machine Loaded with Vertices: "+ machine.getDefaultRegion().vertices);
       console.log("New Machine Loaded with Vertices: "+ statesArray);
-}//end loadworkflow
+    }, //end loadworkflow
 });//end methods

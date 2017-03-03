@@ -23,12 +23,25 @@ body {
   text-align: center
 }
 
-.workflow {
+#selectWFArea {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: white;
+  text-align: center
+}
+
+#workflow {
   background-color: #337AB7;
   color: white;
   padding-top: 5px;
   font-size: 20px;
 }
+
+#workflow:hover {
+  background-color: #2d6da4;
+  color: #F1F1F1;
+}
+
 .module {
   text-align: center;
   width: 100%;

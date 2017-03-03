@@ -24,7 +24,7 @@ Template.dashboardPage.events({
       console.log("No Workflow Found");
     }
     console.log("You pressed the Monitor Workflow button");
-    Router.go("/modifyWorkflow");
+    Router.go("/selectWorkflow");
   },
   'click .createWorkflowArea': function(e) {
     e.preventDefault();

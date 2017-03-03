@@ -64,8 +64,6 @@ Template.createState.events({
   );
 
     console.log("ALL WORKFLOW NAMES: " + Workflows.find({}).fetch());
-    //console.log("SAMPLE WORKFLOW NAME: " + Workflows.findOne().workflowName);
-    //console.log("SAMPLE WORKFLOW STATES: " + Workflows.findOne({}).States);
     console.log("You pressed the back button");
     Router.go("/");
   } // end backButton
