@@ -23,4 +23,8 @@ Template.createTrans.events({
     console.log("You pressed the back button");
     Router.go("/");
   },
+  'click .logo': function(e){
+    e.preventDefault();
+    Router.go("/");
+  }
 });

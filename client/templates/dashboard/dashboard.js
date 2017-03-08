@@ -35,5 +35,9 @@ Template.dashboardPage.events({
     e.preventDefault();
     console.log("You pressed the Create Workflow Button")
     Router.go("/createWorkflow");
+  },
+  'click .logo': function(e){
+    e.preventDefault();
+    Router.go("/");
   }
 });

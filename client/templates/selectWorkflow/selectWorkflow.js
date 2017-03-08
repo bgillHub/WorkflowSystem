@@ -23,10 +23,13 @@ Template.selectWorkflow.events({
       // // node = document.createTextNode(name);
       // // l.appendChild(node);
       // // element.insertBefore(l, child);
-      container.innerHTML += '<div id="workflow">'+ name +'</div>';
+      container.innerHTML += '<br>' + '<div id="workflow">'+ name +'</div>';
       a++
     }
-
     // document.appendChild(add);
+  },
+  'click .logo': function(e){
+    e.preventDefault();
+    Router.go("/");
   }
 });
