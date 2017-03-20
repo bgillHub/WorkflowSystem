@@ -30,6 +30,13 @@ body {
   text-align: center
 }
 
+#viewWFArea {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: white;
+  text-align: center
+}
+
 #workflow {
   background-color: #337AB7;
   color: white;

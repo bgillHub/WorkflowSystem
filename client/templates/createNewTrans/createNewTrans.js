@@ -41,4 +41,30 @@ Template.createTrans.events({
     e.preventDefault();
     Router.go("/");
   }
+}),
+
+Template.createTrans.onRendered( function () {
+  console.log('rendered');
+  StatesArray = StatesList.find().fetch();
+  //WFArray.push(WorkflowsList.find().fetch());
+  console.log("Array" + StatesArray);
+
+  startContainer = document.getElementById("startDrop");
+  endContainer = document.getElementById("endDrop");
+  child = document.getElementById("state");
+  // var add = document.createDocumentFragment();
+  var a = 0;
+  for (i in StatesArray) {
+    name = StatesArray[i].name;
+     // var l = document.createElement("label");
+    // l.id = 'workflow'+a;
+    // l.className = 'workflow';
+    // add.appendChild(l);
+    // // node = document.createTextNode(name);
+    // // l.appendChild(node);
+    // // element.insertBefore(l, child);
+    startContainer.innerHTML +=  '<option>'+ name +'</option>';
+    endContainer.innerHTML +=  '<option>'+ name +'</option>';
+    a++
+  }
 });
