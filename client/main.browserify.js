@@ -21,6 +21,7 @@ if (Meteor.isServer) {
     'createMachine': function(name){
       var state = require('state.js');
       wfName = name;
+      statesArray = [];
       state.setConsole(console);
       machine = new state.StateMachine(name);
       initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
@@ -90,6 +91,7 @@ Meteor.methods({
   'createMachine': function(name){
     var state = require('state.js');
     wfName = name;
+    statesArray = [];
     state.setConsole(console);
     machine = new state.StateMachine(name);
     initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
