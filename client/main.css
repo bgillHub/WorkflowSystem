@@ -20,21 +20,26 @@ body {
   padding-top: 50px;
   padding-bottom: 50px;
   background-color: white;
-  text-align: center
+  text-align: center;
 }
 
 #selectWFArea {
   padding-top: 50px;
   padding-bottom: 50px;
   background-color: white;
-  text-align: center
+  text-align: center;
 }
 
 #viewWFArea {
   padding-top: 50px;
   padding-bottom: 50px;
   background-color: white;
-  text-align: center
+  text-align: center;
+  height: 100vh;
+}
+
+#mynetwork {
+  height: 100%;
 }
 
 #workflow {
