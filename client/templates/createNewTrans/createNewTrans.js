@@ -3,8 +3,8 @@ Template.createTrans.events({
     e.preventDefault();
     console.log("You pressed the create button");
     var name = document.getElementById("nameField").value;
-    var start = document.getElementById("startSelect").value;
-    var end = document.getElementById("endSelect").value;
+    var start = document.getElementById("startDrop").value;
+    var end = document.getElementById("end").value;
     var foundObject = Workflows.findOne({workflowName:wfName});
     //Meteor.call('updateTransitions');
     Workflows.update(
@@ -45,7 +45,7 @@ Template.createTrans.events({
 
 Template.createTrans.onRendered( function () {
   console.log('rendered');
-  StatesArray = StatesList.find().fetch();
+  StatesArray = machine.getDefaultRegion().vertices;
   //WFArray.push(WorkflowsList.find().fetch());
   console.log("Array" + StatesArray);
 
@@ -56,6 +56,7 @@ Template.createTrans.onRendered( function () {
   var a = 0;
   for (i in StatesArray) {
     name = StatesArray[i].name;
+    if (name != 'initial' && name != 'terminal'){
      // var l = document.createElement("label");
     // l.id = 'workflow'+a;
     // l.className = 'workflow';
@@ -65,6 +66,6 @@ Template.createTrans.onRendered( function () {
     // // element.insertBefore(l, child);
     startContainer.innerHTML +=  '<option>'+ name +'</option>';
     endContainer.innerHTML +=  '<option>'+ name +'</option>';
-    a++
+    a++}
   }
 });

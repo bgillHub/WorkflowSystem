@@ -1,7 +1,18 @@
 <template name="dashboardPage">
+  <script>
+  function changeWF() {
+    console.log("Function Called");
+    Meteor.call('loadWorkflow', document.getElementById('wfDrop').value);
+  }
+  </script>
   <div class="container-fluid ">
     <div name="row">
       <h2 class="logo">WFMS</h2>
+      <label id="wfLabel">Current Workflow:</label>
+      <div class="form-group statesForm">
+        <select class="form-control" id="wfDrop" onchange='changeWF()'>
+        </select>
+      </div>
       <div class="col-md-6 col-md-offset-3 text-center">
       </div>
     </div>

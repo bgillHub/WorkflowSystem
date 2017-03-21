@@ -2,8 +2,7 @@ if (Meteor.isClient) {
   Meteor.startup(function () {
     var state = require('state.js');
     wfName = "New";
-    selectedFlow = Workflows.findOne({workflowName: wfName});
-    Meteor.call('loadWorkflow', selectedFlow);
+    selectedFlow = Workflows.findOne();
     state.setConsole(console);
     machine = new state.StateMachine("machine");
     initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
@@ -66,7 +65,8 @@ if (Meteor.isServer) {
     'loadStates' : function(){
       var deleteQuery = StatesList.findOne({ name: deleteName});
     },
-    'loadWorkflow' : function(selectedFlow){
+    'loadWorkflow' : function(){
+      selectedFlow = Workflows.findOne();
       console.log("Calling Load Function");
       var state = require('state.js');
       state.setConsole(console);
@@ -142,22 +142,28 @@ Meteor.methods({
     //state.initialise(machine, instance);
     console.log("Current Array: " + statesArray);
   },//end addState
-  'loadWorkflow' : function(selectedFlow){
-    console.log("Calling Load Function");
+  //THE CURRENT LOAD WORKFLOW USED
+  'loadWorkflow' : function(passedName){
+    console.log("Calling My Load Function");
     var state = require('state.js');
     state.setConsole(console);
     statesArray = [];
     transArray =[];
-    console.log("Selected Flow Found");
+    var selectedFlow = Workflows.findOne({workflowName: passedName});
+    if (selectedFlow){
+      console.log("Selected Flow Found WIth States:" + selectedFlow.States);
     holdArray = selectedFlow.States;
-    for (i in holdArray){
-      statesArray.push(String(i));
-    }
+    statesArray = selectedFlow.States;
+    /*for (i in holdArray){
+      statesArray.push(String(holdArray[i]));
+    }*/
     machine = new state.StateMachine(selectedFlow.workflowName);
       for (i in statesArray){
-        dynamicState = new state.State(i, machine);
+        dynamicState = new state.State(statesArray[i], machine);
       }
       console.log("New Machine Loaded with Vertices: "+ machine.getDefaultRegion().vertices);
-      console.log("New Machine Loaded with Vertices: "+ statesArray);
+      console.log("New States Array Loaded with Vertices: "+ statesArray);
+    }
+    else console.log("No flow found");
     }, //end loadworkflow
 });//end methods
