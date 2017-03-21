@@ -19,7 +19,8 @@
     "url": "https://github.com/bgillHub/WorkflowSystem/issues"
   },
   "dependencies": {
-    "state.js": "^5.11.0"
+    "state.js": "^5.11.0",
+    "vis": "^4.19.1"
   },
   "homepage": "https://github.com/bgillHub/WorkflowSystem#readme"
 }

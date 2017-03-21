@@ -2,6 +2,26 @@
   "dependencies": {
     "state.js": {
       "version": "5.11.0"
+    },
+    "vis": {
+      "version": "4.19.1",
+      "dependencies": {
+        "emitter-component": {
+          "version": "1.1.1"
+        },
+        "moment": {
+          "version": "2.18.0"
+        },
+        "propagating-hammerjs": {
+          "version": "1.4.6"
+        },
+        "hammerjs": {
+          "version": "2.0.8"
+        },
+        "keycharm": {
+          "version": "0.2.0"
+        }
+      }
     }
   }
 }
