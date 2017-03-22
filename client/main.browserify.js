@@ -1,12 +1,12 @@
 if (Meteor.isClient) {
   Meteor.startup(function () {
     var state = require('state.js');
-    wfName = "New";
+  //  wfName = "New";
     selectedFlow = Workflows.findOne();
     state.setConsole(console);
-    machine = new state.StateMachine("machine");
-    initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
-    terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
+    //machine = new state.StateMachine("machine");
+    //initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
+    //terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
     statesArray = [];
     transArray=[];
     currentWorkflow = "Workflow";

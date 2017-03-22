@@ -53,7 +53,7 @@ Template.createTrans.onRendered( function () {
   console.log('rendered');
   StatesArray = machine.getDefaultRegion().vertices;
   //WFArray.push(WorkflowsList.find().fetch());
-  console.log("Array" + StatesArray);
+  console.log("Array " + StatesArray);
 
   startContainer = document.getElementById("startDrop");
   endContainer = document.getElementById("endDrop");
