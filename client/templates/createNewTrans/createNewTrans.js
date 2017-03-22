@@ -4,7 +4,7 @@ Template.createTrans.events({
     console.log("You pressed the create button");
     var name = document.getElementById("nameField").value;
     var start = document.getElementById("startDrop").value;
-    var end = document.getElementById("end").value;
+    var end = document.getElementById("endDrop").value;
     var foundObject = Workflows.findOne({workflowName:wfName});
     //Meteor.call('updateTransitions');
     Workflows.update(
@@ -17,9 +17,14 @@ Template.createTrans.events({
        startState: start,
        endState: end
      }
-},
+   },
     {upsert: true}
   );
+  Transitions.insert({
+    name: name,
+    startState: start,
+    endState: end
+  });
     console.log(name);
   },
   'click #clearButton': function(e) {
@@ -57,16 +62,8 @@ Template.createTrans.onRendered( function () {
   var a = 0;
   for (i in StatesArray) {
     name = StatesArray[i].name;
-    if (name != 'initial' && name != 'terminal'){
-     // var l = document.createElement("label");
-    // l.id = 'workflow'+a;
-    // l.className = 'workflow';
-    // add.appendChild(l);
-    // // node = document.createTextNode(name);
-    // // l.appendChild(node);
-    // // element.insertBefore(l, child);
     startContainer.innerHTML +=  '<option>'+ name +'</option>';
     endContainer.innerHTML +=  '<option>'+ name +'</option>';
-    a++}
+    a++
   }
 });
