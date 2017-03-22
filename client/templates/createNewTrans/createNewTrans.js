@@ -41,6 +41,7 @@ Template.createTrans.events({
   'click #cancelButton': function(e){
     e.preventDefault();
     console.log("You pressed the back button");
+    Meteor.call('saveWorkflow');
     Router.go("/");
   },
   'click .logo': function(e){
@@ -53,7 +54,7 @@ Template.createTrans.onRendered( function () {
   console.log('rendered');
   StatesArray = machine.getDefaultRegion().vertices;
   //WFArray.push(WorkflowsList.find().fetch());
-  console.log("Array" + StatesArray);
+  console.log("Array " + StatesArray);
 
   startContainer = document.getElementById("startDrop");
   endContainer = document.getElementById("endDrop");

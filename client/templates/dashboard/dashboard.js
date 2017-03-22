@@ -15,36 +15,26 @@ Template.dashboardPage.events({
     console.log("You pressed Go To Create Transition button");
     Router.go("/createTrans");
   },
-  'click #wfLabel': function(e){
-    e.preventDefault();
-    console.log("You  selected wfdrop");
-    WFCursor = Workflows.find().fetch();
-    //WFArray.push(WorkflowsList.find().fetch());
-    //console.log("Array " + WFArray);
-    wfContainer = document.getElementById("wfDrop");
-    wfContainer.innerHTML = null;
-    // var add = document.createDocumentFragment();
-    var a = 0;
-    for (i in WFCursor) {
-      name = WFCursor[i].workflowName;
-      console.log("Item " + i);
-      wfContainer.innerHTML +=  '<option>'+ name +'</option>';
-      a++
-    }
-  },
   'click #deleteWFButton': function(e){
     e.preventDefault();
     console.log("You pressed Go To Delete Workflow button");
     Router.go("/modifyWorkflow");
   },
+  'click #editWFButton': function(e){
+    e.preventDefault();
+    if (machine != null){
+    console.log("You pressed Edit Workflow button");
+    Router.go("/createState");}
+    else alert('No Workflow Selected!');
+  },
   'click .viewWorkflowArea': function(e) {
     e.preventDefault();
-    selectedFlow = Workflows.findOne({workflowName: wfName});
+    /*selectedFlow = Workflows.findOne({workflowName: wfName});
     if (selectedFlow != null){
     Meteor.call('loadWorkflow');}
     else {
       console.log("No Workflow Found");
-    }
+    }*/
     console.log("You pressed the Monitor Workflow button");
     Router.go("/selectWorkflow");
   },

@@ -6,12 +6,28 @@ Template.selectWorkflow.events({
   },
   'click #populate': function(e) {
     e.preventDefault();
-    WFArray = WorkflowsList.find().fetch();
+    e.preventDefault();
+    console.log("You  selected wfdrop");
+    WFCursor = Workflows.find().fetch();
+    //WFArray.push(WorkflowsList.find().fetch());
+    //console.log("Array " + WFArray);
+    wfContainer = document.getElementById("wfDrop");
+    wfContainer.innerHTML = null;
+    // var add = document.createDocumentFragment();
+    var a = 0;
+    for (i in WFCursor) {
+      name = WFCursor[i].workflowName;
+      console.log("Item " + i);
+      wfContainer.innerHTML +=  '<option>'+ name +'</option>';
+      a++
+    }
+    /*WFArray = WorkflowsList.find().fetch();
     //WFArray.push(WorkflowsList.find().fetch());
     console.log(WFArray);
 
     container = document.getElementById("selectWFArea");
     child = document.getElementById("workflow");
+    container.innerHTML = null;
     // var add = document.createDocumentFragment();
     var a = 0;
     for (i in WFArray) {
@@ -25,7 +41,7 @@ Template.selectWorkflow.events({
       // // element.insertBefore(l, child);
       container.innerHTML += '<br>' + '<div id="workflow">'+ name +'</div>';
       a++
-    }
+    }*/
     // document.appendChild(add);
   },
   'click .logo': function(e){

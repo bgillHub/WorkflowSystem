@@ -42,16 +42,13 @@ Template.createState.events({
   'click #viewButton': function(e) {
     e.preventDefault();
     //console.log("Workflow Name: " + Workflows.findOne({}).workflowName);
-    console.log("Workflow Array: " + Workflows.find({}));
-    for (i in StatesList.find().fetch()){
-      console.log("State Name: " + i);
-    }
+    Meteor.call('saveWorkflow');
     Router.go("/createTrans");
   },
   'click #cancelButton': function(e){
     //Meteor.call('saveWorkflow', wfName);
     e.preventDefault();
-    //  Meteor.call('saveWorkflow', wfName);
+    Meteor.call('saveWorkflow');
     console.log("Updating Workflow");
     /*Workflows.insert({
       workflowName: wfName,

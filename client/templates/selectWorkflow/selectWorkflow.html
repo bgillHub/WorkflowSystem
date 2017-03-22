@@ -1,4 +1,11 @@
 <template name ="selectWorkflow">
+  <script>
+  function changeWF() {
+    console.log("Function Called");
+    Meteor.call('loadWorkflow', document.getElementById('wfDrop').value);
+    Router.go("/createState");
+  }
+  </script>
   <div class="container-fluid ">
     <div name="row">
       <h2 class="logo">WFMS</h2>
@@ -12,6 +19,10 @@
         <button type="button" id="populate" class="btn btn-success">Load</button>
         <button type="button" id="backButton" class="btn btn-danger">Cancel</button>
         <br>
+        <div class="form-group statesForm">
+          <select class="form-control" id="wfDrop" onchange='changeWF()'>
+          </select>
+        </div>
       </div>
     </div>
   </div>

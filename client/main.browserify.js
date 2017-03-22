@@ -1,12 +1,12 @@
 if (Meteor.isClient) {
   Meteor.startup(function () {
     var state = require('state.js');
-    wfName = "New";
+  //  wfName = "New";
     selectedFlow = Workflows.findOne();
     state.setConsole(console);
-    machine = new state.StateMachine("machine");
-    initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
-    terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
+    //machine = new state.StateMachine("machine");
+    //initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
+    //terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
     statesArray = [];
     transArray=[];
     currentWorkflow = "Workflow";
@@ -101,7 +101,7 @@ Meteor.methods({
     state.initialise(machine, instance);
     alert("Machine Created and Initialsed");
   },
-    'saveWorkflow': function (Name){
+    'saveWorkflow': function (){
       var state = require('state.js');
       state.setConsole(console);
       let verticesArray = machine.getDefaultRegion().vertices;
@@ -111,7 +111,7 @@ Meteor.methods({
         console.log("State Name: " + i.name);
       }*/
       Workflows.insert({
-        workflowName: Name,
+        workflowName: machine.qualifiedName,
         States: statesArray,
         Transitions: transArray
       });
@@ -154,6 +154,7 @@ Meteor.methods({
     var selectedFlow = Workflows.findOne({workflowName: passedName});
     if (selectedFlow){
       console.log("Selected Flow Found WIth States:" + selectedFlow.States);
+      console.log("Selected Flow Found WIth States:" + selectedFlow.Transitions);
     holdArray = selectedFlow.States;
     statesArray = selectedFlow.States;
     /*for (i in holdArray){
