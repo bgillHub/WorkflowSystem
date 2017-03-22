@@ -21,6 +21,7 @@ Template.createWorkflow.events({
   },
   'click #cancelButton': function(e) {
     e.preventDefault();
+    Meteor.call('saveWorkflow');
     Router.go("/");
   },
   'click .logo': function(e){

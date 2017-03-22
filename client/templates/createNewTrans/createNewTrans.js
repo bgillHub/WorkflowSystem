@@ -35,6 +35,7 @@ Template.createTrans.events({
   'click #cancelButton': function(e){
     e.preventDefault();
     console.log("You pressed the back button");
+    Meteor.call('saveWorkflow');
     Router.go("/");
   },
   'click .logo': function(e){

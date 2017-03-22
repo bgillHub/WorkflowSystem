@@ -12,6 +12,7 @@ Template.selectWorkflow.events({
 
     container = document.getElementById("selectWFArea");
     child = document.getElementById("workflow");
+    container.innerHTML = null;
     // var add = document.createDocumentFragment();
     var a = 0;
     for (i in WFArray) {
