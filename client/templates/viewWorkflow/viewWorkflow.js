@@ -6,15 +6,15 @@ Template.viewWorkflow.events({
   'click #loadButton': function(e){
     e.preventDefault();
     var j = 0;
-    StatesArray = StatesList.find().fetch();
+    StatesArray = statesArray;
     TransArray = Transitions.find().fetch();
     console.log(StatesArray);
     console.log(TransArray);
 
     var NodesArray = [];
     for (i in StatesArray) {
-      name = StatesArray[i].name;
-      key = StatesArray[i]._id;
+      name = StatesArray[i];
+      key = j;
       NodesArray.push({id: key, label: name});
       j++
     }

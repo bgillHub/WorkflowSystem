@@ -27,7 +27,7 @@ Template.dashboardPage.events({
     Router.go("/createState");}
     else alert('No Workflow Selected!');
   },
-  'click .viewWorkflowArea': function(e) {
+  'click .selectWorkflowArea': function(e) {
     e.preventDefault();
     /*selectedFlow = Workflows.findOne({workflowName: wfName});
     if (selectedFlow != null){
@@ -35,8 +35,13 @@ Template.dashboardPage.events({
     else {
       console.log("No Workflow Found");
     }*/
-    console.log("You pressed the Monitor Workflow button");
+    console.log("You pressed the View Workflow button");
     Router.go("/selectWorkflow");
+  },
+  'click .monitorWorkflowArea': function(e) {
+    e.preventDefault();
+    console.log("You pressed the Monitor Workflow button");
+    Router.go("/viewWorkflow");
   },
   'click .createWorkflowArea': function(e) {
     e.preventDefault();
