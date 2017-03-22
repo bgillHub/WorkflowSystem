@@ -3,6 +3,7 @@
   function changeWF() {
     console.log("Function Called");
     Meteor.call('loadWorkflow', document.getElementById('wfDrop').value);
+    Router.go("/createState");
   }
   </script>
   <div class="container-fluid ">
