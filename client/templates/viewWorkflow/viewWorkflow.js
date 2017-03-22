@@ -6,7 +6,7 @@ Template.viewWorkflow.events({
   'click #loadButton': function(e){
     e.preventDefault();
     var j = 0;
-    StatesArray = StatesList.find().fetch();
+    StatesArray = statesArray;
     TransArray = Transitions.find().fetch();
     console.log(StatesArray);
     console.log(TransArray);
@@ -54,6 +54,10 @@ Template.viewWorkflow.events({
           }
         }
       });
+      name = StatesArray[i];
+      key = j;
+      NodesArray.push({id: key, label: name});
+      j++
     }
 
     nodes = new vis.DataSet(NodesArray);
