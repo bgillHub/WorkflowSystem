@@ -36,6 +36,7 @@ Template.createTrans.events({
     e.preventDefault();
     console.log("You pressed the view transitions button");
     console.log(Transitions.find().fetch());
+    Router.go("/viewWorkflow");
   },
   'click #cancelButton': function(e){
     e.preventDefault();

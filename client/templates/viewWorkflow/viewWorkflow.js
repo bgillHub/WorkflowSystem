@@ -15,8 +15,45 @@ Template.viewWorkflow.events({
     for (i in StatesArray) {
       name = StatesArray[i].name;
       key = StatesArray[i]._id;
-      NodesArray.push({id: key, label: name});
-      j++
+      type = StatesArray[i].type;
+      if (type == 'Initial') {
+        NodesArray.push({
+          id: key,
+          label: name,
+          color:{
+            background: '#32CD32',
+            border: '#32CD32',
+            highlight:{
+              background: '#32CD32',
+              border: '#32CD32'
+            }
+          }
+        });
+      } else if (type == "Final") {
+        NodesArray.push({
+          id: key,
+          label: name,
+          color:{
+            background: '#E06666',
+            border: '#E06666',
+            highlight:{
+              background: '#E06666',
+              border: '#E06666'
+            }
+          }
+        });
+      } else NodesArray.push({
+        id: key,
+        label: name,
+        color: {
+          background: '#97C2FC',
+          border:'#97C2FC',
+          highlight: {
+            background: '#97C2FC',
+            border: '#97C2FC'
+          }
+        }
+      });
     }
 
     nodes = new vis.DataSet(NodesArray);
@@ -38,7 +75,12 @@ Template.viewWorkflow.events({
           endKey = StatesArray[k]._id;
         }
       }
-      EdgesArray.push({from: startKey, to: endKey});
+      EdgesArray.push({
+        from: startKey,
+        to: endKey,
+        color: {color: '#97C2FC'},
+        arrows :'to'
+      });
     }
     edges = new vis.DataSet(EdgesArray);
 
@@ -57,59 +99,4 @@ Template.viewWorkflow.events({
     var network = new vis.Network(container, data, options);
       // nodeIds.push(id);
   }
-});
-
-
-Template.viewWorkflow.onRendered( function () {
-  // create an array with nodes
-  // var j = 0;
-  // StatesArray = StatesList.find().fetch();
-  // EdgesArray = Transitions.find().fetch();
-  // console.log(StatesArray);
-  // console.log(EdgesArray);
-  //
-  // var NodesArray = [];
-  // for (i in StatesArray) {
-  //   name = StatesArray[i].name;
-  //   NodesArray.push({id: j, label: name});
-  //   j++
-  // }
-  //
-  // nodes = new vis.DataSet(NodesArray);
-  //
-  // // edges attach by ID's
-  //
-  // var EdgesArray = [];
-  // EdgesArray.push({from: 0, to: 1});
-  //
-  // // for (i in Transitions) {
-  // //   transition = Transitions[i].name;
-  // //   startTran = Transitions[i].startState;
-  // //   endTran = Transitions[i].endState;
-  // //   EdgesArray.push({from: j, to: j+1});
-  // // }
-  //
-  // edges = new vis.DataSet(EdgesArray);
-  //
-  // // create an array with edges
-  // // var edges = new vis.DataSet([
-  // //     {from: 1, to: 3},
-  // //     {from: 1, to: 2},
-  // //     {from: 2, to: 4},
-  // //     {from: 2, to: 5}
-  // // ]);
-  //
-  // // create a network
-  // var container = document.getElementById('mynetwork');
-  //
-  // // provide the data in the vis format
-  // var data = {
-  //     nodes: nodes,
-  //     edges: edges
-  // };
-  // var options = {};
-  //
-  // // initialize your network!
-  // var network = new vis.Network(container, data, options);
-  //   // nodeIds.push(id);
 });
