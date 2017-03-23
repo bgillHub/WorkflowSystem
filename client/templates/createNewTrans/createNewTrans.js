@@ -5,6 +5,28 @@ Template.createTrans.events({
     var name = document.getElementById("nameField").value;
     var start = document.getElementById("startDrop").value;
     var end = document.getElementById("endDrop").value;
+    var source;
+    var target;
+    wfName = machine.qualifiedName;
+    for (i in machine.getDefaultRegion().vertices){
+      if (i.qualifiedName == start) i = source;
+      if (i.qualifiedName == end) i = target;
+    }
+    var insertedTrans = {name: name, source: start, target:end};
+    Transitions.insert(insertedTrans, function(err, reference){
+      if (err) return;
+      // Object inserted successfully.
+      var newid = Transitions.findOne({name: name})._id; // this will return the id of object inserted
+      var newArray = wfDoc.Transitions;
+      newArray.push(newid);
+      Workflows.update({_id: wfDoc._id}, {$set: {Transitions: newArray}});
+      console.log("Transitions Updated, Object ID: " + newid);
+      Meteor.call('createTransition', start, end);
+    });//end callback
+
+    /*
+    Meteor.call('createTransition', source, target);
+    console.log("Workflow name: " + wfName);
     var foundObject = Workflows.findOne({workflowName:wfName});
     //Meteor.call('updateTransitions');
     Workflows.update(
@@ -24,9 +46,9 @@ Template.createTrans.events({
     name: name,
     startState: start,
     endState: end
-  });
+  });*/
     console.log(name);
-  },
+  },//end create  button
   'click #clearButton': function(e) {
     e.preventDefault();
     console.log("You pressed the clear button");
@@ -41,7 +63,7 @@ Template.createTrans.events({
   'click #cancelButton': function(e){
     e.preventDefault();
     console.log("You pressed the back button");
-    Meteor.call('saveWorkflow');
+    //Meteor.call('saveWorkflow');
     Router.go("/");
   },
   'click .logo': function(e){
@@ -55,7 +77,6 @@ Template.createTrans.onRendered( function () {
   StatesArray = machine.getDefaultRegion().vertices;
   //WFArray.push(WorkflowsList.find().fetch());
   console.log("Array " + StatesArray);
-
   startContainer = document.getElementById("startDrop");
   endContainer = document.getElementById("endDrop");
   child = document.getElementById("state");
@@ -63,8 +84,9 @@ Template.createTrans.onRendered( function () {
   var a = 0;
   for (i in StatesArray) {
     name = StatesArray[i].name;
+    if (name != 'initial' && name != 'terminal'){
     startContainer.innerHTML +=  '<option>'+ name +'</option>';
-    endContainer.innerHTML +=  '<option>'+ name +'</option>';
+    endContainer.innerHTML +=  '<option>'+ name +'</option>';}
     a++
   }
 });
