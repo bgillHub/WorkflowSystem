@@ -16,44 +16,44 @@ Template.viewWorkflow.events({
       name = StatesArray[i].name;
       key = StatesArray[i]._id;
       type = StatesArray[i].type;
-      if (type == 'Initial') {
-        NodesArray.push({
-          id: key,
-          label: name,
-          color:{
-            background: '#32CD32',
-            border: '#32CD32',
-            highlight:{
-              background: '#32CD32',
-              border: '#32CD32'
-            }
-          }
-        });
-      } else if (type == "Final") {
-        NodesArray.push({
-          id: key,
-          label: name,
-          color:{
-            background: '#E06666',
-            border: '#E06666',
-            highlight:{
-              background: '#E06666',
-              border: '#E06666'
-            }
-          }
-        });
-      } else NodesArray.push({
-        id: key,
-        label: name,
-        color: {
-          background: '#97C2FC',
-          border:'#97C2FC',
-          highlight: {
-            background: '#97C2FC',
-            border: '#97C2FC'
-          }
-        }
-      });
+      // if (type == 'Initial') {
+      //   NodesArray.push({
+      //     id: key,
+      //     label: name,
+      //     color:{
+      //       background: '#32CD32',
+      //       border: '#32CD32',
+      //       highlight:{
+      //         background: '#32CD32',
+      //         border: '#32CD32'
+      //       }
+      //     }
+      //   });
+      // } else if (type == "Final") {
+      //   NodesArray.push({
+      //     id: key,
+      //     label: name,
+      //     color:{
+      //       background: '#E06666',
+      //       border: '#E06666',
+      //       highlight:{
+      //         background: '#E06666',
+      //         border: '#E06666'
+      //       }
+      //     }
+      //   });
+      // } else NodesArray.push({
+      //   id: key,
+      //   label: name,
+      //   color: {
+      //     background: '#97C2FC',
+      //     border:'#97C2FC',
+      //     highlight: {
+      //       background: '#97C2FC',
+      //       border: '#97C2FC'
+      //     }
+      //   }
+      // });
       name = StatesArray[i];
       key = j;
       NodesArray.push({id: key, label: name});

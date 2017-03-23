@@ -72,11 +72,11 @@ body {
   /*text-decoration: underline; */
 }
 
-.module.viewWorkflowArea {
+.module.selectWorkflowArea {
   background-color: #ffa834;
 }
 
-.module.viewWorkflowArea:hover {
+.module.selectWorkflowArea:hover {
   background-color: #e5972e;
   color: #F1F1F1;
   /*text-decoration: underline; */
