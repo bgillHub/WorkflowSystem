@@ -6,10 +6,15 @@ Template.viewWorkflow.events({
   'click #loadButton': function(e){
     e.preventDefault();
     var j = 0;
-    StatesArray = statesArray;
-    TransArray = Transitions.find().fetch();
-    console.log(StatesArray);
-    console.log(TransArray);
+    var codeArray = Workflows.findOne({workflowName: wfName}).States;
+    var codeEdgeArray = Workflows.findOne({workflowName: wfName}).Transitions;
+    var titleArray = [];
+    for (i in codeArray){
+      titleArray.push(StatesList.findOne({_id: codeArray[i]}).name);
+    }
+    StatesArray = titleArray;
+    console.log("States " + StatesArray);
+    console.log("Edges " + codeEdgeArray);
 
     var NodesArray = [];
     for (i in StatesArray) {
@@ -24,18 +29,25 @@ Template.viewWorkflow.events({
     // edges attach by ID's
 
     var EdgesArray = [];
-    for (i in TransArray) {
+    for (i in codeEdgeArray) {
+      var EdgeDoc = Transitions.findOne({_id: codeEdgeArray[i]});
+      console.log("Transition name: " + EdgeDoc.name);
       var startKey, endKey;
-      startTran = TransArray[i].startState;
-      endTran = TransArray[i].endState;
-      for (k in StatesArray) {
-        if (StatesArray[k].name == startTran) {
+      var keyOne = EdgeDoc.source;
+      var keyTwo = EdgeDoc.target;
+      console.log("Transition source: "+ keyOne+ " target: " + keyTwo);
+      var startDoc = StatesList.findOne({name : EdgeDoc.source});
+      var endDoc = StatesList.findOne({name : EdgeDoc.target});
+      startTran = keyOne;
+      endTran = keyTwo;
+      for (k in NodesArray) {
+        if (NodesArray[k].label == startTran) {
           console.log("Start Tran Match Found");
-          startKey = StatesArray[k]._id;
+          startKey = NodesArray[k].id;
         }
-        if (StatesArray[k].name == endTran) {
+        if (NodesArray[k].label == endTran) {
           console.log("End Tran Match Found");
-          endKey = StatesArray[k]._id;
+          endKey = NodesArray[k].id;
         }
       }
       EdgesArray.push({from: startKey, to: endKey});

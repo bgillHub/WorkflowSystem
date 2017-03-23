@@ -3,11 +3,14 @@ Template.createWorkflow.events({
     e.preventDefault();
     var name = document.getElementById("nameField").value;
     wfName = name;
-    Workflows.insert({
+    Workflows.insert({workflowName: wfName,
+    States: [],
+    Transitions: [] });
+    /*Workflows.update({workflowName: wfName},{
       workflowName: wfName,
       States: [],
       Transitions: []
-    });
+    },{upsert : true});*/
     WorkflowsList.insert({
       name: name
     });
