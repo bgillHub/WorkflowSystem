@@ -30,12 +30,13 @@ body {
   text-align: center;
 }
 
-#selectWFArea {
+#viewWFArea {
   padding-top: 50px;
   padding-bottom: 50px;
+  margin-bottom: 10px;
   background-color: white;
   text-align: center;
-  height: 100vh;
+  height: 75vh;
 }
 
 #mynetwork {

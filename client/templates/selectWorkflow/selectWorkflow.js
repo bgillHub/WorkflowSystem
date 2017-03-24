@@ -6,7 +6,6 @@ Template.selectWorkflow.events({
   },
   'click #populate': function(e) {
     e.preventDefault();
-    e.preventDefault();
     console.log("You  selected wfdrop");
     WFCursor = Workflows.find().fetch();
     //WFArray.push(WorkflowsList.find().fetch());
@@ -17,7 +16,6 @@ Template.selectWorkflow.events({
     var a = 0;
     for (i in WFCursor) {
       name = WFCursor[i].workflowName;
-      console.log("Item " + i);
       wfContainer.innerHTML +=  '<option>'+ name +'</option>';
       a++
     }
@@ -47,5 +45,9 @@ Template.selectWorkflow.events({
   'click .logo': function(e){
     e.preventDefault();
     Router.go("/");
+  },
+  'click #viewButton': function(e){
+    e.preventDefault();
+    Router.go("/viewWorkflow");
   }
 });

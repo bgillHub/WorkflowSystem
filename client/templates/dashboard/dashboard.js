@@ -23,8 +23,9 @@ Template.dashboardPage.events({
   'click #editWFButton': function(e){
     e.preventDefault();
     if (machine != null){
-    console.log("You pressed Edit Workflow button");
-    Router.go("/createState");}
+      console.log("You pressed Edit Workflow button");
+      Router.go("/createState");
+    }
     else alert('No Workflow Selected!');
   },
   'click .selectWorkflowArea': function(e) {
