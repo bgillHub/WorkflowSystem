@@ -5,7 +5,7 @@ Template.viewWorkflow.events({
   },
   'click #loadButton': function(e){
     e.preventDefault();
-    var j = 0;
+    var j = 1;
     var codeArray = Workflows.findOne({workflowName: wfName}).States;
     var codeEdgeArray = Workflows.findOne({workflowName: wfName}).Transitions;
     var titleArray = [];
@@ -13,11 +13,53 @@ Template.viewWorkflow.events({
       titleArray.push(StatesList.findOne({_id: codeArray[i]}).name);
     }
     StatesArray = titleArray;
-    console.log("States " + StatesArray);
-    console.log("Edges " + codeEdgeArray);
+    console.log("WF Title: " + wfName);
+    console.log("States: " + StatesArray);
+    console.log("Edges: " + codeEdgeArray);
 
     var NodesArray = [];
     for (i in StatesArray) {
+      name = StatesArray[i].name;
+      key = StatesArray[i]._id;
+      type = StatesArray[i].type;
+      // if (type == 'Initial') {
+      //   NodesArray.push({
+      //     id: key,
+      //     label: name,
+      //     color:{
+      //       background: '#32CD32',
+      //       border: '#32CD32',
+      //       highlight:{
+      //         background: '#32CD32',
+      //         border: '#32CD32'
+      //       }
+      //     }
+      //   });
+      // } else if (type == "Final") {
+      //   NodesArray.push({
+      //     id: key,
+      //     label: name,
+      //     color:{
+      //       background: '#E06666',
+      //       border: '#E06666',
+      //       highlight:{
+      //         background: '#E06666',
+      //         border: '#E06666'
+      //       }
+      //     }
+      //   });
+      // } else NodesArray.push({
+      //   id: key,
+      //   label: name,
+      //   color: {
+      //     background: '#97C2FC',
+      //     border:'#97C2FC',
+      //     highlight: {
+      //       background: '#97C2FC',
+      //       border: '#97C2FC'
+      //     }
+      //   }
+      // });
       name = StatesArray[i];
       key = j;
       NodesArray.push({id: key, label: name});
@@ -50,10 +92,14 @@ Template.viewWorkflow.events({
           endKey = NodesArray[k].id;
         }
       }
-      EdgesArray.push({from: startKey, to: endKey});
+      EdgesArray.push({
+        from: startKey,
+        to: endKey,
+        color: {color: '#97C2FC'},
+        arrows :'to'
+      });
     }
     edges = new vis.DataSet(EdgesArray);
-
 
     // create a network
     var container = document.getElementById('mynetwork');
@@ -67,61 +113,105 @@ Template.viewWorkflow.events({
 
     // initialize your network!
     var network = new vis.Network(container, data, options);
+
+    network.on("doubleClick", function(params) {
+      params.event = "[original event]";
+      var data = JSON.stringify(params, null, 4);
+      var json = JSON.parse(data);
+      var key = json.nodes;
+      var name = "";
+      console.log("node key: " + key);
+      for (i in NodesArray) {
+        if (key == NodesArray[i].id) {
+          name = NodesArray[i].label;
+          break;
+        }
+      }
+      $('#editModal').modal('toggle');
+      editContainer = document.getElementById("editStateInput");
+      editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="nameField" placeholder="'+name+'"/>';
+      // document.getElementById('stateNameField').innerHTML = name;
+    });
+    titleContainer = document.getElementById("title");
+    titleContainer.innerHTML += '<h2 id="titleName">'+wfName+'<i class="fa fa-cog fa-lg" id="gear" aria-hidden="true"></i></h2>';
+
+    document.getElementById("loadButton").onclick = function() {
+      this.disabled = true;
+    }
+
+    document.getElementById("gear").onclick = function() {
+      $('#editModal').modal('toggle');
+      editContainer = document.getElementById("editStateInput");
+      editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="nameField" placeholder="'+wfName+'"/>';
+    }
       // nodeIds.push(id);
+  }, // end load button
+  // 'click #editButton': function(e){
+  //   document.getElementById('stateNameField').innerHTML = "state";
+  //   if (machine != null){
+  //     console.log("You pressed Edit Workflow button");
+  //     // Router.go("/createState");
+  //   } else alert('No Workflow Selected!');
+  // }
+  'click #deleteButton': function(e) {
+    e.preventDefault();
+    var debugRegions = machine.regions;
+    var defRegion = machine.defaultRegion;
+    if (defRegion){
+    }
+    else console.log("Default doesnt exist...");
+    console.log("Regions: " + debugRegions);
+    console.log("Region #: " + debugRegions.length);
+    var debugVertices = debugRegions[0];
+    var deleteName = document.getElementById("deleteField").value;
+    var deleteQuery = WorkflowsList.findOne({ name: deleteName});
+    if (deleteQuery){
+      WorkflowsList.remove({
+        _id: deleteQuery._id
+      });
+    } else alert("No Workflow by "+ deleteName + " Found");
+    document.getElementById("deleteForm").reset();
+    //console.log(deleteName + ", has been deleted!");
+    regional = machine.getDefaultRegion();
+    /*if (regional!= null){
+      var stateList = regional.vertices;
+      for (i in statesArray){
+          if (deleteName = i){
+            let index = statesArray.indexOf(i);
+            statesArray.splice(index, 1);
+            console.log(deleteName + ", has been deleted from array!");
+            console.log("Array:" + statesArray);
+          }
+        }
+        console.log("States AFTER: " + regional.vertices);
+      }*/
+    //end if exists
+    deleteName = "";
+    console.log(StatesList.find().fetch());
+    // Router.go("/createState");
+  },
+  'click .close': function (e){
+    e.preventDefault();
+    $("#nameField").remove();
+  },
+  'click #changeButton': function(e) {
+    e.preventDefault();
+    var name = document.getElementById('nameField').value;
+    for (i in NodesArray) {
+      var key = 0;
+      console.log("json: " + json);
+      if (name = NodesArray[i].label) {
+        key = NodesArray[i].id;
+        nodes.update([{id: key, label: name}]);
+      }
+    }
+    $("#nameField").remove();
   }
 });
 
 
-Template.viewWorkflow.onRendered( function () {
-  // create an array with nodes
-  // var j = 0;
-  // StatesArray = StatesList.find().fetch();
-  // EdgesArray = Transitions.find().fetch();
-  // console.log(StatesArray);
-  // console.log(EdgesArray);
-  //
-  // var NodesArray = [];
-  // for (i in StatesArray) {
-  //   name = StatesArray[i].name;
-  //   NodesArray.push({id: j, label: name});
-  //   j++
-  // }
-  //
-  // nodes = new vis.DataSet(NodesArray);
-  //
-  // // edges attach by ID's
-  //
-  // var EdgesArray = [];
-  // EdgesArray.push({from: 0, to: 1});
-  //
-  // // for (i in Transitions) {
-  // //   transition = Transitions[i].name;
-  // //   startTran = Transitions[i].startState;
-  // //   endTran = Transitions[i].endState;
-  // //   EdgesArray.push({from: j, to: j+1});
-  // // }
-  //
-  // edges = new vis.DataSet(EdgesArray);
-  //
-  // // create an array with edges
-  // // var edges = new vis.DataSet([
-  // //     {from: 1, to: 3},
-  // //     {from: 1, to: 2},
-  // //     {from: 2, to: 4},
-  // //     {from: 2, to: 5}
-  // // ]);
-  //
-  // // create a network
-  // var container = document.getElementById('mynetwork');
-  //
-  // // provide the data in the vis format
-  // var data = {
-  //     nodes: nodes,
-  //     edges: edges
-  // };
-  // var options = {};
-  //
-  // // initialize your network!
-  // var network = new vis.Network(container, data, options);
-  //   // nodeIds.push(id);
+$(document).ready(function(){
+    $("#titleName").dblclick(function(){
+        alert("Title double clicked");
+    });
 });
