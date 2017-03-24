@@ -7,7 +7,7 @@ Template.createTrans.events({
     var end = document.getElementById("endDrop").value;
     var source;
     var target;
-    wfName = machine.qualifiedName;
+    //wfName = machine.qualifiedName;
     for (i in machine.getDefaultRegion().vertices){
       if (i.qualifiedName == start) i = source;
       if (i.qualifiedName == end) i = target;
