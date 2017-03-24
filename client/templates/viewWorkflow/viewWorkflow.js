@@ -135,9 +135,9 @@ Template.viewWorkflow.events({
     titleContainer = document.getElementById("title");
     titleContainer.innerHTML += '<h2 id="titleName">'+wfName+'<i class="fa fa-cog fa-lg" id="gear" aria-hidden="true"></i></h2>';
 
-    document.getElementById("loadButton").onclick = function() {
-      this.disabled = true;
-    }
+    // document.getElementById("loadButton").onclick = function() {
+    //   this.disabled = true;
+    // }
 
     document.getElementById("gear").onclick = function() {
       $('#editModal').modal('toggle');
@@ -196,4 +196,5 @@ Template.viewWorkflow.events({
   },
   'click #changeButton': function(e) {
     e.preventDefault();
+  }
 });
