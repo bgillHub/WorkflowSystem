@@ -3,11 +3,11 @@ Template.createTrans.events({
     e.preventDefault();
     console.log("You pressed the create button");
     var name = document.getElementById("nameField").value;
-    var start = document.getElementById("startDrop").value;
-    var end = document.getElementById("endDrop").value;
+    var start = StatesList.findOne({name: document.getElementById("startDrop").value})._id;
+    var end = StatesList.findOne({name: document.getElementById("endDrop").value})._id;
     var source;
     var target;
-    wfName = machine.qualifiedName;
+    //wfName = machine.qualifiedName;
     for (i in machine.getDefaultRegion().vertices){
       if (i.qualifiedName == start) i = source;
       if (i.qualifiedName == end) i = target;

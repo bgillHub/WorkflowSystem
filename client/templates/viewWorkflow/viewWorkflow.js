@@ -130,15 +130,14 @@ Template.viewWorkflow.events({
       $('#editModal').modal('toggle');
       editContainer = document.getElementById("editStateInput");
       editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="nameField" placeholder="'+name+'"/>';
-      name = nameField
       // document.getElementById('stateNameField').innerHTML = name;
     });
     titleContainer = document.getElementById("title");
     titleContainer.innerHTML += '<h2 id="titleName">'+wfName+'<i class="fa fa-cog fa-lg" id="gear" aria-hidden="true"></i></h2>';
 
-    // document.getElementById("loadButton").onclick = function() {
-    //   this.disabled = true;
-    // }
+    document.getElementById("loadButton").onclick = function() {
+      this.disabled = true;
+    }
 
     document.getElementById("gear").onclick = function() {
       $('#editModal').modal('toggle');
@@ -197,32 +196,4 @@ Template.viewWorkflow.events({
   },
   'click #changeButton': function(e) {
     e.preventDefault();
-  //   var name = document.getElementById('nameField').value;
-  //   var key = 0;
-  //   for (i in StatesArray) {
-  //     name = StatesArray[i].name;
-  //     console.log("json: " + json);
-  //     if (name = NodesArray[i].label) {
-  //       key = NodesArray[i].id;
-  //       nodes.update([{id: key, label: name}]);
-  //     }
-  //   }
-  //   $("#nameField").remove();
-  // }
-
-  // update(nodes)
-  }
 });
-
-// function update(nodes) {
-//   var name = document.getElementById('nameField').value;
-//   var key = 0;
-//   for (i in StatesArray) {
-//     name = StatesArray[i].name;
-//     console.log("json: " + json);
-//     if (name = NodesArray[i].label) {
-//       key = NodesArray[i].id;
-//       nodes.update([{id: key, label: name}]);
-//     }
-//   }
-// }
