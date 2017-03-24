@@ -1,3 +1,4 @@
+  var globalName = "";
 Template.viewWorkflow.events({
   'click .logo': function(e){
     e.preventDefault();
@@ -78,10 +79,10 @@ Template.viewWorkflow.events({
       var keyOne = EdgeDoc.source;
       var keyTwo = EdgeDoc.target;
       console.log("Transition source: "+ keyOne+ " target: " + keyTwo);
-      var startDoc = StatesList.findOne({name : EdgeDoc.source});
-      var endDoc = StatesList.findOne({name : EdgeDoc.target});
-      startTran = keyOne;
-      endTran = keyTwo;
+      var startDoc = StatesList.findOne({_id : EdgeDoc.source});
+      var endDoc = StatesList.findOne({_id : EdgeDoc.target});
+      startTran = startDoc.name;
+      endTran = endDoc.name;
       for (k in NodesArray) {
         if (NodesArray[k].label == startTran) {
           console.log("Start Tran Match Found");
@@ -130,14 +131,16 @@ Template.viewWorkflow.events({
       $('#editModal').modal('toggle');
       editContainer = document.getElementById("editStateInput");
       editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="nameField" placeholder="'+name+'"/>';
+      globalName = name;
+      console.log("Grabbed Old Name:" + globalName);
       // document.getElementById('stateNameField').innerHTML = name;
     });
     titleContainer = document.getElementById("title");
     titleContainer.innerHTML += '<h2 id="titleName">'+wfName+'<i class="fa fa-cog fa-lg" id="gear" aria-hidden="true"></i></h2>';
 
-    document.getElementById("loadButton").onclick = function() {
+    /*document.getElementById("loadButton").onclick = function() {
       this.disabled = true;
-    }
+    }*/
 
     document.getElementById("gear").onclick = function() {
       $('#editModal').modal('toggle');
@@ -197,15 +200,20 @@ Template.viewWorkflow.events({
   'click #changeButton': function(e) {
     e.preventDefault();
     var name = document.getElementById('nameField').value;
-    for (i in NodesArray) {
+    var stateDoc = StatesList.findOne({name: globalName});
+    if (stateDoc){
+    StatesList.update({_id: stateDoc._id},{$set:{name: name}});}
+    console.log("Changed Name: " + globalName + "To: " + name);
+    /*for (i in NodesArray) {
       var key = 0;
       console.log("json: " + json);
       if (name = NodesArray[i].label) {
         key = NodesArray[i].id;
         nodes.update([{id: key, label: name}]);
       }
-    }
+    }*/
     $("#nameField").remove();
+    document.getElementById("loadButton").click();
   }
 });
 
