@@ -62,4 +62,10 @@
   }//end iff wfDoc
   else console.log('No workflow found...');
 }
+
+*/
+/*
+Change worklow name
+Workflows.update({_id: workflowId},{$set{name: input}},{upsert =  false});
+
 */

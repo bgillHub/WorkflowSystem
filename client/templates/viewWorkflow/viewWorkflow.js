@@ -130,7 +130,7 @@ Template.viewWorkflow.events({
       }
       $('#editModal').modal('toggle');
       editContainer = document.getElementById("editStateInput");
-      editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="nameField" placeholder="'+name+'"/>';
+      editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="stateNameField" placeholder="'+name+'"/>';
       globalName = name;
       console.log("Grabbed Old Name:" + globalName);
       // document.getElementById('stateNameField').innerHTML = name;
@@ -143,9 +143,9 @@ Template.viewWorkflow.events({
     }*/
 
     document.getElementById("gear").onclick = function() {
-      $('#editModal').modal('toggle');
-      editContainer = document.getElementById("editStateInput");
-      editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="nameField" placeholder="'+wfName+'"/>';
+      $('#editWFModal').modal('toggle');
+      editContainer = document.getElementById("editWFInput");
+      editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="wfNameField" placeholder="'+wfName+'"/>';
     }
       // nodeIds.push(id);
   }, // end load button
@@ -197,9 +197,28 @@ Template.viewWorkflow.events({
     e.preventDefault();
     $("#nameField").remove();
   },
+  'click #changeWFButton': function(e) {
+    e.preventDefault();
+    var name = document.getElementById('wfNameField').value;
+    var wfDoc = Workflows.findOne({workflowName: wfName});
+    if (wfDoc){
+    Workflows.update({_id: wfDoc._id},{$set:{workflowName: name}},{upsert: false});}
+    console.log("Changed Name: " + globalName + "To: " + name);
+    /*for (i in NodesArray) {
+      var key = 0;
+      console.log("json: " + json);
+      if (name = NodesArray[i].label) {
+        key = NodesArray[i].id;
+        nodes.update([{id: key, label: name}]);
+      }
+    }*/
+    $("#wfNameField").remove();
+    wfName = name;
+    titleContainer.innerHTML += '<h2 id="titleName">'+wfName+'<i class="fa fa-cog fa-lg" id="gear" aria-hidden="true"></i></h2>';
+  },
   'click #changeButton': function(e) {
     e.preventDefault();
-    var name = document.getElementById('nameField').value;
+    var name = document.getElementById('stateNameField').value;
     var stateDoc = StatesList.findOne({name: globalName});
     if (stateDoc){
     StatesList.update({_id: stateDoc._id},{$set:{name: name}});}
@@ -212,7 +231,7 @@ Template.viewWorkflow.events({
         nodes.update([{id: key, label: name}]);
       }
     }*/
-    $("#nameField").remove();
+    $("#stateNameField").remove();
     document.getElementById("loadButton").click();
   }
 });
