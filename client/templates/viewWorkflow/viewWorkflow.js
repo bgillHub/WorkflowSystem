@@ -23,7 +23,22 @@ Template.viewWorkflow.events({
       name = StatesArray[i].name;
       key = StatesArray[i]._id;
       type = StatesArray[i].type;
-      if (type == 'Initial') {
+      curKey = Workflows.findOne({workflowName: wfName}).currentState;
+      if (key == curKey){
+        NodesArray.push({
+          id: key,
+          label: name,
+          color:{
+            background: '#ffff00',
+            border: '#ffff00',
+            highlight:{
+              background: '#ffff00',
+              border: '#ffff00'
+            }
+          }
+        });
+      }
+      else if (type == 'Initial') {
         NodesArray.push({
           id: key,
           label: name,
@@ -156,7 +171,7 @@ Template.viewWorkflow.events({
   //     // Router.go("/createState");
   //   } else alert('No Workflow Selected!');
   // }
-  'click #deleteButton': function(e) {
+  'click #confirmDelete': function(e) {
     e.preventDefault();
     var debugRegions = machine.regions;
     var defRegion = machine.defaultRegion;
@@ -167,11 +182,12 @@ Template.viewWorkflow.events({
     console.log("Region #: " + debugRegions.length);
     var debugVertices = debugRegions[0];
     var deleteName = document.getElementById("deleteField").value;
-    var deleteQuery = WorkflowsList.findOne({ name: deleteName});
+    var deleteQuery = Workflows.findOne({ workflowName: deleteName});
     if (deleteQuery){
-      WorkflowsList.remove({
+      Workflows.remove({
         _id: deleteQuery._id
       });
+      alert("Workflow by "+ deleteName + " Deleted");
     } else alert("No Workflow by "+ deleteName + " Found");
     document.getElementById("deleteForm").reset();
     //console.log(deleteName + ", has been deleted!");
@@ -196,6 +212,36 @@ Template.viewWorkflow.events({
   'click .close': function (e){
     e.preventDefault();
     $("#nameField").remove();
+  },
+  'click #continueWFButton': function (e){
+    e.preventDefault();
+    taskText = document.getElementById("taskDrop").value;
+    console.log("Confimred Value: " + taskText);
+    var wfDoc = Workflows.findOne({workflowName: wfName});
+    if (wfDoc){
+    Workflows.update({_id: wfDoc._id},{$set:{currentState: Transitions.findOne({name: taskText}).target}},{upsert: false});
+    }
+    if (StatesList.findOne({_id: Transitions.findOne({name: taskText}).target}).type == "Final"){
+      alert("Terminal State Reached!! Please Alert your supervisor.");
+    }
+  },
+  'click #taskButton': function (e){
+    e.preventDefault();
+    TransCursor = Transitions.find().fetch();
+    currState = Workflows.findOne({workflowName: wfName}).currentState;
+    console.log("currState : "+ currState);
+    taskContainer = document.getElementById("taskDrop");
+    taskContainer.innerHTML = null;
+    // var add = document.createDocumentFragment();
+    var a = 0;
+    for (i in TransCursor) {
+      if (currState == TransCursor[i].source) {
+        console.log("currState matched : "+ currState +" = " + TransCursor[i].source);
+      name = TransCursor[i].name;
+      taskContainer.innerHTML +=  '<option>'+ name +'</option>';
+      a++
+    }
+    }
   },
   'click #changeWFButton': function(e) {
     e.preventDefault();

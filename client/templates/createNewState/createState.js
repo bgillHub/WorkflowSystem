@@ -25,6 +25,9 @@ Template.createState.events({
          var newArray = wfDoc.States;
          newArray.push(newid);
          Workflows.update({_id: wfDoc._id}, {$set: {States: newArray}});
+         if (document.getElementById("initialRadio").checked) {
+           Workflows.update({_id: wfDoc._id}, {$set: {currentState: newid}});
+         }
          console.log("StatesList Updated, Object ID: " + newid);
          Meteor.call('createState', name, stateType);
        }
