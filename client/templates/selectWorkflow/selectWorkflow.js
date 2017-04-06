@@ -2,7 +2,7 @@ Template.selectWorkflow.events({
   'click #backButton': function(e){
     e.preventDefault();
     console.log("You pressed the back button");
-    Router.go("/");
+    Router.go("/dashboardPage");
   },
   'click #populate': function(e) {
     e.preventDefault();
@@ -44,7 +44,7 @@ Template.selectWorkflow.events({
   },
   'click .logo': function(e){
     e.preventDefault();
-    Router.go("/");
+    Router.go("/dashboardPage");
   },
   'click #viewButton': function(e){
     e.preventDefault();

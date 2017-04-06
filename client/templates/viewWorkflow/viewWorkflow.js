@@ -2,7 +2,7 @@ var globalName = "";
 Template.viewWorkflow.events({
   'click .logo': function(e){
     e.preventDefault();
-    Router.go("/");
+    Router.go("/dashboardPage");
   },
   'click #loadButton': function(e){
     e.preventDefault();

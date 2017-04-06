@@ -78,10 +78,10 @@ Template.createState.events({
       States: statesArray
     });*/
     console.log("ALL WORKFLOW NAMES: " + Workflows.find({}).fetch());
-    Router.go("/");
+    Router.go("/dashboardPage");
   }, // end cancelButton
   'click .logo': function(e){
     e.preventDefault();
-    Router.go("/");
+    Router.go("/dashboardPage");
   }
 });
