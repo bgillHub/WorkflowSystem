@@ -1,4 +1,5 @@
 var globalName = "";
+var gitVar = '';
 Template.viewWorkflow.events({
   'click .logo': function(e){
     e.preventDefault();
