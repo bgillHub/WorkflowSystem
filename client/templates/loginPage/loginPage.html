@@ -1,0 +1,25 @@
+<template name="loginPage">
+  <div class="container-fluid ">
+    <div class="col-md-6 col-md-offset-3 text-center">
+      <img src="/images/logo.png" class="logo">
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="col-md-6 col-md-offset-3 loginArea">
+      <h2 class="text-center">Login</h2>
+      <form class="form-inline new-state text-right accountForm">
+        <label>Email:</label>
+        <input class="createAccountField" id="loginEmail" type="email" name="signupEmail" placeholder="Email">
+        <br>
+        <label>Password:</label>
+        <input class="createAccountField" id="loginPassword" type="password" name="signupPassword" placeholder="Password">
+        <br>
+        <input class="btn btn-success" type="submit" value="Login" id="loginButton">
+      </form>
+      <br>
+      <div class="col-md-6 col-md-offset-3 text-center">
+        <a href="#" class="createAccountButton">Create Account</a>
+      </div>
+    </div>
+  </div>
+</template>

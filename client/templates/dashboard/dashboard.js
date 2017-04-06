@@ -51,7 +51,12 @@ Template.dashboardPage.events({
   },
   'click .logo': function(e){
     e.preventDefault();
-    Router.go("/");
+    Router.go("/dashboardPage");
+  },
+  'click .logout': function(e) {
+    e.preventDefault();
+    Meteor.logout();
+    Router.go("/loginPage");
   }
 });//end events
 

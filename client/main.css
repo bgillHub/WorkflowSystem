@@ -27,12 +27,32 @@ body {
   width: 200px;
 }
 
+.loginArea {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: white;
+  text-align: left;
+  box-shadow: 5px 5px 1px rgba(56, 55, 55, 0.5);
+}
+
 .createStateArea {
   padding-top: 50px;
   padding-bottom: 50px;
   background-color: white;
   text-align: left;
   box-shadow: 5px 5px 1px rgba(56, 55, 55, 0.5);
+}
+
+.accountForm {
+  margin-right: 30%;
+}
+
+#loginButton {
+  margin-right: 20%;
+}
+
+.buttons {
+  margin-right: 10%;
 }
 
 #selectWFArea {

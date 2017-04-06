@@ -64,11 +64,11 @@ Template.createTrans.events({
     e.preventDefault();
     console.log("You pressed the back button");
     //Meteor.call('saveWorkflow');
-    Router.go("/");
+    Router.go("/dashboardPage");
   },
   'click .logo': function(e){
     e.preventDefault();
-    Router.go("/");
+    Router.go("/dashboardPage");
   }
 }),
 

@@ -1,14 +1,26 @@
-Template.createAccount.events({
-  'click .createButton': function(e) {
-    var firstName = document.getElementById("firstNameField").value;
-    var lastName = document.getElementById("lastNameField").value;
-    var email = document.getElementById("emailField").value;
-    var password = document.getElementById("passwordField").value;
-    Accounts.createUser({
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password
-    });
-  }
-});
+if (Meteor.isClient) {
+  Template.createAccount.events({
+    'submit form': function(e, template) {
+      e.preventDefault();
+      var emailVar = template.find('#email').value;
+      var passwordVar = template.find('#password').value;
+      var nameVar = template.find('#name').value;
+      Accounts.createUser({
+        email: emailVar,
+        password: passwordVar,
+        profile: {
+          name: nameVar
+        }
+      });
+      Router.go("dashboardPage");
+    },
+    'click #cancelButton': function(e) {
+      e.preventDefault();
+      Router.go("/loginPage");
+    },
+    'click .logo': function(e) {
+      e.preventDefault();
+      Router.go("/loginPage");
+    }
+  });
+}

@@ -5,29 +5,22 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="col-md-6 col-md-offset-3 createStateArea">
+    <div class="col-md-6 col-md-offset-3 loginArea">
       <h2 class="text-center">Create Account</h2>
-      <form class="form-inline new-state text-right" id="createAccountForm">
-        <!-- <label>First Name:</label>
-        <input type="text" class="createAccountField" id="firstNameField" name="text" placeholder="First Name"/>
-        <br>
-        <label>Last Name:</label>
-        <input type="text" class="createAccountField" id="lastNameField" name="text" placeholder="Last Name"/>
+      <form class="form-inline new-state text-right accountForm">
+        <label>Name:</label>
+        <input class="createAccountField" id="name" type="text" name="nameField" placeholder="Name">
         <br>
         <label>Email:</label>
-        <input type="email" class="createAccountField" id="emailField" name="email" placeholder="Email"/>
+        <input class="createAccountField" id="email" type="email" name="signupEmail" placeholder="Email">
         <br>
         <label>Password:</label>
-        <input type="password" class="createAccountField" id="passwordField" name="password" placeholder="Password"/>
-        <br> -->
-        <form>
-          <input class="createAccountField" type="email" name="registerEmail">
-          <input class="createAccountField" type="password" name="registerPassword">
-          <input class="createAccountField" type="submit" value="Register">
-        </form>
-        <button type="button" id="createButton" class="btn btn-success" value="create">Create</button>
-        <button type="button" id="clearButton" class="btn btn-warning">Clear</button>
-        <button type="button" id="cancelButton" class="btn btn-danger">Cancel</button>
+        <input class="createAccountField" id ="password" type="password" name="signupPassword" placeholder="Password">
+        <br>
+        <div class="buttons">
+          <input class="btn btn-success" type="submit" id="createButton" value="Signup">
+          <button type="button" id="cancelButton" class="btn btn-danger">Cancel</button>
+        </div>
       </form>
     </div>
   </div>
