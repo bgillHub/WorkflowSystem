@@ -219,7 +219,11 @@ Template.viewWorkflow.events({
     console.log("Confimred Value: " + taskText);
     var wfDoc = Workflows.findOne({workflowName: wfName});
     if (wfDoc){
-    Workflows.update({_id: wfDoc._id},{$set:{currentState: Transitions.findOne({name: taskText}).target}},{upsert: false});
+    Workflows.update({_id: wfDoc._id},{
+      $set:{
+        currentState: Transitions.findOne({name: taskText}).target,
+        completedTransitions: wfDoc.completedTransitions + Transitions.findOne({name: taskText})._id}},
+      {upsert: false});
     }
     if (StatesList.findOne({_id: Transitions.findOne({name: taskText}).target}).type == "Final"){
       alert("Terminal State Reached!! Please Alert your supervisor.");
