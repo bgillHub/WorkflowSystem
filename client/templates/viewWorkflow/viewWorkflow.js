@@ -17,11 +17,11 @@ Template.viewWorkflow.events({
     console.log("WF Title: " + wfName);
     console.log("States: " + StatesArray);
     console.log("Edges: " + codeEdgeArray);
-
     var NodesArray = [];
     for (i in StatesArray) {
       name = StatesArray[i].name;
       key = StatesArray[i]._id;
+      console.log("Pushing with States: " + key);
       type = StatesArray[i].type;
       curKey = Workflows.findOne({workflowName: wfName}).currentState;
       if (key == curKey){
@@ -76,8 +76,8 @@ Template.viewWorkflow.events({
           }
         }
       });
-      name = StatesArray[i];
-      key = j;
+      //name = StatesArray[i];
+      //key = j;
       //NodesArray.push({id: key, label: name});
       j++
     }
@@ -148,6 +148,7 @@ Template.viewWorkflow.events({
       globalName = name;
       console.log("Grabbed Old Name:" + globalName);
       // document.getElementById('stateNameField').innerHTML = name;
+    }
     });
     titleContainer = document.getElementById("title");
     titleContainer.innerHTML += '<h2 id="titleName">'+wfName+'<i class="fa fa-cog fa-lg" id="gear" aria-hidden="true"></i></h2>';
