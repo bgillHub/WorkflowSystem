@@ -1,4 +1,4 @@
-  var globalName = "";
+var globalName = "";
 Template.viewWorkflow.events({
   'click .logo': function(e){
     e.preventDefault();
@@ -82,66 +82,65 @@ Template.viewWorkflow.events({
       j++
     }
 
-    nodes = new vis.DataSet(NodesArray);
+  nodes = new vis.DataSet(NodesArray);
 
-    // edges attach by ID's
+  // edges attach by ID's
 
-    var EdgesArray = [];
-    for (i in codeEdgeArray) {
-      var EdgeDoc = Transitions.findOne({_id: codeEdgeArray[i]});
-      console.log("Transition name: " + EdgeDoc.name);
-      var startKey, endKey;
-      var keyOne = EdgeDoc.source;
-      var keyTwo = EdgeDoc.target;
-      console.log("Transition source: "+ keyOne+ " target: " + keyTwo);
-      var startDoc = StatesList.findOne({_id : EdgeDoc.source});
-      var endDoc = StatesList.findOne({_id : EdgeDoc.target});
-      startTran = startDoc.name;
-      endTran = endDoc.name;
-      for (k in NodesArray) {
-        if (NodesArray[k].label == startTran) {
-          console.log("Start Tran Match Found");
-          startKey = NodesArray[k].id;
-        }
-        if (NodesArray[k].label == endTran) {
-          console.log("End Tran Match Found");
-          endKey = NodesArray[k].id;
-        }
+  var EdgesArray = [];
+  for (i in codeEdgeArray) {
+    var EdgeDoc = Transitions.findOne({_id: codeEdgeArray[i]});
+    console.log("Transition name: " + EdgeDoc.name);
+    var startKey, endKey;
+    var keyOne = EdgeDoc.source;
+    var keyTwo = EdgeDoc.target;
+    console.log("Transition source: "+ keyOne+ " target: " + keyTwo);
+    var startDoc = StatesList.findOne({_id : EdgeDoc.source});
+    var endDoc = StatesList.findOne({_id : EdgeDoc.target});
+    startTran = startDoc.name;
+    endTran = endDoc.name;
+    for (k in NodesArray) {
+      if (NodesArray[k].label == startTran) {
+        console.log("Start Tran Match Found");
+        startKey = NodesArray[k].id;
       }
-      EdgesArray.push({
-        from: startKey,
-        to: endKey,
-        color: {color: '#97C2FC'},
-        arrows :'to'
-      });
+      if (NodesArray[k].label == endTran) {
+        console.log("End Tran Match Found");
+        endKey = NodesArray[k].id;
+      }
     }
-    edges = new vis.DataSet(EdgesArray);
+    EdgesArray.push({
+      from: startKey,
+      to: endKey,
+      color: {color: '#97C2FC'},
+      arrows :'to'
+    });
+  }
+  edges = new vis.DataSet(EdgesArray);
 
-    // create a network
-    var container = document.getElementById('mynetwork');
+  // create a network
+  var container = document.getElementById('mynetwork');
 
-    // provide the data in the vis format
-    var data = {
-        nodes: nodes,
-        edges: edges
-    };
-    var options = {};
+  // provide the data in the vis format
+  var data = {
+      nodes: nodes,
+      edges: edges
+  };
+  var options = {};
 
-    // initialize your network!
-    var network = new vis.Network(container, data, options);
+  // initialize your network!
+  var network = new vis.Network(container, data, options);
 
-    network.on("doubleClick", function(params) {
-      params.event = "[original event]";
-      var data = JSON.stringify(params, null, 4);
-      var json = JSON.parse(data);
-      var key = json.nodes;
-      var name = "";
-      console.log("node key: " + key);
-      for (i in NodesArray) {
-        if (key == NodesArray[i].id) {
-          name = NodesArray[i].label;
-          break;
-        }
+  network.on("doubleClick", function(params) {
+    params.event = "[original event]";
+    var data = JSON.stringify(params, null, 4);
+    var json = JSON.parse(data);
+    var key = json.nodes;
+    var name = "";
+    console.log("node key: " + key);
+    for (i in NodesArray) {
+      if (key == NodesArray[i].id) {
+        name = NodesArray[i].label;
+        break;
       }
       $('#editModal').modal('toggle');
       editContainer = document.getElementById("editStateInput");
@@ -153,9 +152,9 @@ Template.viewWorkflow.events({
     titleContainer = document.getElementById("title");
     titleContainer.innerHTML += '<h2 id="titleName">'+wfName+'<i class="fa fa-cog fa-lg" id="gear" aria-hidden="true"></i></h2>';
 
-    /*document.getElementById("loadButton").onclick = function() {
-      this.disabled = true;
-    }*/
+  /*document.getElementById("loadButton").onclick = function() {
+    this.disabled = true;
+  }*/
 
     document.getElementById("gear").onclick = function() {
       $('#editWFModal').modal('toggle');
@@ -280,6 +279,7 @@ Template.viewWorkflow.events({
         key = NodesArray[i].id;
         nodes.update([{id: key, label: name}]);
       }
+      console.log("States AFTER: " + regional.vertices);
     }*/
     $("#stateNameField").remove();
     document.getElementById("loadButton").click();
@@ -288,7 +288,7 @@ Template.viewWorkflow.events({
 
 
 $(document).ready(function(){
-    $("#titleName").dblclick(function(){
-        alert("Title double clicked");
-    });
+  $("#titleName").dblclick(function(){
+      alert("Title double clicked");
+  });
 });
