@@ -20,15 +20,17 @@
         <label>Password:</label>
         <input type="password" class="createAccountField" id="passwordField" name="password" placeholder="Password"/>
         <br> -->
-        <form>
-          <input class="createAccountField" type="email" name="registerEmail">
-          <input class="createAccountField" type="password" name="registerPassword">
-          <input class="createAccountField" type="submit" value="Register">
-        </form>
+      </form>
+      <form class="form-inline new-state text-right">
+        <input class="createAccountField" type="text" name="nameField" placeholder="Name">
+        <input class="createAccountField" type="email" name="signupEmail" placeholder="Email">
+        <input class="createAccountField" type="password" name="signupPassword" placeholder="Password">
+        <input class="createAccountField" type="submit" value="Signup">
+      </form>
         <button type="button" id="createButton" class="btn btn-success" value="create">Create</button>
         <button type="button" id="clearButton" class="btn btn-warning">Clear</button>
         <button type="button" id="cancelButton" class="btn btn-danger">Cancel</button>
-      </form>
+      <!-- </form> -->
     </div>
   </div>
 </template>
