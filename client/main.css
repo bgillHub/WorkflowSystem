@@ -1,7 +1,8 @@
 /* CSS declarations go here */
 body {
   font-family: sans-serif;
-  background-color: #C9F1FD;
+  /*background-color: #C9F1FD;*/
+  background-color: #4dabf5;
   background-attachment: fixed;
 
   position: absolute;
@@ -16,11 +17,22 @@ body {
   font-size: 14px;
 }
 
+.logo {
+  width: 20%;
+  height: 20%;
+  margin: 0;
+}
+
+.createAccountField {
+  width: 200px;
+}
+
 .createStateArea {
   padding-top: 50px;
   padding-bottom: 50px;
   background-color: white;
-  text-align: center;
+  text-align: left;
+  box-shadow: 5px 5px 1px rgba(56, 55, 55, 0.5);
 }
 
 #selectWFArea {
@@ -55,20 +67,28 @@ body {
   color: #F1F1F1;
 }
 
+.dashButtons {
+  background-color: #FFF;
+  padding: 20px;
+  width: 90%;
+  box-shadow: 5px 5px 1px rgba(56, 55, 55, 0.5);
+}
+
 .module {
   text-align: center;
   width: 100%;
   color: white;
   padding: 30px;
-  border: 1px solid black;
+  /*border: 0.5px solid black;*/
+  /*box-shadow: 5px 5px 1px rgba(56, 55, 55, 0.5);*/
 }
 
 .module.createWorkflowArea {
-  background-color: #3d8af7;
+  background-color: #1d87da;
 }
 
 .module.createWorkflowArea:hover {
-  background-color: #367CDE;
+  background-color: #383737;
   color: #F1F1F1;
   /*text-decoration: underline; */
 }
@@ -78,7 +98,7 @@ body {
 }
 
 .module.selectWorkflowArea:hover {
-  background-color: #e5972e;
+  background-color: #383737;
   color: #F1F1F1;
   /*text-decoration: underline; */
 }
@@ -88,7 +108,7 @@ body {
 }
 
 .module.profileArea:hover {
-  background-color: #D12F6C;
+  background-color: #383737;
   color: #F1F1F1;
   /*text-decoration: underline; */
 }
@@ -98,7 +118,7 @@ body {
 }
 
 .module.notificationsArea:hover {
-  background-color: #66a84a;
+  background-color: #383737;
   color: #F1F1F1;
   /*text-decoration: underline; */
 }
@@ -108,7 +128,7 @@ body {
 }
 
 .module.monitorWorkflowArea:hover {
-  background-color: #e57c76;
+  background-color: #383737;
   color: #F1F1F1;
   /*text-decoration: underline; */
 }
@@ -118,7 +138,7 @@ body {
 }
 
 .module.alterSettingsArea:hover {
-  background-color: #ae32d3;
+  background-color: #383737;
   color: #F1F1F1;
   /*text-decoration: underline; */
 }
