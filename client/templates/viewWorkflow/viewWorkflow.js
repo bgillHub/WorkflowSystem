@@ -153,6 +153,7 @@ Template.viewWorkflow.events({
 
     });
     titleContainer = document.getElementById("title");
+    titleContainer.innerHTML = '';
     titleContainer.innerHTML += '<h2 id="titleName">'+wfName+'<i class="fa fa-cog fa-lg" id="gear" aria-hidden="true"></i></h2>';
 
   /*document.getElementById("loadButton").onclick = function() {
