@@ -226,6 +226,8 @@ Template.viewWorkflow.events({
         completedTransitions: wfDoc.completedTransitions + Transitions.findOne({name: taskText})._id}},
       {upsert: false});
     }
+    //Update The number of ties completed
+    StatesList.update({_id: Transitions.findOne({name: taskText}).target},{$inc: {completedTimes: 1}},{upsert: false});
     if (StatesList.findOne({_id: Transitions.findOne({name: taskText}).target}).type == "Final"){
       alert("Terminal State Reached!! Please Alert your supervisor.");
     }
