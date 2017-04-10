@@ -135,21 +135,22 @@ Template.viewWorkflow.events({
     params.event = "[original event]";
     var data = JSON.stringify(params, null, 4);
     var json = JSON.parse(data);
-    var key = json.nodes;
-    var name = "";
+    console.log("node json: " + data);
+    var key = String(json.nodes);
     console.log("node key: " + key);
-    for (i in NodesArray) {
-      if (key == NodesArray[i].id) {
-        name = NodesArray[i].label;
-        break;
-      }
-      $('#editModal').modal('toggle');
+    console.log("node key type : " + typeof key);
+    var changeDoc = StatesList.findOne({_id: key});
+        if (changeDoc != null){
+        globalName = changeDoc.name;
       editContainer = document.getElementById("editStateInput");
-      editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="stateNameField" placeholder="'+name+'"/>';
-      globalName = name;
+      editContainer.innerHTML = '';
+      $('#editModal').modal('toggle');
+      editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="stateNameField" placeholder="'+globalName+'"/>';
       console.log("Grabbed Old Name:" + globalName);
-      // document.getElementById('stateNameField').innerHTML = name;
     }
+    else {console.log("No Doc");}
+      // document.getElementById('stateNameField').innerHTML = name;
+
     });
     titleContainer = document.getElementById("title");
     titleContainer.innerHTML += '<h2 id="titleName">'+wfName+'<i class="fa fa-cog fa-lg" id="gear" aria-hidden="true"></i></h2>';
@@ -274,7 +275,7 @@ Template.viewWorkflow.events({
     var name = document.getElementById('stateNameField').value;
     var stateDoc = StatesList.findOne({name: globalName});
     if (stateDoc){
-    StatesList.update({_id: stateDoc._id},{$set:{name: name}});}
+    StatesList.update({_id: stateDoc._id},{$set:{name: name}}, {upsert:false});}
     console.log("Changed Name: " + globalName + "To: " + name);
     /*for (i in NodesArray) {
       var key = 0;
