@@ -63,6 +63,14 @@ body {
   font-size: 20px;
 }
 
+#gear {
+  font-size: 20px;
+}
+
+#gear:hover {
+  color: #4c4c4c;
+}
+
 #logout {
   position: absolute;
   top: 0px;
