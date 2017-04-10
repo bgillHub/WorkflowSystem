@@ -30,5 +30,19 @@ Template.createWorkflow.events({
   'click .logo': function(e){
     e.preventDefault();
     Router.go("/dashboardPage");
+  },
+  'click .logoutLink': function(e) {
+    e.preventDefault();
+    Meteor.logout();
+    Router.go("/loginPage");
   }
+});
+
+Template.createWorkflow.onRendered( function () {
+  var user = Meteor.user().profile.name;
+
+  nameContainer = document.getElementById("logout");
+  nameContainer.innerHTML +=  '<p id="user">'+user+'</p>';
+  console.log(user);
+
 });

@@ -288,6 +288,11 @@ Template.viewWorkflow.events({
     }*/
     $("#stateNameField").remove();
     document.getElementById("loadButton").click();
+  },
+  'click .logoutLink': function(e) {
+    e.preventDefault();
+    Meteor.logout();
+    Router.go("/loginPage");
   }
 });
 
@@ -296,4 +301,12 @@ $(document).ready(function(){
   $("#titleName").dblclick(function(){
       alert("Title double clicked");
   });
+});
+
+Template.viewWorkflow.onRendered( function () {
+  var user = Meteor.user().profile.name;
+
+  nameContainer = document.getElementById("logout");
+  nameContainer.innerHTML +=  '<p id="user">'+user+'</p>';
+  console.log(user);
 });

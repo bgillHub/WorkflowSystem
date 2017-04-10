@@ -53,7 +53,7 @@ Template.dashboardPage.events({
     e.preventDefault();
     Router.go("/dashboardPage");
   },
-  'click .logout': function(e) {
+  'click .logoutLink': function(e) {
     e.preventDefault();
     Meteor.logout();
     Router.go("/loginPage");
@@ -66,5 +66,10 @@ function changeWF() {
 }
 
 Template.dashboardPage.onRendered( function () {
-  console.log('rendered dash');
-});//end on rendered
+  var user = Meteor.user().profile.name;
+
+  nameContainer = document.getElementById("logout");
+  nameContainer.innerHTML +=  '<p id="user">'+user+'</p>';
+  console.log(user);
+
+});
