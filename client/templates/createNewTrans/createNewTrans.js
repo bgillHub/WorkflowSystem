@@ -69,11 +69,20 @@ Template.createTrans.events({
   'click .logo': function(e){
     e.preventDefault();
     Router.go("/dashboardPage");
+  },
+  'click .logoutLink': function(e) {
+    e.preventDefault();
+    Meteor.logout();
+    Router.go("/loginPage");
   }
 }),
 
 Template.createTrans.onRendered( function () {
-  console.log('rendered');
+  var user = Meteor.user().profile.name;
+
+  nameContainer = document.getElementById("logout");
+  nameContainer.innerHTML +=  '<p id="user">'+user+'</p>';
+
   StatesArray = machine.getDefaultRegion().vertices;
   //WFArray.push(WorkflowsList.find().fetch());
   console.log("Array " + StatesArray);

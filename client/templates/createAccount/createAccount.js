@@ -12,6 +12,7 @@ if (Meteor.isClient) {
           name: nameVar
         }
       });
+      UserAccounts = Meteor.users;
       Router.go("dashboardPage");
     },
     'click #cancelButton': function(e) {
