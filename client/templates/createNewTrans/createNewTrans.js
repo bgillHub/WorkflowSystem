@@ -48,6 +48,7 @@ Template.createTrans.events({
     endState: end
   });*/
     console.log(name);
+    alert("Transition " + name + "created.");
   },//end create  button
   'click #clearButton': function(e) {
     e.preventDefault();

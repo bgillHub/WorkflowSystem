@@ -36,6 +36,7 @@ Template.createState.events({
       name = "";
       stateType = "";
       stateTime = "";
+      alert("State " + name + "created.");
     });//end callback
 
     /*StatesList.insert({

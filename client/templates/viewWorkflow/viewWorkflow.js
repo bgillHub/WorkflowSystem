@@ -161,8 +161,9 @@ Template.viewWorkflow.events({
   }*/
 
     document.getElementById("gear").onclick = function() {
-      $('#editWFModal').modal('toggle');
       editContainer = document.getElementById("editWFInput");
+      editContainer.innerHTML = '';
+      $('#editWFModal').modal('toggle');
       editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="wfNameField" placeholder="'+wfName+'"/>';
     }
       // nodeIds.push(id);
