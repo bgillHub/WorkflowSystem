@@ -7,7 +7,7 @@ Template.selectWorkflow.events({
   'click #populate': function(e) {
     e.preventDefault();
     console.log("You  selected wfdrop");
-    WFCursor = Workflows.find().fetch();
+    WFCursor = Workflows.find({Users: String(Meteor.userId())}).fetch();
     //WFArray.push(WorkflowsList.find().fetch());
     //console.log("Array " + WFArray);
     wfContainer = document.getElementById("wfDrop");
@@ -64,4 +64,16 @@ Template.selectWorkflow.onRendered( function () {
   nameContainer.innerHTML +=  '<p id="user">'+user+'</p>';
   console.log(user);
 
+  WFCursor = Workflows.find({Users: String(Meteor.userId())}).fetch();
+  //WFArray.push(WorkflowsList.find().fetch());
+  //console.log("Array " + WFArray);
+  wfContainer = document.getElementById("wfDrop");
+  wfContainer.innerHTML = null;
+  // var add = document.createDocumentFragment();
+  var a = 0;
+  for (i in WFCursor) {
+    name = WFCursor[i].workflowName;
+    wfContainer.innerHTML +=  '<option>'+ name +'</option>';
+    a++
+  }
 });

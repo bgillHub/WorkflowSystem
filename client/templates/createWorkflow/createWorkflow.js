@@ -3,9 +3,12 @@ Template.createWorkflow.events({
     e.preventDefault();
     var name = document.getElementById("nameField").value;
     wfName = name;
+    var profile = String(Meteor.userId());
+    console.log("User id: " +profile);
     Workflows.insert({workflowName: wfName,
     States: [],
-    Transitions: [] });
+    Transitions: [],
+    Users: profile });
     /*Workflows.update({workflowName: wfName},{
       workflowName: wfName,
       States: [],

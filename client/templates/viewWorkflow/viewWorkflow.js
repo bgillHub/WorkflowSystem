@@ -28,7 +28,7 @@ Template.viewWorkflow.events({
       if (key == curKey){
         NodesArray.push({
           id: key,
-          label: name,
+          label: '',
           color:{
             background: '#ffff00',
             border: '#ffff00',
@@ -42,7 +42,7 @@ Template.viewWorkflow.events({
       else if (type == 'Initial') {
         NodesArray.push({
           id: key,
-          label: name,
+          label: '',
           color:{
             background: '#32CD32',
             border: '#32CD32',
@@ -55,7 +55,7 @@ Template.viewWorkflow.events({
       } else if (type == "Final") {
         NodesArray.push({
           id: key,
-          label: name,
+          label: '',
           color:{
             background: '#E06666',
             border: '#E06666',
@@ -67,7 +67,7 @@ Template.viewWorkflow.events({
         });
       } else NodesArray.push({
         id: key,
-        label: name,
+        label: '',
         color: {
           background: '#97C2FC',
           border:'#97C2FC',
@@ -94,17 +94,18 @@ Template.viewWorkflow.events({
     var startKey, endKey;
     var keyOne = EdgeDoc.source;
     var keyTwo = EdgeDoc.target;
+    var tranName = EdgeDoc.name;
     console.log("Transition source: "+ keyOne+ " target: " + keyTwo);
     var startDoc = StatesList.findOne({_id : EdgeDoc.source});
     var endDoc = StatesList.findOne({_id : EdgeDoc.target});
-    startTran = startDoc.name;
-    endTran = endDoc.name;
+    startTran = startDoc._id;
+    endTran = endDoc._id;
     for (k in NodesArray) {
-      if (NodesArray[k].label == startTran) {
+      if (NodesArray[k].id == startTran) {
         console.log("Start Tran Match Found");
         startKey = NodesArray[k].id;
       }
-      if (NodesArray[k].label == endTran) {
+      if (NodesArray[k].id == endTran) {
         console.log("End Tran Match Found");
         endKey = NodesArray[k].id;
       }
@@ -113,7 +114,8 @@ Template.viewWorkflow.events({
       from: startKey,
       to: endKey,
       color: {color: '#97C2FC'},
-      arrows :'to'
+      arrows :'to',
+      label: tranName
     });
   }
   edges = new vis.DataSet(EdgesArray);
@@ -306,7 +308,7 @@ $(document).ready(function(){
 
 Template.viewWorkflow.onRendered( function () {
   var user = Meteor.user().profile.name;
-
+  $('#loadButton').click();
   nameContainer = document.getElementById("logout");
   nameContainer.innerHTML +=  '<p id="user">'+user+'</p>';
   console.log(user);
