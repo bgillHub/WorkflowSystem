@@ -11,19 +11,29 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3 createStateArea">
         <div class="formContent">
-        <h2>Create Task</h2>
-        <form class="form-inline new-state" id="createForm">
-          <label>Task Name:</label>
-          <input type="text" id="nameField" name="text" placeholder="Add Task Name"/>
+          <div class="col-md-6 col-md-offset-3 text-center">
+            <h2>Create Task</h2>
+          </div>
+          <form class="form-inline new-state" id="createForm">
+          <div class="col-md-6 text-right">
+            <label>Task Name:</label>
+          </div>
+          <div class="col-md-6">
+            <input type="text" id="nameField" name="text" placeholder="Add Task Name"/>
+          </div>
           <br>
-          <label>Time Select:</label>
+          <div class="col-md-6 text-right">
+            <label>Task Deadline:</label>
+          </div>
           <fieldset class="form-group">
-            <div class='input-group date' id='transTime'>
-              <input type='text' class="form-control" />
-                <span class="input-group-addon">
-                  <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
+            <div class="col-md-12">
+              <div class='input-group date' id='transTime'>
+                <input type='text' class="form-control" />
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+              </div>
           </fieldset>
           <script type="text/javascript">
             $(function () {
@@ -32,25 +42,35 @@
           </script>
           <br>
           <!-- Pull States from DB with type initial & final (seperate) -->
-          <label>Start State:</label>
-          <div class="form-group statesForm">
-            <select class="form-control" id="startDrop">
-            </select>
+          <div class="col-md-6 text-right">
+            <label>Start State:</label>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group statesForm">
+              <select class="form-control" id="startDrop"></select>
+            </div>
           </div>
           <br>
-          <label>End State:</label>
-          <div class="form-group statesForm">
-            <select class="form-control" id="endDrop">
-            </select>
+          <div class="col-md-6 text-right">
+            <label>End State:</label>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group statesForm">
+              <select class="form-control" id="endDrop"></select>
+            </div>
           </div>
           <br>
           <!-- Get time element for task -->
-          <button type="button" id="createButton" class="btn btn-success" value="create">Create</button>
-          <button type="button" id="clearButton" class="btn btn-warning">Clear</button>
-          <button type="button" id="cancelButton" class="btn btn-danger">Cancel</button>
+          <div class="col-md-6 col-md-offset-3 text-right">
+            <button type="button" id="createButton" class="btn btn-success" value="create">Create</button>
+            <button type="button" id="clearButton" class="btn btn-warning">Clear</button>
+            <button type="button" id="cancelButton" class="btn btn-danger">Cancel</button>
+          </div>
         </form>
         <br>
-        <button type="button" id="viewButton" class="btn btn-primary">View Workflow</button>
+        <div class="col-md-6 col-md-offset-3 advanceButton">
+          <button type="button" id="viewButton" class="btn btn-primary">View Workflow</button>
+        </div>
       </div>
     </div>
     </div>

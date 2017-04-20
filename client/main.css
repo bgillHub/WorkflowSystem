@@ -41,10 +41,21 @@ body {
   background-color: white;
   text-align: left;
   box-shadow: 5px 5px 1px rgba(56, 55, 55, 0.5);
+  width: 50%;
 }
 
 .formContent {
-  padding-left: 30%;
+  /*padding-left: 30%;*/
+}
+
+.advanceButton {
+  text-align: right;
+  margin-left: 17%;
+  margin-top: 5px;
+}
+
+#buttonContent {
+  padding-left: 15%;
 }
 
 .accountForm {
@@ -128,7 +139,7 @@ body {
   color: white;
   padding: 30px;
   /*border: 0.5px solid black;*/
-  /*box-shadow: 5px 5px 1px rgba(56, 55, 55, 0.5);*/
+  box-shadow: 5px 5px 1px rgba(56, 55, 55, 0.5);
 }
 
 .module.createWorkflowArea {

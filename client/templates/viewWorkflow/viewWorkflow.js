@@ -38,6 +38,12 @@ Template.viewWorkflow.events({
             }
           }
         });
+        // Email.send({
+        //   to: "Person McName <mattcucuzza@gmail.com>",
+        //   from: "Awesome App <admin@awesomeapp.com>",
+        //   subject: "Sending Email with Meteor is Easy!",
+        //   text: "This is the text in the body of our email."
+        // });
       }
       else if (type == 'Initial') {
         NodesArray.push({

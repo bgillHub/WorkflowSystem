@@ -9,51 +9,67 @@
   </div>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-6 col-md-offset-3 createStateArea">
+      <div class="col-xs-6 col-xs-offset-3 createStateArea">
         <div class ="formContent">
-        <h2> Create State</h2>
-        <form class="form-inline new-state" id="createForm">
-          <label>State Name:</label>
-          <input type="text" id="nameField" name="text" placeholder="Add State Title"/>
+          <div class="col-xs-6 col-xs-offset-3 text-center">
+            <h2> Create State</h2>
+          </div>
           <br>
-          <label>Time Select:</label>
-          <fieldset class="form-group">
-            <div class='input-group date' id='stateTime'>
-              <input type='text' class="form-control" />
+        <form class="form-inline new-state" id="createForm">
+          <div class="col-xs-6 text-right">
+            <label>State Name:</label>
+          </div>
+          <div class="col-xs-6">
+            <input type="text" id="nameField" name="text" placeholder="Add State Title"/>
+          </div>
+          <br>
+          <div class="col-xs-6 text-right">
+            <label>State Deadline:</label>
+          </div>
+          <div class="col-xs-6">
+            <fieldset class="form-group">
+              <div class='input-group date' id='stateTime'>
+                <input type='text' class="form-control" />
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                 </span>
-            </div>
-          </fieldset>
+              </div>
+            </fieldset>
+          </div>
           <script type="text/javascript">
             $(function () {
               $('#stateTime').datetimepicker();
             });
           </script>
           <br>
-          <label>Check State Type:</label>
-          <fieldset class="form-group">
-            <!-- <legend>Radio buttons</legend> -->
-            <div class="form-check-inline">
-              <label class="form-check-label">
-              <input type="radio" id="initialRadio" class="form-check-input" name="optionsRadios" value="initialType" >Initial</label>
+          <div class="col-xs-6 text-right">
+            <label>Check State Type:</label>
+          </div>
+          <div class="col-xs-6">
+            <fieldset class="form-group">
+              <!-- <legend>Radio buttons</legend> -->
+                <label class="radio-inline">
+                  <input type="radio" id="initialRadio" class="form-check-input" name="optionsRadios" value="initialType" >Initial
+                </label>
+                  <label class="radio-inline">
+                    <input type="radio" id="normalRadio" class="form-check-input" name="optionsRadios" value="normalType" checked>Normal
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" id="finalRadio" class="form-check-input" name="optionsRadios" value="finalType">Final
+                  </label>
+              </fieldset>
             </div>
-            <div class="form-check-inline">
-              <label class="form-check-label">
-              <input type="radio" id="normalRadio" class="form-check-input" name="optionsRadios" value="normalType" checked>Normal</label>
-            </div>
-            <div class="form-check-inline">
-              <label class="form-check-label">
-              <input type="radio" id="finalRadio" class="form-check-input" name="optionsRadios" value="finalType">Final</label>
-            </div>
-          </fieldset>
           <br>
-          <button type="button" id="createButton" class="btn btn-success" value="create">Create</button>
-          <button type="button" id="clearButton" class="btn btn-warning">Clear</button>
-          <button type="button" id="cancelButton" class="btn btn-danger">Cancel</button>
+          <div class="col-xs-6 col-xs-offset-3 text-right">
+            <button type="button" id="createButton" class="btn btn-success" value="create">Create</button>
+            <button type="button" id="clearButton" class="btn btn-warning">Clear</button>
+            <button type="button" id="cancelButton" class="btn btn-danger">Cancel</button>
+          </div>
         </form>
         <br>
-        <button type="button" id="viewButton" class="btn btn-primary">Create Tasks</button>
+        <div class="col-xs-6 col-xs-offset-3 advanceButton">
+          <button type="button" id="viewButton" class="btn btn-primary">Create Tasks</button>
+        </div>
       </div>
     </div>
     </div>
