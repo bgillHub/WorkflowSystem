@@ -28,7 +28,7 @@ Template.viewWorkflow.events({
       if (key == curKey){
         NodesArray.push({
           id: key,
-          label: '',
+          label: name,
           color:{
             background: '#ffff00',
             border: '#ffff00',
@@ -38,17 +38,12 @@ Template.viewWorkflow.events({
             }
           }
         });
-        // Email.send({
-        //   to: "Person McName <mattcucuzza@gmail.com>",
-        //   from: "Awesome App <admin@awesomeapp.com>",
-        //   subject: "Sending Email with Meteor is Easy!",
-        //   text: "This is the text in the body of our email."
-        // });
+        Meteor.call('notifcationSend');
       }
       else if (type == 'Initial') {
         NodesArray.push({
           id: key,
-          label: '',
+          label: name,
           color:{
             background: '#32CD32',
             border: '#32CD32',
@@ -61,7 +56,7 @@ Template.viewWorkflow.events({
       } else if (type == "Final") {
         NodesArray.push({
           id: key,
-          label: '',
+          label: name,
           color:{
             background: '#E06666',
             border: '#E06666',
@@ -73,7 +68,7 @@ Template.viewWorkflow.events({
         });
       } else NodesArray.push({
         id: key,
-        label: '',
+        label: name,
         color: {
           background: '#97C2FC',
           border:'#97C2FC',
@@ -315,7 +310,7 @@ $(document).ready(function(){
 
 Template.viewWorkflow.onRendered( function () {
   var user = Meteor.user().profile.name;
-  $('#loadButton').click();
+  // $('#loadButton').click();
   nameContainer = document.getElementById("logout");
   nameContainer.innerHTML +=  '<p id="user">'+user+'</p>';
   console.log(user);
@@ -353,12 +348,7 @@ Template.viewWorkflow.rendered = function() {
           }
         }
       });
-      // Email.send({
-      //   to: "Person McName <mattcucuzza@gmail.com>",
-      //   from: "Awesome App <admin@awesomeapp.com>",
-      //   subject: "Sending Email with Meteor is Easy!",
-      //   text: "This is the text in the body of our email."
-      // });
+      Meteor.call('notifcationSend');
     }
     else if (type == 'Initial') {
       NodesArray.push({
@@ -415,17 +405,18 @@ for (i in codeEdgeArray) {
   var startKey, endKey;
   var keyOne = EdgeDoc.source;
   var keyTwo = EdgeDoc.target;
+  var tranName = EdgeDoc.name;
   console.log("Transition source: "+ keyOne+ " target: " + keyTwo);
   var startDoc = StatesList.findOne({_id : EdgeDoc.source});
   var endDoc = StatesList.findOne({_id : EdgeDoc.target});
-  startTran = startDoc.name;
-  endTran = endDoc.name;
+  startTran = startDoc._id;
+  endTran = endDoc._id;
   for (k in NodesArray) {
-    if (NodesArray[k].label == startTran) {
+    if (NodesArray[k].id == startTran) {
       console.log("Start Tran Match Found");
       startKey = NodesArray[k].id;
     }
-    if (NodesArray[k].label == endTran) {
+    if (NodesArray[k].id == endTran) {
       console.log("End Tran Match Found");
       endKey = NodesArray[k].id;
     }
@@ -434,7 +425,8 @@ for (i in codeEdgeArray) {
     from: startKey,
     to: endKey,
     color: {color: '#97C2FC'},
-    arrows :'to'
+    arrows :'to',
+    label: tranName
   });
 }
 edges = new vis.DataSet(EdgesArray);
@@ -487,5 +479,4 @@ network.on("doubleClick", function(params) {
     $('#editWFModal').modal('toggle');
     editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="wfNameField" placeholder="'+wfName+'"/>';
   }
-    // nodeIds.push(id);
 }

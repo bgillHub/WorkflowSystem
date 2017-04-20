@@ -22,6 +22,10 @@ Template.createTrans.events({
       Workflows.update({_id: wfDoc._id}, {$set: {Transitions: newArray}});
       console.log("Transitions Updated, Object ID: " + newid);
       Meteor.call('createTransition', start, end);
+      document.getElementById("createForm").reset();
+      name = "";
+      start = "";
+      end = "";
     });//end callback
 
     /*
