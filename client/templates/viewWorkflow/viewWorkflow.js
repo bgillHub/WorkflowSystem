@@ -318,3 +318,172 @@ Template.viewWorkflow.onRendered( function () {
   nameContainer.innerHTML +=  '<p id="user">'+user+'</p>';
   console.log(user);
 });
+
+Template.viewWorkflow.rendered = function() {
+  var j = 1;
+  var codeArray = Workflows.findOne({workflowName: wfName}).States;
+  var codeEdgeArray = Workflows.findOne({workflowName: wfName}).Transitions;
+  var titleArray = [];
+  for (i in codeArray){
+    titleArray.push(StatesList.findOne({_id: codeArray[i]}));
+  }
+  StatesArray = titleArray;
+  console.log("WF Title: " + wfName);
+  console.log("States: " + StatesArray);
+  console.log("Edges: " + codeEdgeArray);
+  var NodesArray = [];
+  for (i in StatesArray) {
+    name = StatesArray[i].name;
+    key = StatesArray[i]._id;
+    console.log("Pushing with States: " + key);
+    type = StatesArray[i].type;
+    curKey = Workflows.findOne({workflowName: wfName}).currentState;
+    if (key == curKey){
+      NodesArray.push({
+        id: key,
+        label: name,
+        color:{
+          background: '#ffff00',
+          border: '#ffff00',
+          highlight:{
+            background: '#ffff00',
+            border: '#ffff00'
+          }
+        }
+      });
+      // Email.send({
+      //   to: "Person McName <mattcucuzza@gmail.com>",
+      //   from: "Awesome App <admin@awesomeapp.com>",
+      //   subject: "Sending Email with Meteor is Easy!",
+      //   text: "This is the text in the body of our email."
+      // });
+    }
+    else if (type == 'Initial') {
+      NodesArray.push({
+        id: key,
+        label: name,
+        color:{
+          background: '#32CD32',
+          border: '#32CD32',
+          highlight:{
+            background: '#32CD32',
+            border: '#32CD32'
+          }
+        }
+      });
+    } else if (type == "Final") {
+      NodesArray.push({
+        id: key,
+        label: name,
+        color:{
+          background: '#E06666',
+          border: '#E06666',
+          highlight:{
+            background: '#E06666',
+            border: '#E06666'
+          }
+        }
+      });
+    } else NodesArray.push({
+      id: key,
+      label: name,
+      color: {
+        background: '#97C2FC',
+        border:'#97C2FC',
+        highlight: {
+          background: '#97C2FC',
+          border: '#97C2FC'
+        }
+      }
+    });
+    //name = StatesArray[i];
+    //key = j;
+    //NodesArray.push({id: key, label: name});
+    j++
+  }
+
+nodes = new vis.DataSet(NodesArray);
+
+// edges attach by ID's
+
+var EdgesArray = [];
+for (i in codeEdgeArray) {
+  var EdgeDoc = Transitions.findOne({_id: codeEdgeArray[i]});
+  console.log("Transition name: " + EdgeDoc.name);
+  var startKey, endKey;
+  var keyOne = EdgeDoc.source;
+  var keyTwo = EdgeDoc.target;
+  console.log("Transition source: "+ keyOne+ " target: " + keyTwo);
+  var startDoc = StatesList.findOne({_id : EdgeDoc.source});
+  var endDoc = StatesList.findOne({_id : EdgeDoc.target});
+  startTran = startDoc.name;
+  endTran = endDoc.name;
+  for (k in NodesArray) {
+    if (NodesArray[k].label == startTran) {
+      console.log("Start Tran Match Found");
+      startKey = NodesArray[k].id;
+    }
+    if (NodesArray[k].label == endTran) {
+      console.log("End Tran Match Found");
+      endKey = NodesArray[k].id;
+    }
+  }
+  EdgesArray.push({
+    from: startKey,
+    to: endKey,
+    color: {color: '#97C2FC'},
+    arrows :'to'
+  });
+}
+edges = new vis.DataSet(EdgesArray);
+
+// create a network
+var container = document.getElementById('mynetwork');
+
+// provide the data in the vis format
+var data = {
+    nodes: nodes,
+    edges: edges
+};
+var options = {};
+
+// initialize your network!
+var network = new vis.Network(container, data, options);
+
+network.on("doubleClick", function(params) {
+  params.event = "[original event]";
+  var data = JSON.stringify(params, null, 4);
+  var json = JSON.parse(data);
+  console.log("node json: " + data);
+  var key = String(json.nodes);
+  console.log("node key: " + key);
+  console.log("node key type : " + typeof key);
+  var changeDoc = StatesList.findOne({_id: key});
+      if (changeDoc != null){
+      globalName = changeDoc.name;
+    editContainer = document.getElementById("editStateInput");
+    editContainer.innerHTML = '';
+    $('#editModal').modal('toggle');
+    editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="stateNameField" placeholder="'+globalName+'"/>';
+    console.log("Grabbed Old Name:" + globalName);
+  }
+  else {console.log("No Doc");}
+    // document.getElementById('stateNameField').innerHTML = name;
+
+  });
+  titleContainer = document.getElementById("title");
+  titleContainer.innerHTML = '';
+  titleContainer.innerHTML += '<h2 id="titleName">'+wfName+' <i class="fa fa-cog fa-lg" id="gear" aria-hidden="true"></i></h2>';
+
+/*document.getElementById("loadButton").onclick = function() {
+  this.disabled = true;
+}*/
+
+  document.getElementById("gear").onclick = function() {
+    editContainer = document.getElementById("editWFInput");
+    editContainer.innerHTML = '';
+    $('#editWFModal').modal('toggle');
+    editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="wfNameField" placeholder="'+wfName+'"/>';
+  }
+    // nodeIds.push(id);
+}

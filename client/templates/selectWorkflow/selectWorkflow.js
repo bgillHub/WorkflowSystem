@@ -4,21 +4,21 @@ Template.selectWorkflow.events({
     console.log("You pressed the back button");
     Router.go("/dashboardPage");
   },
-  'click #populate': function(e) {
-    e.preventDefault();
-    console.log("You  selected wfdrop");
-    WFCursor = Workflows.find().fetch();
-    //WFArray.push(WorkflowsList.find().fetch());
-    //console.log("Array " + WFArray);
-    wfContainer = document.getElementById("wfDrop");
-    wfContainer.innerHTML = null;
-    // var add = document.createDocumentFragment();
-    var a = 0;
-    for (i in WFCursor) {
-      name = WFCursor[i].workflowName;
-      wfContainer.innerHTML +=  '<option>'+ name +'</option>';
-      a++
-    }
+  // 'click #populate': function(e) {
+  //   e.preventDefault();
+  //   console.log("You  selected wfdrop");
+  //   WFCursor = Workflows.find().fetch();
+  //   //WFArray.push(WorkflowsList.find().fetch());
+  //   //console.log("Array " + WFArray);
+  //   wfContainer = document.getElementById("wfDrop");
+  //   wfContainer.innerHTML = null;
+  //   // var add = document.createDocumentFragment();
+  //   var a = 0;
+  //   for (i in WFCursor) {
+  //     name = WFCursor[i].workflowName;
+  //     wfContainer.innerHTML +=  '<option>'+ name +'</option>';
+  //     a++
+  //   }
     /*WFArray = WorkflowsList.find().fetch();
     //WFArray.push(WorkflowsList.find().fetch());
     console.log(WFArray);
@@ -41,7 +41,7 @@ Template.selectWorkflow.events({
       a++
     }*/
     // document.appendChild(add);
-  },
+  // },
   'click .logo': function(e){
     e.preventDefault();
     Router.go("/dashboardPage");
@@ -65,3 +65,36 @@ Template.selectWorkflow.onRendered( function () {
   console.log(user);
 
 });
+
+Template.selectWorkflow.rendered = function() {
+  console.log("You  selected wfdrop");
+  WFCursor = Workflows.find().fetch();
+  //WFArray.push(WorkflowsList.find().fetch());
+  //console.log("Array " + WFArray);
+  wfContainer = document.getElementById("wfDrop");
+  wfContainer.innerHTML = null;
+  // var add = document.createDocumentFragment();
+  var a = 0;
+  for (i in WFCursor) {
+    name = WFCursor[i].workflowName;
+    wfContainer.innerHTML +=  '<option>'+ name +'</option>';
+    a++
+  }
+}
+
+// Template.selectWorkflow.onCreated( function(e) {
+//     e.preventDefault();
+//     console.log("You  selected wfdrop");
+//     WFCursor = Workflows.find().fetch();
+//     //WFArray.push(WorkflowsList.find().fetch());
+//     //console.log("Array " + WFArray);
+//     wfContainer = document.getElementById("wfDrop");
+//     wfContainer.innerHTML = null;
+//     // var add = document.createDocumentFragment();
+//     var a = 0;
+//     for (i in WFCursor) {
+//       name = WFCursor[i].workflowName;
+//       wfContainer.innerHTML +=  '<option>'+ name +'</option>';
+//       a++
+//     }
+// });
