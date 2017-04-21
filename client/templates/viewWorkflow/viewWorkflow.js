@@ -7,6 +7,7 @@ Template.viewWorkflow.events({
   },
   'click #loadButton': function(e){
     e.preventDefault();
+    var email = Meteor.user().emails[0].address;
     var j = 1;
     var codeArray = Workflows.findOne({workflowName: wfName}).States;
     var codeEdgeArray = Workflows.findOne({workflowName: wfName}).Transitions;
@@ -38,7 +39,6 @@ Template.viewWorkflow.events({
             }
           }
         });
-        Meteor.call('notifcationSend');
       }
       else if (type == 'Initial') {
         NodesArray.push({
@@ -169,6 +169,7 @@ Template.viewWorkflow.events({
       $('#editWFModal').modal('toggle');
       editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="wfNameField" placeholder="'+wfName+'"/>';
     }
+    // Meteor.call('notifcationSend',email, wfName);
       // nodeIds.push(id);
   }, // end load button
   // 'click #editButton': function(e){
@@ -240,6 +241,7 @@ Template.viewWorkflow.events({
   },
   'click #taskButton': function (e){
     e.preventDefault();
+    var email = Meteor.user().emails[0].address;
     TransCursor = Transitions.find().fetch();
     currState = Workflows.findOne({workflowName: wfName}).currentState;
     console.log("currState : "+ currState);
@@ -253,8 +255,9 @@ Template.viewWorkflow.events({
       name = TransCursor[i].name;
       taskContainer.innerHTML +=  '<option>'+ name +'</option>';
       a++
+      }
     }
-    }
+    Meteor.call('notifcationSend',email, wfName);
   },
   'click #changeWFButton': function(e) {
     e.preventDefault();
@@ -310,6 +313,7 @@ $(document).ready(function(){
 
 Template.viewWorkflow.onRendered( function () {
   var user = Meteor.user().profile.name;
+  var email = Meteor.user().emails[0].address;
   // $('#loadButton').click();
   nameContainer = document.getElementById("logout");
   nameContainer.innerHTML +=  '<p id="user">'+user+'</p>';
@@ -348,7 +352,7 @@ Template.viewWorkflow.rendered = function() {
           }
         }
       });
-      Meteor.call('notifcationSend');
+      // Meteor.call('notifcationSend');
     }
     else if (type == 'Initial') {
       NodesArray.push({

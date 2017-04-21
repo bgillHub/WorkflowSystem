@@ -5,7 +5,7 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // process.env.MAIL_URL = "smtp://postmaster%40<mattcucuzza@gmail.com>.mailgun.org:password@smtp.mailgun.org:587";
-    process.env.MAIL_URL = "smtp://postmaster%40<sandbox99d398c004f949b4be5dab3d89b65fe9>.mailgun.org:e892cbab85f3d72c7d288b92482b7765@smtp.mailgun.org:587"
+    // process.env.MAIL_URL = "smtp://postmaster%40sandbox99d398c004f949b4be5dab3d89b65fe9.mailgun.org:truffle@smtp.mailgun.org:587"
     console.log("Meteor Started As Server in Main");
   });
 

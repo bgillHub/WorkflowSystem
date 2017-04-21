@@ -1,3 +1,11 @@
+if (Meteor.isServer) {
+  Meteor.startup(function () {
+    // process.env.MAIL_URL = "smtp://postmaster%40<mattcucuzza@gmail.com>.mailgun.org:password@smtp.mailgun.org:587";
+    process.env.MAIL_URL = "smtp://postmaster%40sandbox99d398c004f949b4be5dab3d89b65fe9.mailgun.org:password@smtp.mailgun.org:587"
+    console.log("Meteor Started As Server in Main");
+  });
+}
+
 Meteor.methods({
   'updateTransitions': function(){
     Workflows.update(
@@ -14,14 +22,14 @@ Meteor.methods({
     {upsert: true}
   );
 },
-// 'notifcationSend': function(e){
-//   Meteor.defer(function() {
-//     Email.send({
-//       to: "User <mattcucuzza@gmail.com>",
-//       from: "FlexFlow Admin <admin@localhost.com>",
-//       subject: "Sending Email with Meteor is Easy!",
-//       text: "This is the text in the body of our email."
-//     })
-//   });
-//   }
+'notifcationSend': function(user, wfName){
+  Meteor.defer(function() {
+    Email.send({
+      to: user,
+      from: "FlexFlow Administrator <admin@localhost.com>",
+      subject: "FlexFlow: Task Completion Notification",
+      text: "A task has been completed on the workflow " + wfName + ". Please visit FlexFlow and check on the progress of " + wfName + "."
+    })
+  });
+  }
 });
