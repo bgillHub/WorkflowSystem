@@ -1,6 +1,7 @@
 var globalName = "";
 var gitVar = '';
 Template.viewWorkflow.events({
+  // Reroute back to dashboard upon logo click
   'click .logo': function(e){
     e.preventDefault();
     Router.go("/dashboardPage");
@@ -9,6 +10,8 @@ Template.viewWorkflow.events({
     e.preventDefault();
     Router.go("/addUser");
   },
+
+  // Refresh Button Event, same idea as load on render but as a backup to reload the workflow
   'click #loadButton': function(e){
     e.preventDefault();
     var email = Meteor.user().emails[0].address;
@@ -20,9 +23,12 @@ Template.viewWorkflow.events({
       titleArray.push(StatesList.findOne({_id: codeArray[i]}));
     }
     StatesArray = titleArray;
+
     console.log("WF Title: " + wfName);
     console.log("States: " + StatesArray);
     console.log("Edges: " + codeEdgeArray);
+
+    // Beginning of data visualization for view workflow
     var NodesArray = [];
     for (i in StatesArray) {
       name = StatesArray[i].name;
@@ -82,107 +88,102 @@ Template.viewWorkflow.events({
           }
         }
       });
-      //name = StatesArray[i];
-      //key = j;
-      //NodesArray.push({id: key, label: name});
       j++
     }
 
-  nodes = new vis.DataSet(NodesArray);
+    // Definition of states to be viewed
+    nodes = new vis.DataSet(NodesArray);
 
-  // edges attach by ID's
-
-  var EdgesArray = [];
-  for (i in codeEdgeArray) {
-    var EdgeDoc = Transitions.findOne({_id: codeEdgeArray[i]});
-    console.log("Transition name: " + EdgeDoc.name);
-    var startKey, endKey;
-    var keyOne = EdgeDoc.source;
-    var keyTwo = EdgeDoc.target;
-    var tranName = EdgeDoc.name;
-    console.log("Transition source: "+ keyOne+ " target: " + keyTwo);
-    var startDoc = StatesList.findOne({_id : EdgeDoc.source});
-    var endDoc = StatesList.findOne({_id : EdgeDoc.target});
-    startTran = startDoc._id;
-    endTran = endDoc._id;
-    for (k in NodesArray) {
-      if (NodesArray[k].id == startTran) {
+    // Transitions visualization
+    var EdgesArray = [];
+    for (i in codeEdgeArray) {
+      var EdgeDoc = Transitions.findOne({_id: codeEdgeArray[i]});
+      console.log("Transition name: " + EdgeDoc.name);
+      var startKey, endKey;
+      var keyOne = EdgeDoc.source;
+      var keyTwo = EdgeDoc.target;
+      var tranName = EdgeDoc.name;
+      console.log("Transition source: "+ keyOne+ " target: " + keyTwo);
+      var startDoc = StatesList.findOne({_id : EdgeDoc.source});
+      var endDoc = StatesList.findOne({_id : EdgeDoc.target});
+      startTran = startDoc._id;
+      endTran = endDoc._id;
+      for (k in NodesArray) {
+        if (NodesArray[k].id == startTran) {
         console.log("Start Tran Match Found");
         startKey = NodesArray[k].id;
+        }
+        if (NodesArray[k].id == endTran) {
+          console.log("End Tran Match Found");
+          endKey = NodesArray[k].id;
+        }
       }
-      if (NodesArray[k].id == endTran) {
-        console.log("End Tran Match Found");
-        endKey = NodesArray[k].id;
-      }
+      EdgesArray.push({
+        from: startKey,
+        to: endKey,
+        color: {color: '#97C2FC'},
+        arrows :'to',
+        label: tranName
+      });
     }
-    EdgesArray.push({
-      from: startKey,
-      to: endKey,
-      color: {color: '#97C2FC'},
-      arrows :'to',
-      label: tranName
-    });
-  }
-  edges = new vis.DataSet(EdgesArray);
 
-  // create a network
-  var container = document.getElementById('mynetwork');
+    // Definition of transitions to be viewed
+    edges = new vis.DataSet(EdgesArray);
 
-  // provide the data in the vis format
-  var data = {
+    var container = document.getElementById('mynetwork');
+
+  // States and Transitions added to the data
+    var data = {
       nodes: nodes,
       edges: edges
-  };
-  var options = {};
+    };
 
-  // initialize your network!
-  var network = new vis.Network(container, data, options);
+    // Empty set of options
+    // Can add options based on visJS docs
+    var options = {
 
-  network.on("doubleClick", function(params) {
-    params.event = "[original event]";
-    var data = JSON.stringify(params, null, 4);
-    var json = JSON.parse(data);
-    console.log("node json: " + data);
-    var key = String(json.nodes);
-    console.log("node key: " + key);
-    console.log("node key type : " + typeof key);
-    var changeDoc = StatesList.findOne({_id: key});
-        if (changeDoc != null){
+    };
+
+    // Initalization of Network using the container, data, and options
+    var network = new vis.Network(container, data, options);
+
+    // Set double click event on network to toggle a modal
+    network.on("doubleClick", function(params) {
+      params.event = "[original event]";
+      var data = JSON.stringify(params, null, 4);
+      var json = JSON.parse(data);
+      console.log("node json: " + data);
+      var key = String(json.nodes);
+      console.log("node key: " + key);
+      console.log("node key type : " + typeof key);
+      var changeDoc = StatesList.findOne({_id: key});
+      if (changeDoc != null) {
         globalName = changeDoc.name;
-      editContainer = document.getElementById("editStateInput");
-      editContainer.innerHTML = '';
-      $('#editModal').modal('toggle');
-      editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="stateNameField" placeholder="'+globalName+'"/>';
-      console.log("Grabbed Old Name:" + globalName);
-    }
-    else {console.log("No Doc");}
-      // document.getElementById('stateNameField').innerHTML = name;
+        editContainer = document.getElementById("editStateInput");
+        editContainer.innerHTML = '';
+        $('#editModal').modal('toggle');
+        editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="stateNameField" placeholder="'+globalName+'"/>';
+        console.log("Grabbed Old Name:" + globalName);
+      } else {
+        console.log("No Doc");
+      }
 
     });
+
     titleContainer = document.getElementById("title");
     titleContainer.innerHTML = '';
     titleContainer.innerHTML += '<h2 id="titleName">'+wfName+' <i class="fa fa-cog fa-lg" id="gear" aria-hidden="true"></i></h2>';
 
-  /*document.getElementById("loadButton").onclick = function() {
-    this.disabled = true;
-  }*/
-
+    // Edit workflow name
     document.getElementById("gear").onclick = function() {
       editContainer = document.getElementById("editWFInput");
       editContainer.innerHTML = '';
       $('#editWFModal').modal('toggle');
       editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="wfNameField" placeholder="'+wfName+'"/>';
     }
-    // Meteor.call('notifcationSend',email, wfName);
-      // nodeIds.push(id);
   }, // end load button
-  // 'click #editButton': function(e){
-  //   document.getElementById('stateNameField').innerHTML = "state";
-  //   if (machine != null){
-  //     console.log("You pressed Edit Workflow button");
-  //     // Router.go("/createState");
-  //   } else alert('No Workflow Selected!');
-  // }
+
+  // Confirm Deletion Event
   'click #confirmDelete': function(e) {
     e.preventDefault();
     var debugRegions = machine.regions;
@@ -196,6 +197,7 @@ Template.viewWorkflow.events({
     var deleteName = document.getElementById("deleteField").value;
     var deleteQuery = Workflows.findOne({ workflowName: deleteName});
     if (deleteQuery){
+      // You must remove workflows by the id
       Workflows.remove({
         _id: deleteQuery._id
       });
@@ -204,45 +206,42 @@ Template.viewWorkflow.events({
     document.getElementById("deleteForm").reset();
     //console.log(deleteName + ", has been deleted!");
     regional = machine.getDefaultRegion();
-    /*if (regional!= null){
-      var stateList = regional.vertices;
-      for (i in statesArray){
-          if (deleteName = i){
-            let index = statesArray.indexOf(i);
-            statesArray.splice(index, 1);
-            console.log(deleteName + ", has been deleted from array!");
-            console.log("Array:" + statesArray);
-          }
-        }
-        console.log("States AFTER: " + regional.vertices);
-      }*/
-    //end if exists
     deleteName = "";
     console.log(StatesList.find().fetch());
-    // Router.go("/createState");
-  },
+  }, // end confirmDelete
+
+  // Close the edit modal that has been toggled
   'click .close': function (e){
     e.preventDefault();
     $("#nameField").remove();
   },
+
+  // Advance in the workflow from the modal that's been toggled
   'click #continueWFButton': function (e){
     e.preventDefault();
     taskText = document.getElementById("taskDrop").value;
     console.log("Confimred Value: " + taskText);
     var wfDoc = Workflows.findOne({workflowName: wfName});
+
     if (wfDoc){
+    // Update the current workflow based on task completion
     Workflows.update({_id: wfDoc._id},{
       $set:{
         currentState: Transitions.findOne({name: taskText}).target,
         completedTransitions: wfDoc.completedTransitions + Transitions.findOne({name: taskText})._id}},
       {upsert: false});
     }
+
     //Update The number of ties completed
     StatesList.update({_id: Transitions.findOne({name: taskText}).target},{$inc: {completedTimes: 1}},{upsert: false});
+
+    // If the terminal state is reached, an alert is toggled
     if (StatesList.findOne({_id: Transitions.findOne({name: taskText}).target}).type == "Final"){
       alert("Terminal State Reached!! Please Alert your supervisor.");
     }
-  },
+  }, // end continueWF
+
+  // Bring up task advance modal
   'click #taskButton': function (e){
     e.preventDefault();
     var email = Meteor.user().emails[0].address;
@@ -262,7 +261,9 @@ Template.viewWorkflow.events({
       }
     }
     Meteor.call('notifcationSend',email, wfName);
-  },
+  }, // end taskButton
+
+  // Change the Workflow name
   'click #changeWFButton': function(e) {
     e.preventDefault();
     var name = document.getElementById('wfNameField').value;
@@ -270,18 +271,12 @@ Template.viewWorkflow.events({
     if (wfDoc){
     Workflows.update({_id: wfDoc._id},{$set:{workflowName: name}},{upsert: false});}
     console.log("Changed Name: " + globalName + "To: " + name);
-    /*for (i in NodesArray) {
-      var key = 0;
-      console.log("json: " + json);
-      if (name = NodesArray[i].label) {
-        key = NodesArray[i].id;
-        nodes.update([{id: key, label: name}]);
-      }
-    }*/
     $("#wfNameField").remove();
     wfName = name;
     titleContainer.innerHTML += '<h2 id="titleName">'+wfName+'<i class="fa fa-cog fa-lg" id="gear" aria-hidden="true"></i></h2>';
-  },
+  }, // end changeWFButton
+
+  // Change state name
   'click #changeButton': function(e) {
     e.preventDefault();
     var name = document.getElementById('stateNameField').value;
@@ -289,18 +284,11 @@ Template.viewWorkflow.events({
     if (stateDoc){
     StatesList.update({_id: stateDoc._id},{$set:{name: name}}, {upsert:false});}
     console.log("Changed Name: " + globalName + "To: " + name);
-    /*for (i in NodesArray) {
-      var key = 0;
-      console.log("json: " + json);
-      if (name = NodesArray[i].label) {
-        key = NodesArray[i].id;
-        nodes.update([{id: key, label: name}]);
-      }
-      console.log("States AFTER: " + regional.vertices);
-    }*/
     $("#stateNameField").remove();
     document.getElementById("loadButton").click();
   },
+
+  // Logout event in the upper corner
   'click .logoutLink': function(e) {
     e.preventDefault();
     Meteor.logout();
@@ -315,6 +303,7 @@ $(document).ready(function(){
   });
 });
 
+
 Template.viewWorkflow.onRendered( function () {
   var user = Meteor.user().profile.name;
   var email = Meteor.user().emails[0].address;
@@ -324,6 +313,7 @@ Template.viewWorkflow.onRendered( function () {
   console.log(user);
 });
 
+// Must use template rendered to automatically view the workflow without having to create a load button
 Template.viewWorkflow.rendered = function() {
   var j = 1;
   var codeArray = Workflows.findOne({workflowName: wfName}).States;
@@ -333,9 +323,12 @@ Template.viewWorkflow.rendered = function() {
     titleArray.push(StatesList.findOne({_id: codeArray[i]}));
   }
   StatesArray = titleArray;
+
   console.log("WF Title: " + wfName);
   console.log("States: " + StatesArray);
   console.log("Edges: " + codeEdgeArray);
+
+  // Beginning of data visualization for view workflow
   var NodesArray = [];
   for (i in StatesArray) {
     name = StatesArray[i].name;
@@ -356,7 +349,6 @@ Template.viewWorkflow.rendered = function() {
           }
         }
       });
-      // Meteor.call('notifcationSend');
     }
     else if (type == 'Initial') {
       NodesArray.push({
@@ -396,95 +388,94 @@ Template.viewWorkflow.rendered = function() {
         }
       }
     });
-    //name = StatesArray[i];
-    //key = j;
-    //NodesArray.push({id: key, label: name});
     j++
   }
 
-nodes = new vis.DataSet(NodesArray);
+  // Definition of states to be viewed
+  nodes = new vis.DataSet(NodesArray);
 
-// edges attach by ID's
-
-var EdgesArray = [];
-for (i in codeEdgeArray) {
-  var EdgeDoc = Transitions.findOne({_id: codeEdgeArray[i]});
-  console.log("Transition name: " + EdgeDoc.name);
-  var startKey, endKey;
-  var keyOne = EdgeDoc.source;
-  var keyTwo = EdgeDoc.target;
-  var tranName = EdgeDoc.name;
-  console.log("Transition source: "+ keyOne+ " target: " + keyTwo);
-  var startDoc = StatesList.findOne({_id : EdgeDoc.source});
-  var endDoc = StatesList.findOne({_id : EdgeDoc.target});
-  startTran = startDoc._id;
-  endTran = endDoc._id;
-  for (k in NodesArray) {
-    if (NodesArray[k].id == startTran) {
+  // Transitions visualization
+  var EdgesArray = [];
+  for (i in codeEdgeArray) {
+    var EdgeDoc = Transitions.findOne({_id: codeEdgeArray[i]});
+    console.log("Transition name: " + EdgeDoc.name);
+    var startKey, endKey;
+    var keyOne = EdgeDoc.source;
+    var keyTwo = EdgeDoc.target;
+    var tranName = EdgeDoc.name;
+    console.log("Transition source: "+ keyOne+ " target: " + keyTwo);
+    var startDoc = StatesList.findOne({_id : EdgeDoc.source});
+    var endDoc = StatesList.findOne({_id : EdgeDoc.target});
+    startTran = startDoc._id;
+    endTran = endDoc._id;
+    for (k in NodesArray) {
+      if (NodesArray[k].id == startTran) {
       console.log("Start Tran Match Found");
       startKey = NodesArray[k].id;
+      }
+      if (NodesArray[k].id == endTran) {
+        console.log("End Tran Match Found");
+        endKey = NodesArray[k].id;
+      }
     }
-    if (NodesArray[k].id == endTran) {
-      console.log("End Tran Match Found");
-      endKey = NodesArray[k].id;
-    }
+    EdgesArray.push({
+      from: startKey,
+      to: endKey,
+      color: {color: '#97C2FC'},
+      arrows :'to',
+      label: tranName
+    });
   }
-  EdgesArray.push({
-    from: startKey,
-    to: endKey,
-    color: {color: '#97C2FC'},
-    arrows :'to',
-    label: tranName
-  });
-}
-edges = new vis.DataSet(EdgesArray);
 
-// create a network
-var container = document.getElementById('mynetwork');
+  // Definition of transitions to be viewed
+  edges = new vis.DataSet(EdgesArray);
 
-// provide the data in the vis format
-var data = {
+  var container = document.getElementById('mynetwork');
+
+// States and Transitions added to the data
+  var data = {
     nodes: nodes,
     edges: edges
-};
-var options = {};
+  };
 
-// initialize your network!
-var network = new vis.Network(container, data, options);
+  // Empty set of options
+  var options = {};
 
-network.on("doubleClick", function(params) {
-  params.event = "[original event]";
-  var data = JSON.stringify(params, null, 4);
-  var json = JSON.parse(data);
-  console.log("node json: " + data);
-  var key = String(json.nodes);
-  console.log("node key: " + key);
-  console.log("node key type : " + typeof key);
-  var changeDoc = StatesList.findOne({_id: key});
-      if (changeDoc != null){
+  // Initalization of Network using the container, data, and options
+  var network = new vis.Network(container, data, options);
+
+  // Set double click event on network to toggle a modal
+  network.on("doubleClick", function(params) {
+    params.event = "[original event]";
+    var data = JSON.stringify(params, null, 4);
+    var json = JSON.parse(data);
+    console.log("node json: " + data);
+    var key = String(json.nodes);
+    console.log("node key: " + key);
+    console.log("node key type : " + typeof key);
+    var changeDoc = StatesList.findOne({_id: key});
+    if (changeDoc != null) {
       globalName = changeDoc.name;
-    editContainer = document.getElementById("editStateInput");
-    editContainer.innerHTML = '';
-    $('#editModal').modal('toggle');
-    editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="stateNameField" placeholder="'+globalName+'"/>';
-    console.log("Grabbed Old Name:" + globalName);
-  }
-  else {console.log("No Doc");}
-    // document.getElementById('stateNameField').innerHTML = name;
+      editContainer = document.getElementById("editStateInput");
+      editContainer.innerHTML = '';
+      $('#editModal').modal('toggle');
+      editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="stateNameField" placeholder="'+globalName+'"/>';
+      console.log("Grabbed Old Name:" + globalName);
+    } else {
+      console.log("No Doc");
+    }
 
   });
+
   titleContainer = document.getElementById("title");
   titleContainer.innerHTML = '';
   titleContainer.innerHTML += '<h2 id="titleName">'+wfName+' <i class="fa fa-cog fa-lg" id="gear" aria-hidden="true"></i></h2>';
 
-/*document.getElementById("loadButton").onclick = function() {
-  this.disabled = true;
-}*/
-
+  // Edit workflow name
   document.getElementById("gear").onclick = function() {
     editContainer = document.getElementById("editWFInput");
     editContainer.innerHTML = '';
     $('#editWFModal').modal('toggle');
     editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="wfNameField" placeholder="'+wfName+'"/>';
   }
-}
+} // end rendered

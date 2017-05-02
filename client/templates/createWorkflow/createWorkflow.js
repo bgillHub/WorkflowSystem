@@ -1,10 +1,14 @@
 Template.createWorkflow.events({
+
+  // Create Workflow Event
   'click #createButton': function(e) {
     e.preventDefault();
     var name = document.getElementById("nameField").value;
     wfName = name;
     var profile = String(Meteor.userId());
     console.log("User id: " +profile);
+
+    // Inserts a workflow name, with an empty set of states & transitions for now
     Workflows.insert({workflowName: wfName,
     States: [],
     Transitions: [],
@@ -14,6 +18,8 @@ Template.createWorkflow.events({
       States: [],
       Transitions: []
     },{upsert : true});*/
+
+    // Workflow is specific to a user
     WorkflowsList.insert({
       name: name
     });
@@ -41,6 +47,7 @@ Template.createWorkflow.events({
   }
 });
 
+// Logout area in the upper right corner
 Template.createWorkflow.onRendered( function () {
   var user = Meteor.user().profile.name;
 
