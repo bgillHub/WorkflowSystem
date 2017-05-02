@@ -1,0 +1,35 @@
+<template name ="addUser">
+  <script>
+  function insertUser() {
+    console.log("Function Called");
+    console.log("Selected Name:" +  document.getElementById('userDrop').value);
+    userKey = UserAccounts.findOne({profile.name:  document.getElementById('userDrop').value})._id;
+    UserArray = Workflows.findOne({workflowName: wfName}).Users;
+    UserArray += userKey;
+    console.log("User Array:" +  UserArray);
+  }
+  </script>
+  <div class="container-fluid ">
+    <div class="col-md-6 col-md-offset-3 text-center">
+      <img src="/images/logo.png" class="logo">
+    </div>
+    <div id="logout">
+      <a href="#" class="logoutLink">Logout</a>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3" id="addUserArea">
+        <h2>Add A User</h2>
+        <!-- <div id ="workflow">
+          <label>WF1</label>
+        </div> -->
+        <!-- <button type="button" id="populate" class="btn btn-success">Populate</button> -->
+        <button type="button" id="addUser" class="btn btn-success addUser">Add</button>
+        <br>
+        <div class="form-group statesForm">
+          <select class="form-control" id="userDrop">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

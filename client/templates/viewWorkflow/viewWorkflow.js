@@ -5,6 +5,10 @@ Template.viewWorkflow.events({
     e.preventDefault();
     Router.go("/dashboardPage");
   },
+  'click #addUserButton': function(e){
+    e.preventDefault();
+    Router.go("/addUser");
+  },
   'click #loadButton': function(e){
     e.preventDefault();
     var email = Meteor.user().emails[0].address;

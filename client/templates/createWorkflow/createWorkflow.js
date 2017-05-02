@@ -8,7 +8,7 @@ Template.createWorkflow.events({
     Workflows.insert({workflowName: wfName,
     States: [],
     Transitions: [],
-    Users: profile });
+    Users: [profile] });
     /*Workflows.update({workflowName: wfName},{
       workflowName: wfName,
       States: [],

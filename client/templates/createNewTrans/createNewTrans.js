@@ -61,8 +61,7 @@ Template.createTrans.events({
   },
   'click #viewButton': function(e){
     e.preventDefault();
-    console.log("You pressed the view transitions button");
-    console.log(Transitions.find().fetch());
+    console.log("You pressed the add Users button");
     Router.go("/viewWorkflow");
   },
   'click #cancelButton': function(e){
