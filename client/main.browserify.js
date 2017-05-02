@@ -4,16 +4,13 @@ if (Meteor.isClient) {
   //  wfName = "New";
     selectedFlow = Workflows.findOne();
     state.setConsole(console);
-    //machine = new state.StateMachine("machine");
-    //initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
-    //terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
     statesArray = [];
     transArray=[];
     currentWorkflow = "Workflow";
     console.log("Proof that Workflows Exists:" + Workflows.find().fetch());
     console.log("Meteor Executed Client Code. Created StateMachine");
     console.log("Meteor started as Client with Browserify");
-  });//end startup
+  }); //end startup
 }// if is client
 
 if (Meteor.isServer) {
@@ -37,23 +34,12 @@ if (Meteor.isServer) {
       let verticesArray = machine.getDefaultRegion().vertices;
       console.log("Vertices from default region: " + verticesArray);
       console.log("States from current array: " + statesArray);
-      /*for (i in verticesArray){
-        statesArray.push(i.name);
-        console.log("State Name: " + i.name);
-      }*/
-    },//end  saveWorkflow
+    }, //end  saveWorkflow
+
     'addState': function (Name, Type){
       var state = require('state.js');
       state.setConsole(console);
       newState = new state.State(Name, machine);
-      /*initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
-      terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
-      if (Type == "Initial"){
-        initial.to(newState);
-      }
-      else if (Type == "Final"){
-        newState.to(terminal);
-      }*/
       statesArray.push(Name);
       StatesList.insert({
         stateName: Name,
@@ -63,9 +49,11 @@ if (Meteor.isServer) {
       //state.initialise(machine, instance);
       console.log("Current Array: " + statesArray);
     },//end addState
+
     'loadStates' : function(){
       var deleteQuery = StatesList.findOne({ name: deleteName});
     },
+
     'loadWorkflow' : function(){
       selectedFlow = Workflows.findOne();
       console.log("Calling Load Function");

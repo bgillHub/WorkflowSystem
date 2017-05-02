@@ -1,12 +1,13 @@
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    // process.env.MAIL_URL = "smtp://postmaster%40<mattcucuzza@gmail.com>.mailgun.org:password@smtp.mailgun.org:587";
+    // This MailGun URL is needed by Meteor's Email package to authorize emails
     process.env.MAIL_URL = "smtp://postmaster%40sandbox99d398c004f949b4be5dab3d89b65fe9.mailgun.org:password@smtp.mailgun.org:587"
     console.log("Meteor Started As Server in Main");
   });
 }
 
 Meteor.methods({
+  // Meteor method that updates transitions in the workflow
   'updateTransitions': function(){
     Workflows.update(
    {workflowName: wfName},
@@ -22,8 +23,12 @@ Meteor.methods({
     {upsert: true}
   );
 },
+
+// Method to send notifications that will be called in the viewWorkflow js
 'notifcationSend': function(user, wfName){
+  // Email must be wrapped in a defer block otherwise it won't work 
   Meteor.defer(function() {
+    // Email composition that will be sent to the users
     Email.send({
       to: user,
       from: "FlexFlow Administrator <admin@localhost.com>",

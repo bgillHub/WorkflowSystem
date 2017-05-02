@@ -1,4 +1,3 @@
-//var state = require("state.js");
 Template.createState.events({
   'click #createButton': function(e) {
     e.preventDefault();
@@ -12,7 +11,11 @@ Template.createState.events({
     } else if (document.getElementById("finalRadio").checked) {
       var stateType = "Final";
     }
+
+    // Finds the workflow name
     wfDoc = Workflows.findOne({workflowName: wfName});
+
+    // Grabs the state name and the type
     var insertedState = {name: name, type: stateType};
     StatesList.insert(insertedState, function(err, reference){
       if (err) {console.log("Error: " + err); return;}
@@ -24,8 +27,11 @@ Template.createState.events({
          var newid = StatesList.findOne({name: name})._id // this will return the id of object inserted
          var newArray = wfDoc.States;
          newArray.push(newid);
+
+         // Updates the workflow with the newly created state
          Workflows.update({_id: wfDoc._id}, {$set: {States: newArray}});
          if (document.getElementById("initialRadio").checked) {
+           // Sets the state type in the workflow
            Workflows.update({_id: wfDoc._id}, {$set: {currentState: newid}});
          }
          console.log("StatesList Updated, Object ID: " + newid);
@@ -38,23 +44,6 @@ Template.createState.events({
       stateTime = "";
       alert("State " + name + "created.");
     });//end callback
-
-    /*StatesList.insert({
-      name: name,
-      time: stateTime,
-      type: stateType
-    });
-    if (Meteor.isServer) {
-      console.log("Calling Add Method");
-      Meteor.call('addState', name, stateType);
-      console.log("State Inserted On Server Method");
-    }
-    else {
-      console.log("Calling Add Method");
-      Meteor.call('addState', name, stateType);
-      console.log("State Inserted On Client Method");
-    } */
-
   }, // end createButton
   'click #clearButton': function(e){
     e.preventDefault();
@@ -65,19 +54,13 @@ Template.createState.events({
   }, // end clearButton
   'click #viewButton': function(e) {
     e.preventDefault();
-    //console.log("Workflow Name: " + Workflows.findOne({}).workflowName);
     Meteor.call('saveWorkflow');
     Router.go("/createTrans");
   },
   'click #cancelButton': function(e){
-    //Meteor.call('saveWorkflow', wfName);
     e.preventDefault();
     Meteor.call('saveWorkflow');
     console.log("Updating Workflow");
-    /*Workflows.insert({
-      workflowName: wfName,
-      States: statesArray
-    });*/
     console.log("ALL WORKFLOW NAMES: " + Workflows.find({}).fetch());
     Router.go("/dashboardPage");
   }, // end cancelButton
@@ -94,7 +77,6 @@ Template.createState.events({
 
 Template.createState.onRendered( function () {
   var user = Meteor.user().profile.name;
-
   nameContainer = document.getElementById("logout");
   nameContainer.innerHTML +=  '<p id="user">'+user+'</p>';
   console.log(user);

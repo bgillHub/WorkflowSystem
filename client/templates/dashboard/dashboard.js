@@ -1,3 +1,5 @@
+// All of the events on this page redirect you to the respective router 
+
 Template.dashboardPage.events({
   'click #createStateButton': function(e){
     e.preventDefault();
@@ -30,12 +32,6 @@ Template.dashboardPage.events({
   },
   'click .selectWorkflowArea': function(e) {
     e.preventDefault();
-    /*selectedFlow = Workflows.findOne({workflowName: wfName});
-    if (selectedFlow != null){
-    Meteor.call('loadWorkflow');}
-    else {
-      console.log("No Workflow Found");
-    }*/
     console.log("You pressed the View Workflow button");
     Router.go("/selectWorkflow");
   },
