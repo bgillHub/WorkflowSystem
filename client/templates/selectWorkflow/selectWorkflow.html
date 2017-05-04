@@ -9,8 +9,19 @@
   <script>
   function editWF() {
     console.log("Function Called");
+    // Get User Id as a String:
+    var curUser = String(Meteor.userId());
+    // Get  wf:
+    var wfDoc = Workflows.findOne({workflowName: document.getElementById('wfDrop').value});
+    // Get admin:
+    var admin = wfDoc.Admin;
+    if (curUser != admin) {
+      alert("You Dont Own This Workflow!!");
+    }
+    else {
     Meteor.call('loadWorkflow', document.getElementById('wfDrop').value);
     Router.go("/createState");
+    }
   }
   </script>
   <div class="container-fluid ">

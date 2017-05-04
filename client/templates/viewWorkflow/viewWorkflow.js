@@ -1,5 +1,20 @@
 var globalName = "";
 var gitVar = '';
+function checkUser(){
+  console.log("Check User Fired!");
+  // Get User Id as a String:
+  var curUser = String(Meteor.userId());
+  // Get  wf:
+  var wfDoc = Workflows.findOne({workflowName: wfName});
+  // Get admin:
+  var admin = wfDoc.Admin;
+  //Check match & Hide Button
+  if (curUser!=admin){
+  alert("You do not own this workflow");
+  return false;
+  }
+  else return true;
+}
 Template.viewWorkflow.events({
   // Reroute back to dashboard upon logo click
   'click .logo': function(e){
@@ -10,7 +25,21 @@ Template.viewWorkflow.events({
     e.preventDefault();
     Router.go("/addUser");
   },
-
+  'click #deleteButton': function(e){
+    e.preventDefault();
+    console.log("Check User Fired!");
+    // Get User Id as a String:
+    var curUser = String(Meteor.userId());
+    // Get  wf:
+    var wfDoc = Workflows.findOne({workflowName: wfName});
+    // Get admin:
+    var admin = wfDoc.Admin;
+    //Check match & Hide Button
+    if (curUser!=admin){
+    alert("You do not own this workflow");
+    $("#myModalHorizontal").modal("toggle");
+    }
+  },
   // Refresh Button Event, same idea as load on render but as a backup to reload the workflow
   'click #loadButton': function(e){
     e.preventDefault();
@@ -149,6 +178,19 @@ Template.viewWorkflow.events({
 
     // Set double click event on network to toggle a modal
     network.on("doubleClick", function(params) {
+      console.log("Check User Fired!");
+      // Get User Id as a String:
+      var curUser = String(Meteor.userId());
+      // Get  wf:
+      var wfDoc = Workflows.findOne({workflowName: wfName});
+      // Get admin:
+      var admin = wfDoc.Admin;
+      //Check match & Hide Button
+      if (curUser!=admin){
+      alert("You do not own this workflow");
+      return false;
+      }
+      else {
       params.event = "[original event]";
       var data = JSON.stringify(params, null, 4);
       var json = JSON.parse(data);
@@ -167,7 +209,7 @@ Template.viewWorkflow.events({
       } else {
         console.log("No Doc");
       }
-
+    }//end checkUser is true
     });
 
     titleContainer = document.getElementById("title");
@@ -176,10 +218,24 @@ Template.viewWorkflow.events({
 
     // Edit workflow name
     document.getElementById("gear").onclick = function() {
+      console.log("Check User Fired!");
+      // Get User Id as a String:
+      var curUser = String(Meteor.userId());
+      // Get  wf:
+      var wfDoc = Workflows.findOne({workflowName: wfName});
+      // Get admin:
+      var admin = wfDoc.Admin;
+      //Check match & Hide Button
+      if (curUser!=admin){
+      alert("You do not own this workflow");
+      return false;
+      }
+      else {
       editContainer = document.getElementById("editWFInput");
       editContainer.innerHTML = '';
       $('#editWFModal').modal('toggle');
       editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="wfNameField" placeholder="'+wfName+'"/>';
+      }
     }
   }, // end load button
 
@@ -239,12 +295,24 @@ Template.viewWorkflow.events({
     if (StatesList.findOne({_id: Transitions.findOne({name: taskText}).target}).type == "Final"){
       alert("Terminal State Reached!! Please Alert your supervisor.");
     }
+
+    var wfUsers = Workflows.findOne({workflowName: wfName}).Users;
+    for (i in wfUsers){
+      console.log("User : " + i);
+      var user =  UserAccounts.findOne({_id: wfUsers[i]});
+      console.log("UserStuff: " + user.profile.name);
+      var emailList = user.emails[0];
+      console.log("EList: " + emailList);
+      var email = emailList.address;
+      console.log("Email Found: " + email);
+      Meteor.call('notifcationSend',email, wfName);
+    }
   }, // end continueWF
 
   // Bring up task advance modal
   'click #taskButton': function (e){
     e.preventDefault();
-    var email = Meteor.user().emails[0].address;
+    //var email = Meteor.user().emails[0].address;
     TransCursor = Transitions.find().fetch();
     currState = Workflows.findOne({workflowName: wfName}).currentState;
     console.log("currState : "+ currState);
@@ -260,7 +328,6 @@ Template.viewWorkflow.events({
       a++
       }
     }
-    Meteor.call('notifcationSend',email, wfName);
   }, // end taskButton
 
   // Change the Workflow name
@@ -319,6 +386,8 @@ Template.viewWorkflow.rendered = function() {
   var codeArray = Workflows.findOne({workflowName: wfName}).States;
   var codeEdgeArray = Workflows.findOne({workflowName: wfName}).Transitions;
   var titleArray = [];
+  Meteor.subscribe('allUsers');
+  console.log("Meteor Subscribed to users");
   for (i in codeArray){
     titleArray.push(StatesList.findOne({_id: codeArray[i]}));
   }
@@ -446,6 +515,19 @@ Template.viewWorkflow.rendered = function() {
 
   // Set double click event on network to toggle a modal
   network.on("doubleClick", function(params) {
+    console.log("Check User Fired!");
+    // Get User Id as a String:
+    var curUser = String(Meteor.userId());
+    // Get  wf:
+    var wfDoc = Workflows.findOne({workflowName: wfName});
+    // Get admin:
+    var admin = wfDoc.Admin;
+    //Check match & Hide Button
+    if (curUser!=admin){
+    alert("You do not own this workflow");
+    return false;
+    }
+    else {
     params.event = "[original event]";
     var data = JSON.stringify(params, null, 4);
     var json = JSON.parse(data);
@@ -464,7 +546,7 @@ Template.viewWorkflow.rendered = function() {
     } else {
       console.log("No Doc");
     }
-
+  }//end check user
   });
 
   titleContainer = document.getElementById("title");
@@ -473,9 +555,23 @@ Template.viewWorkflow.rendered = function() {
 
   // Edit workflow name
   document.getElementById("gear").onclick = function() {
+    console.log("Check User Fired!");
+    // Get User Id as a String:
+    var curUser = String(Meteor.userId());
+    // Get  wf:
+    var wfDoc = Workflows.findOne({workflowName: wfName});
+    // Get admin:
+    var admin = wfDoc.Admin;
+    //Check match & Hide Button
+    if (curUser!=admin){
+    alert("You do not own this workflow");
+    return false;
+    }
+    else {
     editContainer = document.getElementById("editWFInput");
     editContainer.innerHTML = '';
     $('#editWFModal').modal('toggle');
     editContainer.innerHTML +=  '<input type="value" class="form-control text-center" id="wfNameField" placeholder="'+wfName+'"/>';
+    }
   }
 } // end rendered
