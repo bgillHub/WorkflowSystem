@@ -28,6 +28,7 @@ Template.addUser.events({
     UserArray.push(userKey);
     console.log("User Array 2:" +  UserArray);
     Workflows.update({_id: wfDoc._id}, {$set: {Users: UserArray}});
+    alert(document.getElementById('userDrop').value + " was added!!");
   }
 });
 Template.addUser.onRendered = function() {
