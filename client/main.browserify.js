@@ -15,19 +15,25 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.methods({
+
+    // Creates an initial machine
     'createMachine': function(name){
       var state = require('state.js');
       wfName = name;
       statesArray = [];
       state.setConsole(console);
       machine = new state.StateMachine(name);
+      // Creation of the initial state
       initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
+      // Creation of the final state
       terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
       initial.to(terminal);
       var instance = new state.StateMachineInstance(name);
       state.initialise(machine, instance);
       alert("Machine Created and Initialsed");
     },
+
+    // Method to save a workflow
     'saveWorkflow': function (Name){
       var state = require('state.js');
       state.setConsole(console);
@@ -36,11 +42,13 @@ if (Meteor.isServer) {
       console.log("States from current array: " + statesArray);
     }, //end  saveWorkflow
 
+    // Add a state to the workflow
     'addState': function (Name, Type){
       var state = require('state.js');
       state.setConsole(console);
       newState = new state.State(Name, machine);
       statesArray.push(Name);
+      // Insert into the MongoDB a name & type
       StatesList.insert({
         stateName: Name,
         stateType: Type
@@ -50,10 +58,12 @@ if (Meteor.isServer) {
       console.log("Current Array: " + statesArray);
     },//end addState
 
+    // Load states method... finds the names through querying the db
     'loadStates' : function(){
       var deleteQuery = StatesList.findOne({ name: deleteName});
     },
 
+    // Load an entire workflow
     'loadWorkflow' : function(){
       selectedFlow = Workflows.findOne();
       console.log("Calling Load Function");
@@ -103,26 +113,11 @@ Meteor.methods({
         States: statesArray,
         Transitions: transArray
       });
-      /*Workflows.update(
-        {workflowName: Name},
-        {
-        workflowName: Name,
-        States: statesArray
-      },
-      {upsert: true});*/
     },//end  saveWorkflow
   'addState': function (Name, Type){
     var state = require('state.js');
     state.setConsole(console);
     newState = new state.State(Name, machine);
-    /*initial = new state.PseudoState("initial", machine, state.PseudoStateKind.Initial);
-    terminal = new state.PseudoState("terminal", machine, state.PseudoStateKind.Terminate);
-    if (Type == "Initial"){
-      initial.to(newState);
-    }
-    else if (Type == "Final"){
-      newState.to(terminal);
-    }*/
     statesArray.push(Name);
     StatesList.insert({
       stateName: Name,
@@ -157,61 +152,11 @@ Meteor.methods({
         }
       }//end for
       var tranArray = wfDoc.Transitions;
-      /*for (i in tranArray){
-        var code = tranArray[i];
-        console.log("Found Code: " + code);
-        var tranDoc = Transitions.findOne({_id: code});
-        var first = StatesList.findOne({_id: tranDoc.source});
-        var second = StatesList.findOne({_id: tranDoc.target});
-        var firstNode = new state.State('blank', machine);
-        var secondNode = new state.State('blank', machine);
-        nodes = wfDoc.States;
-        console.log("Found Node Code : " + code);
-        console.log("Found Nodes: " + nodes);
-        for (i in nodes){
-          console.log("Found Node Itself: " + i);
-          //console.log("Found Node NAME: " + nodes[i].name);
-          if (i.qualifiedName == first.name) {
-            firstNode = nodes[i];
-            console.log("Second Name Found");
-          }
-          if (i.qualifiedName == second.name){
-            console.log("Third Name Found");
-            secondNode = nodes[i];
-          }
-        }//end each node check
-        firstNode.to(secondNode);
-        console.log('Transition processed');
-      }// end each transition*/
+
       console.log('Workflow Loaded');
     }//end iff wfDoc
     else console.log('No workflow found...');
   },//end loadWorkflow
-  //THE CURRENT LOAD WORKFLOW USED
-  /*'loadWorkflow' : function(passedName){
-    console.log("Calling My Load Function");
-    var state = require('state.js');
-    state.setConsole(console);
-    statesArray = [];
-    transArray =[];
-    var selectedFlow = Workflows.findOne({workflowName: passedName});
-    if (selectedFlow){
-      console.log("Selected Flow Found WIth States:" + selectedFlow.States);
-      console.log("Selected Flow Found WIth States:" + selectedFlow.Transitions);
-    holdArray = selectedFlow.States;
-    statesArray = selectedFlow.States;
-    /*for (i in holdArray){
-      statesArray.push(String(holdArray[i]));
-    }
-    machine = new state.StateMachine(selectedFlow.workflowName);
-      for (i in statesArray){
-        dynamicState = new state.State(statesArray[i], machine);
-      }
-      console.log("New Machine Loaded with Vertices: "+ machine.getDefaultRegion().vertices);
-      console.log("New States Array Loaded with Vertices: "+ statesArray);
-    }
-    else console.log("No flow found");
-  }, *///end loadworkflow
     'createState' : function(name, type){
       var state = require('state.js');
       state.setConsole(console);
