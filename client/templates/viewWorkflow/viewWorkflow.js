@@ -40,6 +40,24 @@ Template.viewWorkflow.events({
     $("#myModalHorizontal").modal("toggle");
     }
   },
+  'click #deleteStateButton': function(e) {
+    console.log("Check User Fired!");
+    // Get User Id as a String:
+    var curUser = String(Meteor.userId());
+    // Get  wf:
+    var codeArray = Workflows.findOne({workflowName: wfName}).States;
+    var codeEdgeArray = Workflows.findOne({workflowName: wfName}).Transitions;
+    for (i in codeArray){
+      var state = StatesList.findOne({_id: codeArray[i]});
+    }
+    // Get admin:
+    var admin = wfDoc.Admin;
+    //Check match & Hide Button
+    if (curUser!=admin){
+      alert("You do not own this workflow");
+      $("#myModalHorizontal2").modal("toggle");
+    }
+  },
   // Refresh Button Event, same idea as load on render but as a backup to reload the workflow
   'click #loadButton': function(e){
     e.preventDefault();
@@ -265,7 +283,31 @@ Template.viewWorkflow.events({
     deleteName = "";
     console.log(StatesList.find().fetch());
   }, // end confirmDelete
-
+  'click #confirmStateDelete': function(e) {
+    e.preventDefault();
+    var debugRegions = machine.regions;
+    var defRegion = machine.defaultRegion;
+    if (defRegion){
+    }
+    else console.log("Default doesnt exist...");
+    console.log("Regions: " + debugRegions);
+    console.log("Region #: " + debugRegions.length);
+    var debugVertices = debugRegions[0];
+    var deleteName = document.getElementById("deleteStateField").value;
+    var deleteQuery = StatesList.findOne({ name: deleteName});
+    if (deleteQuery){
+      // You must remove workflows by the id
+      StatesList.remove({
+        _id: deleteQuery._id
+      });
+      alert("State "+ deleteName + " Deleted");
+    } else alert("No State Named "+ deleteName + " Found");
+    document.getElementById("deleteForm").reset();
+    //console.log(deleteName + ", has been deleted!");
+    regional = machine.getDefaultRegion();
+    deleteName = "";
+    console.log(StatesList.find().fetch());
+  }, // end confirmDelete
   // Close the edit modal that has been toggled
   'click .close': function (e){
     e.preventDefault();

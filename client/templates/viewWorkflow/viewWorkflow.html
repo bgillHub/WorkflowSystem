@@ -35,6 +35,34 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="myModalHorizontal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+              </button>
+              <h4 class="modal-title text-center" id="myModalLabel">Delete State</h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal" role="form" id="deleteForm">
+              <div class="form-group">
+                <label class="col-md-6 col-md-offset-3 text-center" for="deleteStateField">State Name:</label>
+                <div class="col-md-6 col-md-offset-3 text-center">
+                  <input type="value" class="form-control text-center" id="deleteStateField" placeholder="State Name"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                  <button type="button" id="confirmStateDelete" class="btn btn-danger text-center">Confirm Delete</button>
+                </div>
+              </div>
+            </form>
+          </div>
+      </div>
+    </div>
+  </div>
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -132,6 +160,7 @@
       <button type="button" id="loadButton" class="btn btn-warning" value="create">Refresh</button>
       <button type="button" id="addUserButton" class="btn btn-primary" value="addUser">Add Users</button>
       <button type="button" id="deleteButton" class="btn btn-danger" data-toggle="modal" data-target="#myModalHorizontal">Delete Workflow</button>
+      <!-- <button type="button" id="deleteStateButton" class="btn btn-danger disabled" data-toggle="modal" data-target="#myModalHorizontal2" title="disabled">Delete State</button> -->
     </div>
   </div>
 </template>
