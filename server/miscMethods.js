@@ -1,6 +1,9 @@
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // This MailGun URL is needed by Meteor's Email package to authorize emails
+    // Authoirze application on mailgun if using a new account and change the username and password in this String and authorize any emails added
+    // Username: postmaster@sandbox99d398c004f949b4be5dab3d89b65fe9.mailgun.org
+    // Password: password
     process.env.MAIL_URL = "smtp://postmaster%40sandbox99d398c004f949b4be5dab3d89b65fe9.mailgun.org:password@smtp.mailgun.org:587"
     console.log("Meteor Started As Server in MiscMethods");
     Meteor.publish("allUsers", function () {
